@@ -2,7 +2,7 @@
 <html lang="zh-TW" class="scroll-smooth">
 <head>
     <!-- 👑 站長文章發布區：請在下方中括號內貼上你導出的數據（位於第 5 行，極易尋找） 👑 -->
-    <script>const DEFAULT_POSTS = [{"id":1783173844174,"title":"之一：從偉大的日蝕之日開始〔日蝕〕\u0005","category":"賽馬故事","date":"2026-07-04","summary":"\"Eclipse first and the rest nowhere\"\n\n1764年，一場日全蝕橫掃大不列顛，這頭漂亮的栗毛馬在英國誕生了，由於在日全蝕期間誕生，牠得名日蝕。","content":"\"Eclipse first and the rest nowhere\"\n\n1764年，一場日全蝕橫掃大不列顛，這頭漂亮的栗毛馬在英國誕生了，由於在日全蝕期間誕生，牠得名日蝕。\n\n牠擁有天才的暴躁、 強悍、桀驁不馴，在成長期間脾氣差勁，一度面臨被閹割的危機，不過最終通過高強度的訓練終於能夠踏上賽場。五歲出道時技壓群馬，第二場比賽即海放第二名十馬身之多。1769年，賭徒 Dennis O’Kelly在目睹了日蝕的統治力後放出豪言：“Eclipse first and the rest nowhere\"，那一年，幾乎是日蝕的個人巡遊，O’Kelly深深為牠著迷，最後決定重金買下牠。\n\n一馬當先，萬馬無光，正是日蝕一生的寫照。挑戰日蝕被視為一種有勇無謀的大無畏，生涯18戰無敗全勝，其中整整8場是''walkover''，意即由於無馬出賽而自動獲勝。日蝕成為了賽馬界的獨孤求敗，此後由於無人願意出賽，牠在 1771年退役，並作為種馬立下了莫大功勳，一共生出了344匹重賞馬，現今賽馬約97%都是牠的後代，一如牠的名字，日蝕成為了無庸置疑的馬王，偉大的迅影遮蔽一切，從此無馬能出其右。\n\n1789年，日蝕因腹絞痛離世，享年24歲。牠的外貌並不被讚譽，甚至因頭部過大飽受批評，太過桀傲的脾性人盡皆知，卻能在比賽中成功負重，經醫學檢驗，牠的心臟異常龐大，骨骼被收藏於皇家獸醫學院。\n\n死後，日蝕的影響力仍然長存，現今大多數純血馬的血統中都能找到牠的身影，美國賽馬獎項以牠命名，《美國純血馬賽事史》中更是描述，「只要某位育馬者覺得自己有一匹看起來很有希望的小馬駒，就會再次使用這個名字。」\n\n但就如其名一般，所有的光芒都被日蝕奪去，牠是如此不可忽視，所有賽駒只能遙望牠的身影，竭力狂奔。\n"}];</script>
+    <script>const DEFAULT_POSTS = [];</script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -275,18 +275,46 @@
         // 使用 v8 金鑰，強制更新同步
         const CACHE_KEY = 'infinite_expedition_posts_v8';
 
+        // 👑 智慧型自動修復與防呆解析：不論站長如何貼上資料，都能完美自動解析並扁平化
+        function sanitizePosts(rawInput) {
+            let parsed = [];
+            if (!rawInput) return parsed;
+            
+            try {
+                if (typeof rawInput === 'string') {
+                    const temp = JSON.parse(rawInput);
+                    if (Array.isArray(temp)) parsed = temp;
+                } else if (Array.isArray(rawInput)) {
+                    // 自動修復「雙重中括號 [[...]]」的經典問題
+                    if (rawInput.length === 1 && Array.isArray(rawInput[0])) {
+                        parsed = rawInput[0];
+                    } else if (rawInput.length === 1 && typeof rawInput[0] === 'string') {
+                        const temp = JSON.parse(rawInput[0]);
+                        if (Array.isArray(temp)) parsed = temp;
+                    } else {
+                        parsed = rawInput;
+                    }
+                }
+            } catch (e) {
+                console.error("數據解析失敗：", e);
+            }
+            // 確保過濾掉任何無效或未定義的空物件
+            return parsed.filter(item => item && typeof item === 'object' && !Array.isArray(item) && item.id);
+        }
+
         // 初始化文章列表
         let posts = [];
+        let cleanDefaultPosts = sanitizePosts(DEFAULT_POSTS);
         let localPosts = JSON.parse(localStorage.getItem(CACHE_KEY));
 
         // 智慧型同步：如果本地沒有快取，或者檢測到 GitHub (DEFAULT_POSTS) 裡有本地沒有的新文章，立刻進行無縫同步
         if (!localPosts || localPosts.length === 0) {
-            posts = [...DEFAULT_POSTS];
+            posts = [...cleanDefaultPosts];
             localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
         } else {
             posts = [...localPosts];
             // 比對 DEFAULT_POSTS 中的每篇文章是否已被同步至讀者本地，如果沒有則併入
-            DEFAULT_POSTS.forEach(gp => {
+            cleanDefaultPosts.forEach(gp => {
                 if (!posts.some(lp => lp.id === gp.id)) {
                     posts.push(gp);
                 }
