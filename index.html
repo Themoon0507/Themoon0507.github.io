@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>無盡的遠征</title>
+    <title>無盡的遠征 </title>
     
     <!-- 引入 Tailwind CSS 進行古典響應式排版 -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -266,8 +266,8 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">完整正文 (支援斷行)</label>
-                    <textarea id="post-content" rows="12" required class="w-full bg-transparent border border-stone-300 dark:border-stone-700 rounded-lg p-4 focus:border-accent dark:focus:border-accent-dark outline-none font-serif leading-loose transition-colors resize-y" placeholder="請直接貼上你的文章，系統會自動幫你分段落..."></textarea>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">完整正文 (保留您的精準空白與換行)</label>
+                    <textarea id="post-content" rows="12" required class="w-full bg-transparent border border-stone-300 dark:border-stone-700 rounded-lg p-4 focus:border-accent dark:focus:border-accent-dark outline-none font-serif leading-loose transition-colors resize-y" placeholder="請直接貼上你的文章，所有的空白、縮排、斷行皆會原汁原味被保留..."></textarea>
                 </div>
 
                 <div class="flex justify-end pt-4">
@@ -285,8 +285,9 @@
     </footer>
 
     <script>
-        const CACHE_KEY = 'infinite_expedition_posts_clean_v18';
+        const CACHE_KEY = 'infinite_expedition_posts_clean_v19';
 
+        // 清洗隱形符號，但【絕對保留】 \n 與空白
         function sanitizeText(text) {
             if (typeof text !== 'string') return '';
             return text.replace(/[\u0000-\u0009\u000B\u000C\u000E-\u001F\u007F-\u009F]/g, "").trim();
@@ -301,7 +302,7 @@
             }
         }
 
-        // 智慧標題辨識字典：用於輔助排序 (當日期相同時)
+        // 智慧標題辨識字典
         const cnNums = { '一':1, '二':2, '三':3, '四':4, '五':5, '六':6, '七':7, '八':8, '九':9, '十':10, '十一':11, '十二':12 };
         function getSeriesNumber(title) {
             const matchCN = title.match(/之([一二三四五六七八九十]+)/);
@@ -323,8 +324,8 @@
         let editingPostId = null;
 
         // 全域狀態：字體大小與排序規則
-        let currentFontSize = localStorage.getItem('fontSize') || 'text-base'; // text-base, text-lg, text-xl
-        let sortOrder = localStorage.getItem('sortOrder') || 'desc'; // desc: 最新, asc: 最早
+        let currentFontSize = localStorage.getItem('fontSize') || 'text-base'; 
+        let sortOrder = localStorage.getItem('sortOrder') || 'desc'; 
 
         window.onload = async function() {
             const themeIcon = document.getElementById('theme-icon');
@@ -416,7 +417,7 @@
             if(currentView !== 'home') navigateTo('home');
         }
 
-        // --- 功能：字體大小切換 ---
+        // --- 字體大小切換 ---
         function toggleFontSize() {
             if (currentFontSize === 'text-base') currentFontSize = 'text-lg';
             else if (currentFontSize === 'text-lg') currentFontSize = 'text-xl';
@@ -425,13 +426,12 @@
             localStorage.setItem('fontSize', currentFontSize);
             updateFontIndicator();
             
-            // 立即更新內文排版
             if (currentView === 'post-detail') {
-                const paragraphs = document.querySelectorAll('#single-post-content .content-body p');
-                paragraphs.forEach(p => {
-                    p.classList.remove('text-base', 'text-lg', 'text-xl');
-                    p.classList.add(currentFontSize);
-                });
+                const contentBody = document.querySelector('.content-body');
+                if (contentBody) {
+                    contentBody.classList.remove('text-base', 'text-lg', 'text-xl');
+                    contentBody.classList.add(currentFontSize);
+                }
             }
         }
 
@@ -442,7 +442,7 @@
             if(currentFontSize === 'text-xl') { indicator.innerText = '大'; showToast("內文字體已切換：大"); }
         }
 
-        // --- 功能：排序切換與智慧過濾引擎 ---
+        // --- 排序切換與智慧過濾引擎 ---
         function toggleSortOrder() {
             sortOrder = sortOrder === 'desc' ? 'asc' : 'desc';
             localStorage.setItem('sortOrder', sortOrder);
@@ -465,12 +465,10 @@
                 const dateA = new Date(a.date).getTime();
                 const dateB = new Date(b.date).getTime();
                 
-                // 1. 先比較日期
                 if (dateA !== dateB) {
                     return sortOrder === 'desc' ? dateB - dateA : dateA - dateB;
                 }
 
-                // 2. 日期相同時，利用標題的系列數字 (之一、之二) 進行智慧辨識排序
                 const numA = getSeriesNumber(a.title);
                 const numB = getSeriesNumber(b.title);
                 
@@ -478,7 +476,6 @@
                     return sortOrder === 'desc' ? numB - numA : numA - numB;
                 }
 
-                // 3. 最後防線：利用 ID (建立時間)
                 return sortOrder === 'desc' ? b.id - a.id : a.id - b.id;
             });
         }
@@ -493,7 +490,6 @@
                 return matchCat && matchSearch;
             });
 
-            // 套用智慧排序引擎
             const sortedPosts = sortPostsLogic(filteredPosts);
 
             if (sortedPosts.length === 0) {
@@ -563,17 +559,13 @@
 
             loadingIndicator.classList.add('hidden');
             
-            const normalizedContent = finalContent.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+            // 安全處理 HTML 標籤，防止意外注入，但保留文字原貌
+            const escapedContent = finalContent
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
 
-            const formattedContent = normalizedContent
-                .split(/\n\s*\n/) 
-                .filter(paragraph => paragraph.trim() !== '')
-                .map(paragraph => {
-                    const pWithBr = paragraph.trim().replace(/\n/g, '<br>'); 
-                    return `<p class="mb-6 indent-8 text-stone-700 dark:text-stone-300 leading-loose tracking-wide font-serif ${currentFontSize} text-justify">${pWithBr}</p>`;
-                })
-                .join('');
-
+            // 採用 whitespace-pre-wrap 實現真正的「所見即所得」，嚴格遵守使用者的空白與斷行
             contentArea.innerHTML = `
                 <div class="flex items-center gap-3 text-xs font-sans text-stone-500 dark:text-stone-400 mb-4">
                     <span class="bg-stone-200/60 dark:bg-stone-800 px-2.5 py-1 rounded text-accent dark:text-accent-dark font-semibold">${post.category}</span>
@@ -583,9 +575,7 @@
                     <span>${post.wordCount} 字</span>
                 </div>
                 <h2 class="text-2xl md:text-3xl font-bold font-serif mb-8 text-stone-800 dark:text-stone-100 leading-snug tracking-wide border-b border-stone-200 dark:border-stone-800 pb-6">${post.title}</h2>
-                <div class="content-body">
-                    ${formattedContent}
-                </div>
+                <div class="content-body whitespace-pre-wrap text-stone-700 dark:text-stone-300 leading-loose tracking-wide font-serif ${currentFontSize} text-justify">${escapedContent}</div>
             `;
 
             const deleteBtn = document.getElementById('admin-delete-btn');
@@ -622,20 +612,18 @@
             renderPostNavigation(post);
         }
 
-        // --- 根據排序規則更新的上下篇導航 ---
         function renderPostNavigation(currentPost) {
             const navContainer = document.getElementById('post-navigation');
             if (!navContainer) return;
             navContainer.innerHTML = '';
 
             const list = currentFilter === '全部' ? posts : posts.filter(p => p.category === currentFilter);
-            const sortedList = sortPostsLogic(list); // 使用同步的排序邏輯
+            const sortedList = sortPostsLogic(list); 
             const currentIndex = sortedList.findIndex(p => String(p.id) === String(currentPost.id));
 
-            let prevPost = null; // 較舊的篇章
-            let nextPost = null; // 較新的篇章
+            let prevPost = null; 
+            let nextPost = null; 
 
-            // 依據當前的排列方向，找出真正的上一篇與下一篇
             if (sortOrder === 'desc') {
                 nextPost = currentIndex > 0 ? sortedList[currentIndex - 1] : null; 
                 prevPost = currentIndex < sortedList.length - 1 ? sortedList[currentIndex + 1] : null; 
@@ -651,7 +639,7 @@
                     <button onclick="viewPostDetail(${prevPost.id})" class="group w-full sm:w-1/2 flex items-center justify-start gap-4 px-5 py-4 rounded-xl border border-stone-300 dark:border-stone-700 hover:border-accent dark:hover:border-accent-dark transition-all duration-300 bg-stone-100/30 hover:bg-stone-200/50 dark:hover:bg-stone-800/30 text-left">
                         <i class="fa-solid fa-chevron-left text-stone-400 group-hover:text-accent dark:group-hover:text-accent-dark transition-colors"></i>
                         <div class="overflow-hidden">
-                            <span class="block text-[10px] text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-1">上一篇 (較早)</span>
+                            <span class="block text-[10px] text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-1">上一篇</span>
                             <span class="block text-sm font-serif font-semibold text-stone-700 dark:text-stone-300 group-hover:text-accent dark:group-hover:text-accent-dark truncate w-full">${prevPost.title}</span>
                         </div>
                     </button>
@@ -664,7 +652,7 @@
                 navHtml += `
                     <button onclick="viewPostDetail(${nextPost.id})" class="group w-full sm:w-1/2 flex items-center justify-end gap-4 px-5 py-4 rounded-xl border border-stone-300 dark:border-stone-700 hover:border-accent dark:hover:border-accent-dark transition-all duration-300 bg-stone-100/30 hover:bg-stone-200/50 dark:hover:bg-stone-800/30 text-right ml-auto">
                         <div class="overflow-hidden">
-                            <span class="block text-[10px] text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-1">下一篇 (較新)</span>
+                            <span class="block text-[10px] text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-1">下一篇</span>
                             <span class="block text-sm font-serif font-semibold text-stone-700 dark:text-stone-300 group-hover:text-accent dark:group-hover:text-accent-dark truncate w-full">${nextPost.title}</span>
                         </div>
                         <i class="fa-solid fa-chevron-right text-stone-400 group-hover:text-accent dark:group-hover:text-accent-dark transition-colors"></i>
@@ -792,6 +780,7 @@
             const date = document.getElementById('post-date').value;
             const summary = sanitizeText(document.getElementById('post-summary').value);
             
+            // 正文：直接獲取內容，不作破壞性過濾
             const content = document.getElementById('post-content').value; 
             const wordCount = content.replace(/\s/g, '').length;
 
