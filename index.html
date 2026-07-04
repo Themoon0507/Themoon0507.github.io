@@ -180,12 +180,17 @@
                 <!-- 動態注入文章內容 -->
             </article>
 
-            <!-- 閱讀導覽列 (下一章與刪除鈕) -->
+            <!-- 閱讀導覽列 (下一章與站長管理鈕) -->
             <div class="border-t border-stone-200 dark:border-stone-800 mt-16 pt-8 flex flex-col sm:flex-row justify-between items-center gap-6 font-sans">
-                <!-- 刪除文章 (同樣只在解鎖站長暗號後，給站長管理本地快取) -->
-                <button id="admin-delete-btn" class="hidden text-xs text-stone-400 dark:text-stone-600 hover:text-red-600 dark:hover:text-red-400 transition-colors flex items-center gap-2">
-                    <i class="fa-regular fa-trash-can"></i> 刪除此篇
-                </button>
+                <!-- 站長管理按鈕組 (僅在解鎖站長暗號後顯示) -->
+                <div class="flex items-center gap-4">
+                    <button id="admin-edit-btn" class="hidden text-xs text-stone-400 dark:text-stone-600 hover:text-accent dark:hover:text-accent-dark transition-colors flex items-center gap-2">
+                        <i class="fa-regular fa-pen-to-square"></i> 編輯此篇
+                    </button>
+                    <button id="admin-delete-btn" class="hidden text-xs text-stone-400 dark:text-stone-600 hover:text-red-600 dark:hover:text-red-400 transition-colors flex items-center gap-2">
+                        <i class="fa-regular fa-trash-can"></i> 刪除此篇
+                    </button>
+                </div>
                 
                 <!-- 下一章導航 (右對齊) -->
                 <div id="next-chapter-container" class="w-full sm:w-auto ml-auto">
@@ -194,11 +199,11 @@
             </div>
         </section>
 
-        <!-- ================= 視圖：寫作模式 (站長限定) ================= -->
+        <!-- ================= 視圖：寫作/編輯模式 (站長限定) ================= -->
         <section id="view-write" class="view-transition view-hidden">
             <div class="flex justify-between items-center mb-8">
-                <h2 class="text-xl font-bold font-serif tracking-widest text-accent dark:text-accent-dark">新增遠征足跡</h2>
-                <button onclick="navigateTo('home')" class="font-sans text-xs text-stone-500 hover:text-stone-700 dark:hover:text-stone-300">
+                <h2 id="write-view-title" class="text-xl font-bold font-serif tracking-widest text-accent dark:text-accent-dark">新增遠征足跡</h2>
+                <button onclick="cancelWrite()" class="font-sans text-xs text-stone-500 hover:text-stone-700 dark:hover:text-stone-300">
                     取消並返回
                 </button>
             </div>
@@ -241,7 +246,7 @@
                 <!-- 儲存發布 -->
                 <div class="flex justify-end pt-4">
                     <button type="submit" class="bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark font-medium tracking-widest px-8 py-2.5 rounded hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
-                        <i class="fa-solid fa-bookmark mr-2"></i>保存此篇至瀏覽器
+                        <i class="fa-solid fa-bookmark mr-2"></i><span id="submit-btn-text">保存此篇至瀏覽器</span>
                     </button>
                 </div>
             </form>
@@ -258,8 +263,8 @@
         // 徹底刪除所有預設文章範例，初始狀態為完全空白
         const DEFAULT_POSTS = [];
 
-        // 更新快取 Key 名稱為 v5，強制繞過瀏覽器中殘留的舊測試數據
-        const CACHE_KEY = 'infinite_expedition_posts_v5';
+        // 更新快取 Key 名稱為 v6，強制繞過瀏覽器中殘留的舊測試數據
+        const CACHE_KEY = 'infinite_expedition_posts_v6';
 
         // 從 localStorage 載入文章
         let posts = JSON.parse(localStorage.getItem(CACHE_KEY));
@@ -274,6 +279,7 @@
         let secretClickCount = 0;
         let isSecretUnlocked = false;
         let activeConfirmCallback = null;
+        let editingPostId = null; // 當前正在編輯的文章 ID
 
         // 當頁面載入完成後執行
         window.onload = function() {
@@ -363,13 +369,16 @@
             isSecretUnlocked = !isSecretUnlocked;
             const writeBtn = document.getElementById('write-btn');
             const adminDeleteBtn = document.getElementById('admin-delete-btn');
+            const adminEditBtn = document.getElementById('admin-edit-btn');
 
             if (isSecretUnlocked) {
                 if (writeBtn) writeBtn.classList.remove('hidden');
                 if (adminDeleteBtn) adminDeleteBtn.classList.remove('hidden');
+                if (adminEditBtn) adminEditBtn.classList.remove('hidden');
             } else {
                 if (writeBtn) writeBtn.classList.add('hidden');
                 if (adminDeleteBtn) adminDeleteBtn.classList.add('hidden');
+                if (adminEditBtn) adminEditBtn.classList.add('hidden');
                 // 如果目前在寫作介面，則強制導回首頁
                 if (currentView === 'write-post') {
                     navigateTo('home');
@@ -446,8 +455,10 @@
                 </div>
             `;
 
-            // 設定刪除按鈕邏輯
+            // 設定管理按鈕邏輯
             const deleteBtn = document.getElementById('admin-delete-btn');
+            const editBtn = document.getElementById('admin-edit-btn');
+
             if (isSecretUnlocked) {
                 if (deleteBtn) {
                     deleteBtn.classList.remove('hidden');
@@ -460,14 +471,56 @@
                         });
                     };
                 }
+                if (editBtn) {
+                    editBtn.classList.remove('hidden');
+                    editBtn.onclick = function() {
+                        editPost(id);
+                    };
+                }
             } else {
                 if (deleteBtn) deleteBtn.classList.add('hidden');
+                if (editBtn) editBtn.classList.add('hidden');
             }
 
             // 下一章智慧導航渲染 (只查找同分類文章)
             renderNextChapterNav(post);
 
             navigateTo('post-detail');
+        }
+
+        // 進入編輯文章模式
+        function editPost(id) {
+            const post = posts.find(p => p.id === id);
+            if (!post) return;
+
+            editingPostId = id;
+
+            // 回填表單欄位
+            document.getElementById('post-title').value = post.title;
+            document.getElementById('post-category').value = post.category;
+            document.getElementById('post-date').value = post.date;
+            document.getElementById('post-summary').value = post.summary;
+            document.getElementById('post-content').value = post.content;
+
+            // 調整寫作介面標題與按鈕字樣
+            document.getElementById('write-view-title').textContent = "編輯遠征足跡";
+            document.getElementById('submit-btn-text').textContent = "保存修改並發布";
+
+            navigateTo('write-post');
+        }
+
+        // 取消寫作或編輯
+        function cancelWrite() {
+            editingPostId = null;
+            document.getElementById('write-form').reset();
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('post-date').value = today;
+
+            // 還原預設標題與按鈕字樣
+            document.getElementById('write-view-title').textContent = "新增遠征足跡";
+            document.getElementById('submit-btn-text').textContent = "保存此篇至瀏覽器";
+
+            navigateTo('home');
         }
 
         // 智慧下一章按鈕渲染
@@ -481,7 +534,7 @@
                 .filter(p => p.category === currentPost.category)
                 .sort((a, b) => new Date(b.date) - new Date(a.date));
 
-            // 當同分類文章存在 2 篇或以上 (複數) 時才渲染下一章按鍵
+            // 當同分類文章存在 2 篇 or 以上時才渲染下一章按鍵
             if (catPosts.length >= 2) {
                 const currentIndex = catPosts.findIndex(p => p.id === currentPost.id);
                 // 循環導向下一篇
@@ -500,7 +553,7 @@
             }
         }
 
-        // 新增文章發布邏輯
+        // 新增與編輯文章發布邏輯
         function handlePublish(e) {
             e.preventDefault();
 
@@ -510,22 +563,41 @@
             const summary = document.getElementById('post-summary').value.trim();
             const content = document.getElementById('post-content').value;
 
-            const newPost = {
-                id: Date.now(),
-                title,
-                category,
-                date,
-                summary,
-                content
-            };
+            if (editingPostId) {
+                // 編輯模式：更新現有文章數據
+                const index = posts.findIndex(p => p.id === editingPostId);
+                if (index !== -1) {
+                    posts[index] = {
+                        ...posts[index],
+                        title,
+                        category,
+                        date,
+                        summary,
+                        content
+                    };
+                }
+                editingPostId = null; // 清除編輯狀態
+            } else {
+                // 新增模式：添加新文章
+                const newPost = {
+                    id: Date.now(),
+                    title,
+                    category,
+                    date,
+                    summary,
+                    content
+                };
+                posts.unshift(newPost);
+            }
 
-            posts.unshift(newPost);
             localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
 
-            // 重設表單
+            // 重設表單與狀態
             document.getElementById('write-form').reset();
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('post-date').value = today;
+            document.getElementById('write-view-title').textContent = "新增遠征足跡";
+            document.getElementById('submit-btn-text').textContent = "保存此篇至瀏覽器";
 
             renderPosts();
             navigateTo('home');
