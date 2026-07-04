@@ -52,8 +52,7 @@
             transition: background-color 0.5s ease, color 0.5s ease;
         }
 
-        /* 
-           SVG 粗糙手造紙張纖維濾鏡 
+        /* SVG 粗糙手造紙張纖維濾鏡 
            透過低 baseFrequency (0.005) 產生大面積的不規則紙張起伏與斑駁感，
            呈現出類似實體厚磅水彩紙的凹凸質地，絕無細沙狀的灰塵感。
         */
@@ -89,6 +88,7 @@
         }
         .dark ::-webkit-scrollbar-thumb {
             background: rgba(217, 106, 83, 0.2);
+            border-radius: 999px;
         }
 
         /* 視圖平滑切換動畫 */
@@ -173,12 +173,14 @@
 
             <!-- 分類選單與文章排序控制面板 -->
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 my-10 border-b border-stone-200 dark:border-stone-800 pb-4 font-sans text-sm">
-                <!-- 左側：分類按鈕 -->
+                <!-- 左側：分類按鈕 (賽馬科普接在全部後，更新日誌最後) -->
                 <div id="category-bar" class="flex flex-wrap gap-2">
                     <button onclick="filterCategory('全部')" class="cat-btn active px-4 py-1.5 rounded-full bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark font-medium transition-all duration-200" data-cat="全部">全部</button>
+                    <button onclick="filterCategory('賽馬科普')" class="cat-btn px-4 py-1.5 rounded-full text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-all duration-200" data-cat="賽馬科普">賽馬科普</button>
                     <button onclick="filterCategory('賽馬故事')" class="cat-btn px-4 py-1.5 rounded-full text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-all duration-200" data-cat="賽馬故事">賽馬故事</button>
                     <button onclick="filterCategory('隨筆')" class="cat-btn px-4 py-1.5 rounded-full text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-all duration-200" data-cat="隨筆">隨筆</button>
                     <button onclick="filterCategory('同人文')" class="cat-btn px-4 py-1.5 rounded-full text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-all duration-200" data-cat="同人文">同人文</button>
+                    <button onclick="filterCategory('更新日誌')" class="cat-btn px-4 py-1.5 rounded-full text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-all duration-200" data-cat="更新日誌">更新日誌</button>
                 </div>
                 
                 <!-- 右側：排序控制 -->
@@ -266,12 +268,14 @@
                 <!-- 分類與日期 -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">分類 (可自由手動輸入新分類名稱)</label>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">分類 (可選擇或手動輸入新分類名稱)</label>
                         <input type="text" id="post-category" required list="category-suggestions" class="w-full bg-transparent border-b border-stone-300 dark:border-stone-700 py-2 focus:border-accent dark:focus:border-accent-dark outline-none text-stone-800 dark:text-stone-100 transition-colors" placeholder="請選擇或手動輸入分類...">
                         <datalist id="category-suggestions">
+                            <option value="賽馬科普">
                             <option value="賽馬故事">
                             <option value="隨筆">
                             <option value="同人文">
+                            <option value="更新日誌">
                         </datalist>
                     </div>
                     <div>
@@ -412,29 +416,34 @@
         }
 
         // 動態讀取現有文章的所有分類，自動加到分類篩選欄中
+        // 設定「賽馬科普」緊接在「全部」後面，而「更新日誌」強制擺放至最尾端
         function dynamicRenderCategoryFilters() {
             const categoryBar = document.getElementById('category-bar');
             if (!categoryBar) return;
 
             // 獲取所有現有文章的唯一分類
-            const uniqueCategories = ['全部'];
+            const uniqueCategories = [];
             posts.forEach(p => {
                 if (p.category && !uniqueCategories.includes(p.category)) {
                     uniqueCategories.push(p.category);
                 }
             });
 
-            // 如果現有的固定分類沒有在裡面，且沒有文章，不渲染；如果有文章，動態補上
-            // 這裡確保預設的三個分類在篩選列上更直覺
-            const defaultTemplateCats = ['賽馬故事', '隨筆', '同人文'];
-            defaultTemplateCats.forEach(cat => {
-                if (!uniqueCategories.includes(cat)) {
-                    uniqueCategories.push(cat);
+            // 建立標準優先順序的分類清單
+            const finalCategories = ['全部', '賽馬科普', '賽馬故事', '隨筆', '同人文'];
+            
+            // 將動態新增且不在預設名單中的分類加入
+            uniqueCategories.forEach(cat => {
+                if (!finalCategories.includes(cat) && cat !== '更新日誌') {
+                    finalCategories.push(cat);
                 }
             });
 
+            // 強制將「更新日誌」排在最尾端
+            finalCategories.push('更新日誌');
+
             categoryBar.innerHTML = '';
-            uniqueCategories.forEach(cat => {
+            finalCategories.forEach(cat => {
                 const isActive = (cat === currentFilter);
                 const button = document.createElement('button');
                 button.onclick = () => filterCategory(cat);
