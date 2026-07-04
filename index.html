@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>無盡的遠征 </title>
+    <title>無盡的遠征</title>
     
     <!-- 引入 Tailwind CSS 進行古典響應式排版 -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -114,6 +114,13 @@
             <button id="write-btn" onclick="navigateTo('write-post')" class="hidden bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark text-xs font-medium tracking-wider px-3.5 py-1.5 rounded-full hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5">
                 <i class="fa-solid fa-feather-pointed mr-1.5"></i>撰寫文章
             </button>
+            
+            <!-- 字體大小切換按鈕 -->
+            <button onclick="toggleFontSize()" class="text-stone-600 dark:text-stone-300 hover:text-accent dark:hover:text-accent-dark transition-colors text-lg" title="切換字體大小">
+                <i class="fa-solid fa-font"></i><span id="font-size-indicator" class="text-[10px] ml-0.5 align-top opacity-70">小</span>
+            </button>
+
+            <!-- 主題切換按鈕 -->
             <button onclick="toggleDarkMode()" class="text-stone-600 dark:text-stone-300 hover:text-accent dark:hover:text-accent-dark transition-colors text-lg" title="切換主題">
                 <i id="theme-icon" class="fa-solid fa-moon"></i>
             </button>
@@ -130,12 +137,22 @@
                 <div class="font-medium tracking-wide text-stone-600 dark:text-stone-400" id="site-stats">
                     載入統計中...
                 </div>
-                <div class="w-full md:w-64 relative">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-stone-400"></i>
-                    <input type="text" id="search-input" oninput="handleSearch()" placeholder="搜尋日誌..." class="w-full pl-9 pr-4 py-2 bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-700 rounded-full focus:outline-none focus:border-accent dark:focus:border-accent-dark transition-colors text-stone-700 dark:text-stone-300">
+                
+                <div class="flex items-center gap-3 w-full md:w-auto">
+                    <!-- 排序切換按鈕 -->
+                    <button onclick="toggleSortOrder()" id="sort-btn" class="flex-shrink-0 bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-700 px-4 py-2 rounded-full text-stone-600 dark:text-stone-300 hover:text-accent dark:hover:text-accent-dark transition-colors" title="切換文章排序">
+                        <i class="fa-solid fa-arrow-down-wide-short mr-1.5"></i>最新
+                    </button>
+
+                    <!-- 檢索框 -->
+                    <div class="w-full md:w-56 relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-stone-400"></i>
+                        <input type="text" id="search-input" oninput="handleSearch()" placeholder="搜尋日誌..." class="w-full pl-9 pr-4 py-2 bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-700 rounded-full focus:outline-none focus:border-accent dark:focus:border-accent-dark transition-colors text-stone-700 dark:text-stone-300">
+                    </div>
                 </div>
             </div>
 
+            <!-- 詩意首頁引言 -->
             <div class="border-l-2 border-stone-300 dark:border-stone-700 pl-6 py-2 my-8 text-stone-600 dark:text-stone-400 italic text-base leading-relaxed tracking-wider font-serif">
                 <p class="mb-2">馬匹一起衝出起跑線。</p>
                 <p class="mb-2">褐色的馬兒奔跑時勢頭強勁，隆隆的震動一直傳到了看台。七匹食草動物奮力向前衝刺，馬蹄在土地上翻飛，震人心魄。</p>
@@ -144,7 +161,7 @@
                 <p class="text-right text-sm font-sans not-italic text-stone-500 dark:text-stone-500">— 伊坂幸太郎《重力小丑》</p>
             </div>
 
-            <!-- 完整的六大分類按鈕區域 -->
+            <!-- 六大分類按鈕區域 -->
             <div class="flex flex-wrap gap-2 my-10 border-b border-stone-200 dark:border-stone-800 pb-4 font-sans text-sm">
                 <button onclick="filterCategory('全部')" class="cat-btn active px-4 py-1.5 rounded-full bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark font-medium transition-all duration-200" data-cat="全部">全部</button>
                 <button onclick="filterCategory('賽馬科普')" class="cat-btn px-4 py-1.5 rounded-full text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-all duration-200" data-cat="賽馬科普">賽馬科普</button>
@@ -189,7 +206,7 @@
 
             <div id="post-loading" class="hidden text-center py-20 font-serif text-stone-400">
                 <i class="fa-solid fa-feather-pointed animate-bounce text-3xl mb-4 text-accent"></i>
-                <p>正在載入遠征紀錄...</p>
+                <p>正在展開卷軸，載入遠征紀錄...</p>
             </div>
 
             <!-- 正文主體 -->
@@ -270,12 +287,8 @@
     <script>
         const CACHE_KEY = 'infinite_expedition_posts_clean_v18';
 
-        // 核心：過濾控制字元，但 *必須* 保留換行符號 (\n) 與回車符號 (\r)
-        // \u000a 是 \n (保留)
-        // \u000d 是 \r (保留)
         function sanitizeText(text) {
             if (typeof text !== 'string') return '';
-            // 正則解釋：移除 \u0000 到 \u001F，除了 \n(0x0A) 和 \r(0x0D)
             return text.replace(/[\u0000-\u0009\u000B\u000C\u000E-\u001F\u007F-\u009F]/g, "").trim();
         }
 
@@ -284,9 +297,20 @@
                 const cleaned = rawString.replace(/[\u0000-\u0009\u000B\u000C\u000E-\u001F\u007F-\u009F]/g, "");
                 return JSON.parse(cleaned);
             } catch (e) {
-                console.error("JSON 解析失敗：", e);
                 return null;
             }
+        }
+
+        // 智慧標題辨識字典：用於輔助排序 (當日期相同時)
+        const cnNums = { '一':1, '二':2, '三':3, '四':4, '五':5, '六':6, '七':7, '八':8, '九':9, '十':10, '十一':11, '十二':12 };
+        function getSeriesNumber(title) {
+            const matchCN = title.match(/之([一二三四五六七八九十]+)/);
+            if (matchCN && cnNums[matchCN[1]]) return cnNums[matchCN[1]];
+            
+            const matchAr = title.match(/(?:之|第)\s*(\d+)/);
+            if (matchAr) return parseInt(matchAr[1], 10);
+            
+            return 9999; 
         }
 
         let posts = [];            
@@ -298,6 +322,10 @@
         let activeConfirmCallback = null;
         let editingPostId = null;
 
+        // 全域狀態：字體大小與排序規則
+        let currentFontSize = localStorage.getItem('fontSize') || 'text-base'; // text-base, text-lg, text-xl
+        let sortOrder = localStorage.getItem('sortOrder') || 'desc'; // desc: 最新, asc: 最早
+
         window.onload = async function() {
             const themeIcon = document.getElementById('theme-icon');
             if (document.documentElement.classList.contains('dark')) {
@@ -305,6 +333,9 @@
             } else {
                 if (themeIcon) themeIcon.className = 'fa-solid fa-moon';
             }
+
+            updateFontIndicator();
+            updateSortButtonUI();
 
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('post-date').value = today;
@@ -385,6 +416,73 @@
             if(currentView !== 'home') navigateTo('home');
         }
 
+        // --- 功能：字體大小切換 ---
+        function toggleFontSize() {
+            if (currentFontSize === 'text-base') currentFontSize = 'text-lg';
+            else if (currentFontSize === 'text-lg') currentFontSize = 'text-xl';
+            else currentFontSize = 'text-base';
+            
+            localStorage.setItem('fontSize', currentFontSize);
+            updateFontIndicator();
+            
+            // 立即更新內文排版
+            if (currentView === 'post-detail') {
+                const paragraphs = document.querySelectorAll('#single-post-content .content-body p');
+                paragraphs.forEach(p => {
+                    p.classList.remove('text-base', 'text-lg', 'text-xl');
+                    p.classList.add(currentFontSize);
+                });
+            }
+        }
+
+        function updateFontIndicator() {
+            const indicator = document.getElementById('font-size-indicator');
+            if(currentFontSize === 'text-base') { indicator.innerText = '小'; showToast("內文字體已切換：小 (預設)"); }
+            if(currentFontSize === 'text-lg') { indicator.innerText = '中'; showToast("內文字體已切換：中"); }
+            if(currentFontSize === 'text-xl') { indicator.innerText = '大'; showToast("內文字體已切換：大"); }
+        }
+
+        // --- 功能：排序切換與智慧過濾引擎 ---
+        function toggleSortOrder() {
+            sortOrder = sortOrder === 'desc' ? 'asc' : 'desc';
+            localStorage.setItem('sortOrder', sortOrder);
+            updateSortButtonUI();
+            renderPosts();
+            showToast(`排序方式已切換為：${sortOrder === 'desc' ? '最新發表優先' : '最早發表優先'}`);
+        }
+
+        function updateSortButtonUI() {
+            const btn = document.getElementById('sort-btn');
+            if (sortOrder === 'desc') {
+                btn.innerHTML = '<i class="fa-solid fa-arrow-down-wide-short mr-1.5"></i>最新';
+            } else {
+                btn.innerHTML = '<i class="fa-solid fa-arrow-up-short-wide mr-1.5"></i>最早';
+            }
+        }
+
+        function sortPostsLogic(postArray) {
+            return [...postArray].sort((a, b) => {
+                const dateA = new Date(a.date).getTime();
+                const dateB = new Date(b.date).getTime();
+                
+                // 1. 先比較日期
+                if (dateA !== dateB) {
+                    return sortOrder === 'desc' ? dateB - dateA : dateA - dateB;
+                }
+
+                // 2. 日期相同時，利用標題的系列數字 (之一、之二) 進行智慧辨識排序
+                const numA = getSeriesNumber(a.title);
+                const numB = getSeriesNumber(b.title);
+                
+                if (numA !== 9999 && numB !== 9999) {
+                    return sortOrder === 'desc' ? numB - numA : numA - numB;
+                }
+
+                // 3. 最後防線：利用 ID (建立時間)
+                return sortOrder === 'desc' ? b.id - a.id : a.id - b.id;
+            });
+        }
+
         function renderPosts() {
             const container = document.getElementById('posts-container');
             container.innerHTML = '';
@@ -395,7 +493,8 @@
                 return matchCat && matchSearch;
             });
 
-            const sortedPosts = [...filteredPosts].sort((a, b) => new Date(b.date) - new Date(a.date));
+            // 套用智慧排序引擎
+            const sortedPosts = sortPostsLogic(filteredPosts);
 
             if (sortedPosts.length === 0) {
                 container.innerHTML = `
@@ -464,24 +563,14 @@
 
             loadingIndicator.classList.add('hidden');
             
-            // 重要：清除控制字元，但不包含 \n
-            finalContent = sanitizeText(finalContent);
-
-            // ==========================================
-            // 核心功能：優化版內文精確斷行
-            // ==========================================
-            
-            // 1. 將 \r\n 統一轉換為 \n，處理不同系統的差異
             const normalizedContent = finalContent.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
 
-            // 2. 以雙換行符號 (\n\n) 切割出段落
             const formattedContent = normalizedContent
                 .split(/\n\s*\n/) 
                 .filter(paragraph => paragraph.trim() !== '')
                 .map(paragraph => {
-                    // 3. 在每個段落內部，將單一的 \n 替換為 HTML 的換行標籤 <br>
                     const pWithBr = paragraph.trim().replace(/\n/g, '<br>'); 
-                    return `<p class="mb-6 indent-8 text-stone-700 dark:text-stone-300 leading-loose tracking-wide font-serif text-base text-justify">${pWithBr}</p>`;
+                    return `<p class="mb-6 indent-8 text-stone-700 dark:text-stone-300 leading-loose tracking-wide font-serif ${currentFontSize} text-justify">${pWithBr}</p>`;
                 })
                 .join('');
 
@@ -533,17 +622,27 @@
             renderPostNavigation(post);
         }
 
+        // --- 根據排序規則更新的上下篇導航 ---
         function renderPostNavigation(currentPost) {
             const navContainer = document.getElementById('post-navigation');
             if (!navContainer) return;
             navContainer.innerHTML = '';
 
             const list = currentFilter === '全部' ? posts : posts.filter(p => p.category === currentFilter);
-            const sortedList = [...list].sort((a, b) => new Date(b.date) - new Date(a.date));
+            const sortedList = sortPostsLogic(list); // 使用同步的排序邏輯
             const currentIndex = sortedList.findIndex(p => String(p.id) === String(currentPost.id));
 
-            const nextPost = currentIndex > 0 ? sortedList[currentIndex - 1] : null; 
-            const prevPost = currentIndex < sortedList.length - 1 ? sortedList[currentIndex + 1] : null; 
+            let prevPost = null; // 較舊的篇章
+            let nextPost = null; // 較新的篇章
+
+            // 依據當前的排列方向，找出真正的上一篇與下一篇
+            if (sortOrder === 'desc') {
+                nextPost = currentIndex > 0 ? sortedList[currentIndex - 1] : null; 
+                prevPost = currentIndex < sortedList.length - 1 ? sortedList[currentIndex + 1] : null; 
+            } else {
+                prevPost = currentIndex > 0 ? sortedList[currentIndex - 1] : null; 
+                nextPost = currentIndex < sortedList.length - 1 ? sortedList[currentIndex + 1] : null; 
+            }
 
             let navHtml = '';
 
@@ -578,6 +677,7 @@
             navContainer.innerHTML = navHtml;
         }
 
+        // --- 密碼鎖定邏輯 ---
         function triggerSecretClick() {
             secretClickCount++;
             if (secretClickCount >= 5) {
@@ -593,10 +693,8 @@
             }
         });
 
-        // 核心密碼驗證邏輯
         function toggleSecretMode() {
             if (!isSecretUnlocked) {
-                // 尚未解鎖，請求輸入密碼
                 const pwd = window.prompt("請輸入站長專屬密碼以解鎖編輯權限：");
                 
                 if (pwd === "Justin951130") {
@@ -607,7 +705,6 @@
                     if (writeBtn) writeBtn.classList.remove('hidden');
                     if (adminExportSection) adminExportSection.classList.remove('hidden');
                     
-                    // 若當前在單篇文章頁面，同步顯示編輯/刪除按鈕
                     const deleteBtn = document.getElementById('admin-delete-btn');
                     const editBtn = document.getElementById('admin-edit-btn');
                     if (deleteBtn && currentView === 'post-detail') deleteBtn.classList.remove('hidden');
@@ -615,12 +712,11 @@
 
                     showToast("🔑 密碼正確！站長模式已完全解鎖。");
                     updateExportData();
-                } else if (pwd !== null) { // 如果按了取消則不提示，若亂打則提示錯誤
+                } else if (pwd !== null) { 
                     showToast("❌ 密碼錯誤，拒絕存取。");
                 }
                 
             } else {
-                // 已經解鎖的狀態下再次觸發，直接上鎖 (不需要再輸入密碼)
                 isSecretUnlocked = false;
                 
                 const writeBtn = document.getElementById('write-btn');
@@ -628,7 +724,6 @@
                 if (writeBtn) writeBtn.classList.add('hidden');
                 if (adminExportSection) adminExportSection.classList.add('hidden');
                 
-                // 隱藏單篇文章頁面的按鈕
                 const deleteBtn = document.getElementById('admin-delete-btn');
                 const editBtn = document.getElementById('admin-edit-btn');
                 if (deleteBtn) deleteBtn.classList.add('hidden');
@@ -636,7 +731,6 @@
 
                 showToast("🔒 站長模式已安全上鎖。");
                 
-                // 若當前在寫作介面，強制踢回首頁
                 if (currentView === 'write-post') {
                     navigateTo('home');
                 }
@@ -672,7 +766,7 @@
             document.getElementById('post-summary').value = post.summary;
             document.getElementById('post-content').value = content;
 
-            document.getElementById('write-view-title').textContent = "編輯";
+            document.getElementById('write-view-title').textContent = "編輯足跡";
             document.getElementById('submit-btn-text').textContent = "更新並產出新數據";
 
             navigateTo('write-post');
@@ -684,7 +778,7 @@
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('post-date').value = today;
 
-            document.getElementById('write-view-title').textContent = "新增";
+            document.getElementById('write-view-title').textContent = "新增足跡";
             document.getElementById('submit-btn-text').textContent = "保存並準備導出數據";
 
             navigateTo('home');
@@ -698,7 +792,6 @@
             const date = document.getElementById('post-date').value;
             const summary = sanitizeText(document.getElementById('post-summary').value);
             
-            // 注意：這裡取得的內容，我們在寫入 localStorage 前暫不清洗換行符號
             const content = document.getElementById('post-content').value; 
             const wordCount = content.replace(/\s/g, '').length;
 
@@ -722,7 +815,7 @@
             document.getElementById('write-form').reset();
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('post-date').value = today;
-            document.getElementById('write-view-title').textContent = "新增";
+            document.getElementById('write-view-title').textContent = "新增足跡";
             document.getElementById('submit-btn-text').textContent = "保存並準備導出數據";
 
             showToast("✨ 成功發布暫存！請在下方複製程式碼上傳 GitHub。");
@@ -751,7 +844,6 @@
                 wordCount: p.wordCount
             }));
 
-            // 確保匯出的 JSON 清除了所有控制字元，但不影響排版內容 (因為目錄不含 content)
             const cleanedDirectoryJson = JSON.stringify(directoryList, null, 2)
                 .replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
 
@@ -764,7 +856,6 @@
             if (newPostId && textContent) {
                 if (textContainer) textContainer.classList.remove('hidden');
                 if (recommendFilename) recommendFilename.textContent = `${newPostId}.txt`;
-                // 原封不動匯出純文字，保留原始換行節奏
                 if (articleTextArea) articleTextArea.value = textContent; 
             } else {
                 if (textContainer) textContainer.classList.add('hidden');
