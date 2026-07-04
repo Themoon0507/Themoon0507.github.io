@@ -37,10 +37,28 @@
         }
     </script>
     
+    <!-- 立即執行腳本：防止頁面加載時發生亮色閃爍 (FOUC) -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+    </script>
+    
     <style>
         body {
             font-family: 'Noto Serif TC', Georgia, serif;
-            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* 全局平滑深淺色轉換 (排除 SVG 濾鏡以優化性能) */
+        body, header, main, footer, article, h1, h2, h3, p, span, a, button, select, input, textarea {
+            transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                        color 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                        border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* 
@@ -93,13 +111,12 @@
         }
     </style>
 </head>
-<!-- 已修復：將 dark:bg-parchment-dark 與 dark:text-parchment-darkText 直接部署在 body 標籤上 -->
 <body class="bg-parchment-light text-parchment-text dark:bg-parchment-dark dark:text-parchment-darkText min-h-screen flex flex-col relative overflow-x-hidden selection:bg-amber-200 selection:text-amber-900">
 
     <!-- 紙張纖維浮層（覆蓋全螢幕） -->
     <div class="paper-overlay"></div>
 
-    <!-- 頂部輕量通知條 (代替原生 alert) -->
+    <!-- 頂部輕量通知條 (用於發布、刪除等行為，代替原生 alert) -->
     <div id="toast-notification" class="fixed top-0 left-0 w-full transform -translate-y-full transition-transform duration-300 ease-in-out z-50 bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark px-4 py-3 shadow-lg flex justify-between items-center text-sm font-sans">
         <span id="toast-message" class="mx-auto text-center font-medium">提示訊息</span>
         <button onclick="closeToast()" class="absolute right-4 hover:opacity-80"><i class="fa-solid fa-xmark"></i></button>
@@ -116,8 +133,8 @@
 
     <!-- 頂部優雅導覽列 -->
     <header class="w-full max-w-4xl mx-auto px-6 pt-8 md:pt-12 flex justify-between items-center z-10">
-        <!-- 左上角大標題（站長暗號觸發點） -->
-        <div class="flex flex-col cursor-pointer select-none group" onclick="triggerSecretClick()">
+        <!-- 左上角大標題（站長暗號觸發點：點擊 5 次秘密解鎖/上鎖） -->
+        <div class="flex flex-col cursor-pointer select-none group" onclick="triggerSecretClick()" title="站長通道">
             <h1 class="text-2xl md:text-3xl font-bold font-serif tracking-widest text-accent dark:text-accent-dark transition-colors duration-300 relative">
                 《無盡的遠征》
                 <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent dark:bg-accent-dark transition-all duration-500 group-hover:w-full"></span>
@@ -127,12 +144,12 @@
 
         <!-- 右上角工具列 -->
         <div class="flex items-center gap-4 md:gap-6 font-sans">
-            <!-- 寫作按鈕 (預設完全隱藏，點擊標題5次解鎖) -->
+            <!-- 寫作按鈕 (預設完全隱藏，點擊標題5次或 Ctrl+Shift+E 解鎖) -->
             <button id="write-btn" onclick="navigateTo('write-post')" class="hidden bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark text-xs font-medium tracking-wider px-3.5 py-1.5 rounded-full hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5">
                 <i class="fa-solid fa-feather-pointed mr-1.5"></i>撰寫文章
             </button>
             
-            <!-- 深淺色切換 (已修復點擊切換無反應的問題) -->
+            <!-- 深淺色切換 (修復切換延遲與圖示不同步問題) -->
             <button onclick="toggleDarkMode()" class="text-stone-600 dark:text-stone-300 hover:text-accent dark:hover:text-accent-dark transition-colors text-lg" title="切換主題">
                 <i id="theme-icon" class="fa-solid fa-moon"></i>
             </button>
@@ -254,11 +271,36 @@
     </footer>
 
     <script>
-        // 徹底刪除所有預設文章範例，初始狀態為完全空白
-        const DEFAULT_POSTS = [];
+        // 預設文章範本 (在寫作介面中添加的文章將動態加進首頁)
+        const DEFAULT_POSTS = [
+            {
+                id: 1,
+                title: "重返泥地跑道：大震撼的血統與未完的遠征",
+                category: "賽馬故事",
+                date: "2026-07-04",
+                summary: "在綠草如茵的草地上奔馳，是許多名馬終其一生的歸宿。然而當大震撼的後代踏上那片充滿未知的厚重沙地跑道，這不僅是一場環境的轉變，更是血統意志的終極擴張。",
+                content: "當微風拂過中山競馬場的草地，人們總會想起那道近乎飛翔的深色身影。\n大震撼（Deep Impact），這個名字在日本賽馬史上代表著絕對的優雅與奇蹟。他的步伐輕盈如詩，在最後直線拔群而出的姿態，讓無數馬迷為之瘋狂。然而，血統的延續從不侷限於舒適的草綠地毯，當大震撼的嫡系子嗣們被迫或主動踏上嚴苛、厚重且無情的泥地（Dirt）跑道時，命運的齒輪便展開了全新的旋轉。\n泥地賽事與草地截然不同，它不需要輕飄的飛翔，而是需要宛如推土機般的絕對力量與強韌的心肺。每一蹄踩下，都是漫天飛揚的泥沙，拍打在馬兒的面罩上。大震撼那以柔克剛、如羽毛般優雅的基因，在沙地上真的能找到立足之地嗎？\n這就是這場無盡遠征的魅力所在。我們看著他的後代在泥沙中掙扎，起步時落後，在第三彎道奮力推進，那種毫無保留的泥沙洗禮，更像是靈魂深處的鍛鍊。也許，這不僅是爭奪冠冕，更是血統向未知的遠征，證明意志終能超越環境的限制。"
+            },
+            {
+                id: 2,
+                title: "【無聲鈴鹿同人】風的終點，不曾止息",
+                category: "同人文",
+                date: "2026-06-28",
+                summary: "如果在那天秋季的天皇賞上，風沒有停下脚步，那一抹沉默而寂靜的栗毛，會將世界的地平線延伸到多麼遙遠的彼方？",
+                content: "賽道上寂靜無聲，唯有風。 \n無聲鈴鹿（Silence Suzuka）最喜歡的，就是奔跑在所有人的前方，去感受那毫無雜質、不曾被任何人攪碎的純粹之風。\n「只要走在最前方，就不會聽到背後的蹄音。」他曾這樣對自己說。他的奔跑不需要戰術，不依賴留後，只是一股腦地向前傾瀉，將所有對手遠遠甩在身後，直到連地平線也為之顫抖。\n那是1998年，深秋的東京競馬場。十一月的風帶著一絲涼意，拂過他耀眼的栗色毛髮。起跑閘門打開的瞬間，他一如既往地化作了一道孤獨的電光，將世界拋在身後。一個馬身、三個馬身、十個馬身……看台上的歡呼聲化作雷鳴，所有人都相信，這將是又一場無可動搖的傳奇。\n然而，第四彎道。風，突兀地停了。\n他的左前腿無法承受那過於耀眼的速度，發出了骨折的悲鳴。在生命的極限邊緣，無聲鈴鹿沒有倒下，他忍著劇痛，用僅存的三條腿蹣跚地靠向賽道外側，用身體護住了背後的騎師武豐。\n如果，只是如果——在那一瞬間，那陣風不曾止息，無聲鈴鹿越過了終點，衝向了全世界，那麼今天，在世界的邊際，是否依然能看到那一抹奔向無限的栗毛身影？風不曾止息，因為他的身影已經永遠烙印在每個追風者的心中。"
+            },
+            {
+                id: 3,
+                title: "深夜手札：馬蹄聲、地球轉動與我的文字遠征",
+                category: "隨筆",
+                date: "2026-06-15",
+                summary: "讀著伊坂幸太郎的文字，看著深夜書桌前的燭光，我忽然意識到，自己在稿紙上沙沙作響的鋼筆尖，與那些在賽道上奮力奔馳的馬蹄並無二致。",
+                content: "深夜兩點，窗外細雨綿綿。\n書桌上的檯燈散發著溫潤的黃光，映照著這張帶有粗糙紋理的羊皮紙。我手裡握著筆，聽著筆尖在紙張纖維上發出的沙沙聲，那種不規則卻極有節奏的摩擦音，突然讓我想起了遠方賽道上馬蹄拍擊泥土的聲音。\n馬匹在賽道上奔馳時，隆隆的震動會一直傳到看台。伊坂幸太郎說，那七匹奮力向前衝刺的食草動物，牠們有節奏舞動的馬蹄，肯定帶動了地球的旋轉。\n那我呢？此時此刻，在這個小小的房間裡，我用文字所進行的這場無聲遠征，是否也稍微推動了某個讀者心中地球的旋轉？\n寫作是一場極其孤獨的賽事。你沒有對手，甚至在大部分時間裡，你看不到終點。你只是看著前方的空白，一字一句地將思想如同馬蹄般踏上去，留下一排排或深或淺的墨跡。這也是一場《無盡的遠征》，不求征服世界，只求在深夜裡，與同樣孤獨的靈魂產生一次溫暖的共震。"
+            }
+        ];
 
-        // 已修復：更新快取 Key 名稱為 v3，強制繞過你瀏覽器中之前殘留的測試快取數據，確保初始呈現完全空白
-        const CACHE_KEY = 'infinite_expedition_posts_v3';
+        // 快取 Key (採用 v4 確保徹底覆蓋舊數據並載入範本)
+        const CACHE_KEY = 'infinite_expedition_posts_v4';
 
         // 從 localStorage 載入文章
         let posts = JSON.parse(localStorage.getItem(CACHE_KEY));
@@ -276,27 +318,29 @@
 
         // 當頁面載入完成後執行
         window.onload = function() {
-            // 初始化深色模式設定
-            if (localStorage.getItem('theme') === 'dark' || 
-                (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-                document.getElementById('theme-icon').className = 'fa-solid fa-sun';
-            } else {
-                document.documentElement.classList.remove('dark');
-                document.getElementById('theme-icon').className = 'fa-solid fa-moon';
+            // 初始化深淺色按鈕圖示與狀態 (確保不與 header html 渲染發生衝突)
+            const themeIcon = document.getElementById('theme-icon');
+            if (themeIcon) {
+                if (document.documentElement.classList.contains('dark')) {
+                    themeIcon.className = 'fa-solid fa-sun';
+                } else {
+                    themeIcon.className = 'fa-solid fa-moon';
+                }
             }
 
             // 初始化寫作日期為今天
             const today = new Date().toISOString().split('T')[0];
-            document.getElementById('post-date').value = today;
+            const dateInput = document.getElementById('post-date');
+            if (dateInput) dateInput.value = today;
 
             // 渲染列表
             renderPosts();
         }
 
-        // 渲染文章清單 (首頁 - 無任何提示，完全空白起跑)
+        // 渲染文章清單 (首頁)
         function renderPosts() {
             const container = document.getElementById('posts-container');
+            if (!container) return;
             container.innerHTML = '';
 
             // 依據分類過濾
@@ -359,20 +403,18 @@
             }
         });
 
-        // 切換站長寫作權限模式
+        // 切換站長寫作權限模式 (已刪除繁瑣彈窗/Toast提示，實現無干擾背景啟動)
         function toggleSecretMode() {
             isSecretUnlocked = !isSecretUnlocked;
             const writeBtn = document.getElementById('write-btn');
             const adminDeleteBtn = document.getElementById('admin-delete-btn');
 
             if (isSecretUnlocked) {
-                writeBtn.classList.remove('hidden');
-                adminDeleteBtn.classList.remove('hidden');
-                showToast("🔑 站長身份認證成功！隱藏的寫作控制台已解鎖。");
+                if (writeBtn) writeBtn.classList.remove('hidden');
+                if (adminDeleteBtn) adminDeleteBtn.classList.remove('hidden');
             } else {
-                writeBtn.classList.add('hidden');
-                adminDeleteBtn.classList.add('hidden');
-                showToast("🔒 寫作面板已安全上鎖。");
+                if (writeBtn) writeBtn.classList.add('hidden');
+                if (adminDeleteBtn) adminDeleteBtn.classList.add('hidden');
                 // 如果目前在寫作介面，則強制導回首頁
                 if (currentView === 'write-post') {
                     navigateTo('home');
@@ -390,7 +432,7 @@
 
             // 隱藏所有視圖
             Object.values(views).forEach(v => {
-                v.classList.add('view-hidden');
+                if (v) v.classList.add('view-hidden');
             });
 
             // 顯示指定視圖並平滑淡入
@@ -399,7 +441,7 @@
             if (viewId === 'post-detail') activeView = views['single-post'];
             if (viewId === 'write-post') activeView = views['write-post'];
 
-            activeView.classList.remove('view-hidden');
+            if (activeView) activeView.classList.remove('view-hidden');
             currentView = viewId;
 
             // 滾動回頂端
@@ -429,6 +471,7 @@
             if (!post) return;
 
             const contentArea = document.getElementById('single-post-content');
+            if (!contentArea) return;
             
             // 將內容中所有的換行符替換成 HTML 段落，維持中式古典大段落排版
             const formattedContent = post.content
@@ -451,19 +494,21 @@
 
             // 設定刪除按鈕邏輯
             const deleteBtn = document.getElementById('admin-delete-btn');
-            if (isSecretUnlocked) {
-                deleteBtn.classList.remove('hidden');
-                deleteBtn.onclick = function() {
-                    triggerConfirm("您確定要刪除這篇珍貴的遠征紀錄嗎？", function() {
-                        posts = posts.filter(p => p.id !== id);
-                        localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
-                        showToast("🗑️ 文章已成功移出本地手札。");
-                        renderPosts();
-                        navigateTo('home');
-                    });
-                };
-            } else {
-                deleteBtn.classList.add('hidden');
+            if (deleteBtn) {
+                if (isSecretUnlocked) {
+                    deleteBtn.classList.remove('hidden');
+                    deleteBtn.onclick = function() {
+                        triggerConfirm("您確定要刪除這篇珍貴的遠征紀錄嗎？", function() {
+                            posts = posts.filter(p => p.id !== id);
+                            localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
+                            showToast("🗑️ 文章已成功移出本地手札。");
+                            renderPosts();
+                            navigateTo('home');
+                        });
+                    };
+                } else {
+                    deleteBtn.classList.add('hidden');
+                }
             }
 
             // 下一章智慧導航渲染 (只查找同分類文章)
@@ -475,6 +520,7 @@
         // 智慧下一章按鈕渲染
         function renderNextChapterNav(currentPost) {
             const nextContainer = document.getElementById('next-chapter-container');
+            if (!nextContainer) return;
             nextContainer.innerHTML = '';
 
             // 尋找同分類的所有文章並按時間排序（最新發表優先）
@@ -526,23 +572,24 @@
             // 重設表單
             document.getElementById('write-form').reset();
             const today = new Date().toISOString().split('T')[0];
-            document.getElementById('post-date').value = today;
+            const dateInput = document.getElementById('post-date');
+            if (dateInput) dateInput.value = today;
 
             showToast("✨ 成功發布新足跡！內容已安全保存於瀏覽器中。");
             renderPosts();
             navigateTo('home');
         }
 
-        // 切換深色/淺色模式 (已補上與 body 標籤同步更換背景的功能)
+        // 切換深色/淺色模式 (完全修復延遲切換與非同步渲染的問題)
         function toggleDarkMode() {
             const isDark = document.documentElement.classList.toggle('dark');
             const themeIcon = document.getElementById('theme-icon');
             
             if (isDark) {
-                themeIcon.className = 'fa-solid fa-sun';
+                if (themeIcon) themeIcon.className = 'fa-solid fa-sun';
                 localStorage.setItem('theme', 'dark');
             } else {
-                themeIcon.className = 'fa-solid fa-moon';
+                if (themeIcon) themeIcon.className = 'fa-solid fa-moon';
                 localStorage.setItem('theme', 'light');
             }
         }
@@ -551,8 +598,8 @@
         function showToast(message) {
             const toast = document.getElementById('toast-notification');
             const msgSpan = document.getElementById('toast-message');
-            msgSpan.textContent = message;
-            toast.classList.remove('-translate-y-full');
+            if (msgSpan) msgSpan.textContent = message;
+            if (toast) toast.classList.remove('-translate-y-full');
 
             // 5秒後自動關閉
             setTimeout(closeToast, 5000);
@@ -560,15 +607,15 @@
 
         function closeToast() {
             const toast = document.getElementById('toast-notification');
-            toast.classList.add('-translate-y-full');
+            if (toast) toast.classList.add('-translate-y-full');
         }
 
         // 自訂高質感確認動作條
         function triggerConfirm(message, onConfirm) {
             const confirmBar = document.getElementById('confirm-bar');
             const messageSpan = document.getElementById('confirm-message');
-            messageSpan.textContent = message;
-            confirmBar.classList.remove('-translate-y-full');
+            if (messageSpan) messageSpan.textContent = message;
+            if (confirmBar) confirmBar.classList.remove('-translate-y-full');
 
             activeConfirmCallback = onConfirm;
 
@@ -584,7 +631,7 @@
 
         function closeConfirm() {
             const confirmBar = document.getElementById('confirm-bar');
-            confirmBar.classList.add('-translate-y-full');
+            if (confirmBar) confirmBar.classList.add('-translate-y-full');
             activeConfirmCallback = null;
         }
     </script>
