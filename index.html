@@ -93,7 +93,8 @@
         }
     </style>
 </head>
-<body class="bg-parchment-light text-parchment-text min-h-screen flex flex-col relative overflow-x-hidden selection:bg-amber-200 selection:text-amber-900">
+<!-- 已修復：將 dark:bg-parchment-dark 與 dark:text-parchment-darkText 直接部署在 body 標籤上 -->
+<body class="bg-parchment-light text-parchment-text dark:bg-parchment-dark dark:text-parchment-darkText min-h-screen flex flex-col relative overflow-x-hidden selection:bg-amber-200 selection:text-amber-900">
 
     <!-- 紙張纖維浮層（覆蓋全螢幕） -->
     <div class="paper-overlay"></div>
@@ -126,12 +127,12 @@
 
         <!-- 右上角工具列 -->
         <div class="flex items-center gap-4 md:gap-6 font-sans">
-            <!-- 寫作按鈕 (預設完全隱藏) -->
+            <!-- 寫作按鈕 (預設完全隱藏，點擊標題5次解鎖) -->
             <button id="write-btn" onclick="navigateTo('write-post')" class="hidden bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark text-xs font-medium tracking-wider px-3.5 py-1.5 rounded-full hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5">
                 <i class="fa-solid fa-feather-pointed mr-1.5"></i>撰寫文章
             </button>
             
-            <!-- 深淺色切換 -->
+            <!-- 深淺色切換 (已修復點擊切換無反應的問題) -->
             <button onclick="toggleDarkMode()" class="text-stone-600 dark:text-stone-300 hover:text-accent dark:hover:text-accent-dark transition-colors text-lg" title="切換主題">
                 <i id="theme-icon" class="fa-solid fa-moon"></i>
             </button>
@@ -247,20 +248,23 @@
 
     </main>
 
-    <!-- 頁尾 (最極簡，無任何重置、清除與站長提示按鈕) -->
+    <!-- 頁尾 (極簡乾淨古典版權宣告，無任何重設按鈕) -->
     <footer class="w-full max-w-4xl mx-auto px-6 py-12 mt-12 border-t border-stone-200/60 dark:border-stone-800/60 text-center font-sans text-xs text-stone-400 dark:text-stone-600 z-10">
         <p class="tracking-widest">© 2026 《無盡的遠征》. All Rights Reserved.</p>
     </footer>
 
     <script>
-        // 初始化空白文章資料庫：徹底刪除所有預設文章範例
+        // 徹底刪除所有預設文章範例，初始狀態為完全空白
         const DEFAULT_POSTS = [];
 
+        // 已修復：更新快取 Key 名稱為 v3，強制繞過你瀏覽器中之前殘留的測試快取數據，確保初始呈現完全空白
+        const CACHE_KEY = 'infinite_expedition_posts_v3';
+
         // 從 localStorage 載入文章
-        let posts = JSON.parse(localStorage.getItem('infinite_expedition_posts'));
+        let posts = JSON.parse(localStorage.getItem(CACHE_KEY));
         if (!posts) {
             posts = [...DEFAULT_POSTS];
-            localStorage.setItem('infinite_expedition_posts', JSON.stringify(posts));
+            localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
         }
 
         // 系統變數
@@ -290,7 +294,7 @@
             renderPosts();
         }
 
-        // 渲染文章清單 (首頁 - 已安全刪除站長提示字眼)
+        // 渲染文章清單 (首頁 - 無任何提示，完全空白起跑)
         function renderPosts() {
             const container = document.getElementById('posts-container');
             container.innerHTML = '';
@@ -452,7 +456,7 @@
                 deleteBtn.onclick = function() {
                     triggerConfirm("您確定要刪除這篇珍貴的遠征紀錄嗎？", function() {
                         posts = posts.filter(p => p.id !== id);
-                        localStorage.setItem('infinite_expedition_posts', JSON.stringify(posts));
+                        localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
                         showToast("🗑️ 文章已成功移出本地手札。");
                         renderPosts();
                         navigateTo('home');
@@ -517,7 +521,7 @@
             };
 
             posts.unshift(newPost); // 添加到陣列最前面
-            localStorage.setItem('infinite_expedition_posts', JSON.stringify(posts));
+            localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
 
             // 重設表單
             document.getElementById('write-form').reset();
@@ -529,7 +533,7 @@
             navigateTo('home');
         }
 
-        // 切換深色/淺色模式
+        // 切換深色/淺色模式 (已補上與 body 標籤同步更換背景的功能)
         function toggleDarkMode() {
             const isDark = document.documentElement.classList.toggle('dark');
             const themeIcon = document.getElementById('theme-icon');
