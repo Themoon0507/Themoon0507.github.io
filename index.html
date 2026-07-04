@@ -268,16 +268,20 @@
     </footer>
 
     <script>
-        const CACHE_KEY = 'infinite_expedition_posts_clean_v16';
+        const CACHE_KEY = 'infinite_expedition_posts_clean_v18';
 
+        // 核心：過濾控制字元，但 *必須* 保留換行符號 (\n) 與回車符號 (\r)
+        // \u000a 是 \n (保留)
+        // \u000d 是 \r (保留)
         function sanitizeText(text) {
             if (typeof text !== 'string') return '';
-            return text.replace(/[\u0000-\u001F\u007F-\u009F]/g, "").trim();
+            // 正則解釋：移除 \u0000 到 \u001F，除了 \n(0x0A) 和 \r(0x0D)
+            return text.replace(/[\u0000-\u0009\u000B\u000C\u000E-\u001F\u007F-\u009F]/g, "").trim();
         }
 
         function parseCleanJson(rawString) {
             try {
-                const cleaned = rawString.replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
+                const cleaned = rawString.replace(/[\u0000-\u0009\u000B\u000C\u000E-\u001F\u007F-\u009F]/g, "");
                 return JSON.parse(cleaned);
             } catch (e) {
                 console.error("JSON 解析失敗：", e);
@@ -459,12 +463,23 @@
             }
 
             loadingIndicator.classList.add('hidden');
+            
+            // 重要：清除控制字元，但不包含 \n
             finalContent = sanitizeText(finalContent);
 
-            const formattedContent = finalContent
+            // ==========================================
+            // 核心功能：優化版內文精確斷行
+            // ==========================================
+            
+            // 1. 將 \r\n 統一轉換為 \n，處理不同系統的差異
+            const normalizedContent = finalContent.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+
+            // 2. 以雙換行符號 (\n\n) 切割出段落
+            const formattedContent = normalizedContent
                 .split(/\n\s*\n/) 
                 .filter(paragraph => paragraph.trim() !== '')
                 .map(paragraph => {
+                    // 3. 在每個段落內部，將單一的 \n 替換為 HTML 的換行標籤 <br>
                     const pWithBr = paragraph.trim().replace(/\n/g, '<br>'); 
                     return `<p class="mb-6 indent-8 text-stone-700 dark:text-stone-300 leading-loose tracking-wide font-serif text-base text-justify">${pWithBr}</p>`;
                 })
@@ -682,7 +697,9 @@
             const category = document.getElementById('post-category').value;
             const date = document.getElementById('post-date').value;
             const summary = sanitizeText(document.getElementById('post-summary').value);
-            const content = sanitizeText(document.getElementById('post-content').value);
+            
+            // 注意：這裡取得的內容，我們在寫入 localStorage 前暫不清洗換行符號
+            const content = document.getElementById('post-content').value; 
             const wordCount = content.replace(/\s/g, '').length;
 
             let targetId = editingPostId;
@@ -734,6 +751,7 @@
                 wordCount: p.wordCount
             }));
 
+            // 確保匯出的 JSON 清除了所有控制字元，但不影響排版內容 (因為目錄不含 content)
             const cleanedDirectoryJson = JSON.stringify(directoryList, null, 2)
                 .replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
 
@@ -746,7 +764,8 @@
             if (newPostId && textContent) {
                 if (textContainer) textContainer.classList.remove('hidden');
                 if (recommendFilename) recommendFilename.textContent = `${newPostId}.txt`;
-                if (articleTextArea) articleTextArea.value = sanitizeText(textContent);
+                // 原封不動匯出純文字，保留原始換行節奏
+                if (articleTextArea) articleTextArea.value = textContent; 
             } else {
                 if (textContainer) textContainer.classList.add('hidden');
             }
