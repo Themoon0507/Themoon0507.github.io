@@ -98,13 +98,13 @@
     <!-- 紙張纖維浮層（覆蓋全螢幕） -->
     <div class="paper-overlay"></div>
 
-    <!-- 頂部輕量通知條 (代替原生 alert/confirm) -->
+    <!-- 頂部輕量通知條 (代替原生 alert) -->
     <div id="toast-notification" class="fixed top-0 left-0 w-full transform -translate-y-full transition-transform duration-300 ease-in-out z-50 bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark px-4 py-3 shadow-lg flex justify-between items-center text-sm font-sans">
         <span id="toast-message" class="mx-auto text-center font-medium">提示訊息</span>
         <button onclick="closeToast()" class="absolute right-4 hover:opacity-80"><i class="fa-solid fa-xmark"></i></button>
     </div>
 
-    <!-- 頂部自訂確認操作條 -->
+    <!-- 頂部自訂確認操作條 (代替原生 confirm) -->
     <div id="confirm-bar" class="fixed top-0 left-0 w-full transform -translate-y-full transition-transform duration-300 ease-in-out z-50 bg-stone-800 text-stone-100 px-4 py-4 shadow-lg flex flex-col sm:flex-row justify-center items-center gap-4 text-sm font-sans">
         <span id="confirm-message" class="text-center font-medium">您確定要執行此操作嗎？</span>
         <div class="flex gap-2">
@@ -247,7 +247,7 @@
 
     </main>
 
-    <!-- 頁尾 (最極簡，無任何重置與清除按鈕) -->
+    <!-- 頁尾 (最極簡，無任何重置、清除與站長提示按鈕) -->
     <footer class="w-full max-w-4xl mx-auto px-6 py-12 mt-12 border-t border-stone-200/60 dark:border-stone-800/60 text-center font-sans text-xs text-stone-400 dark:text-stone-600 z-10">
         <p class="tracking-widest">© 2026 《無盡的遠征》. All Rights Reserved.</p>
     </footer>
@@ -290,7 +290,7 @@
             renderPosts();
         }
 
-        // 渲染文章清單 (首頁)
+        // 渲染文章清單 (首頁 - 已安全刪除站長提示字眼)
         function renderPosts() {
             const container = document.getElementById('posts-container');
             container.innerHTML = '';
@@ -309,9 +309,6 @@
                         <i class="fa-solid fa-compass text-stone-300 dark:text-stone-700 text-4xl mb-4"></i>
                         <p class="text-stone-400 dark:text-stone-600 tracking-wider">
                             無盡的道路上，正等待著你踏出第一步...
-                        </p>
-                        <p class="text-xs text-stone-400/60 dark:text-stone-600/60 mt-2 font-sans">
-                            ( 站長提示：連點左上角標題 5 次即可開啟新篇章撰寫 )
                         </p>
                     </div>
                 `;
