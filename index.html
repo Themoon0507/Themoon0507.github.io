@@ -107,24 +107,18 @@
     <!-- 頂部導覽列 -->
     <header class="sticky top-0 z-40 backdrop-blur-md bg-parchment-light/80 dark:bg-parchment-dark/80 border-b border-stone-300/40 dark:border-stone-800/40 transition-colors">
         <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-            <!-- 網站 Logo / 標題 -->
-            <a href="#" onclick="showView('home'); filterCategory('all');" class="flex items-center space-x-2 group">
+            <!-- 網站 Logo / 標題 (綁定站長連續點擊事件) -->
+            <a href="#" onclick="handleLogoClick(event);" class="flex items-center space-x-2 group">
                 <i class="fa-solid fa-compass text-accent dark:text-accent-dark transition-transform group-hover:rotate-45 duration-500"></i>
                 <span class="font-serif font-bold text-xl tracking-wider text-stone-800 dark:text-stone-100">無盡的遠征</span>
             </a>
 
             <!-- 工具選單 -->
             <div class="flex items-center space-x-4">
-                <!-- 寫作按鈕 -->
-                <button onclick="showView('write')" class="text-sm px-4 py-1.5 rounded-full border border-stone-400/60 hover:border-accent dark:border-stone-700 dark:hover:border-accent-dark hover:text-accent dark:hover:text-accent-dark transition-all duration-300 flex items-center space-x-1.5">
+                <!-- 寫作按鈕 (預設隱藏 hidden，僅限暗號觸發解鎖) -->
+                <button id="write-btn" onclick="showView('write')" class="hidden text-sm px-4 py-1.5 rounded-full border border-stone-400/60 hover:border-accent dark:border-stone-700 dark:hover:border-accent-dark hover:text-accent dark:hover:text-accent-dark transition-all duration-300 flex items-center space-x-1.5">
                     <i class="fa-solid fa-feather-pointed"></i>
                     <span class="font-sans">寫作</span>
-                </button>
-                
-                <!-- 部署引導按鈕 -->
-                <button onclick="showView('guide')" class="text-sm px-4 py-1.5 rounded-full bg-accent hover:bg-accent/90 text-stone-100 dark:bg-accent-dark dark:hover:bg-accent-dark/90 dark:text-stone-900 font-sans transition-all duration-300 shadow-sm flex items-center space-x-1">
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                    <span>部署上線</span>
                 </button>
 
                 <!-- 深淺色切換 -->
@@ -412,6 +406,57 @@
         // --- 狀態管理 ---
         let posts = [];
         let currentFilter = 'all';
+
+        // --- 站長暗號解鎖邏輯 ---
+        let logoClickCount = 0;
+        let logoClickTimeout;
+
+        function handleLogoClick(event) {
+            if (event) event.preventDefault();
+            
+            // 先執行預設的返回首頁與重設分類
+            showView('home');
+            filterCategory('all');
+
+            // 站長連續點擊計數
+            logoClickCount++;
+            clearTimeout(logoClickTimeout);
+            
+            if (logoClickCount === 5) {
+                toggleWriteButton();
+                logoClickCount = 0;
+            } else {
+                logoClickTimeout = setTimeout(() => {
+                    logoClickCount = 0;
+                }, 2000); // 必須在 2 秒內連續點擊完畢
+            }
+        }
+
+        // 監聽鍵盤快捷鍵 Ctrl + Shift + E
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.shiftKey && event.code === 'KeyE') {
+                event.preventDefault();
+                toggleWriteButton();
+            }
+        });
+
+        // 開關寫作按鈕顯示狀態
+        function toggleWriteButton() {
+            const writeBtn = document.getElementById('write-btn');
+            if (writeBtn.classList.contains('hidden')) {
+                writeBtn.classList.remove('hidden');
+                showToast('🔑 站長寫作模式已解鎖！');
+            } else {
+                writeBtn.classList.add('hidden');
+                showToast('🔒 站長寫作模式已隱藏。');
+                
+                // 安全防護：若當前剛好在寫作畫面，被隱藏時立刻退回首頁
+                const writeView = document.getElementById('view-write');
+                if (writeView.classList.contains('view-visible')) {
+                    showView('home');
+                }
+            }
+        }
 
         // --- 初始化網頁 ---
         window.onload = function() {
