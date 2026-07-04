@@ -128,7 +128,7 @@
 
         <!-- 右上角工具列 -->
         <div class="flex items-center gap-4 md:gap-6 font-sans">
-            <!-- 寫作按鈕 (預設完全隱藏，點擊標題5次解鎖) -->
+            <!-- 寫作按鈕 (預設完全隱藏，點擊標題5次或Ctrl+Shift+E解鎖) -->
             <button id="write-btn" onclick="navigateTo('write-post')" class="hidden bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark text-xs font-medium tracking-wider px-3.5 py-1.5 rounded-full hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5">
                 <i class="fa-solid fa-feather-pointed mr-1.5"></i>撰寫文章
             </button>
@@ -165,6 +165,16 @@
             <!-- 文章列表區域 -->
             <div id="posts-container" class="space-y-16">
                 <!-- 動態注入文章列表 -->
+            </div>
+
+            <!-- 站長專屬備份匯出工具（僅解鎖時可見） -->
+            <div id="admin-export-section" class="hidden mt-20 p-6 border-2 border-dashed border-stone-300 dark:border-stone-700 rounded-lg font-sans text-xs">
+                <h4 class="font-bold text-accent dark:text-accent-dark tracking-wider mb-2 uppercase">👑 站長專屬：導出文章數據至 GitHub</h4>
+                <p class="text-stone-500 dark:text-stone-400 mb-4 leading-relaxed">請將下方文字框內產生的全部文字複製，並回到 GitHub 編輯 `index.html` 檔案，貼上到最上方的 `const DEFAULT_POSTS = [];` 的中括號中，即可使所有人都能看見最新內容！</p>
+                <textarea id="admin-export-area" readonly class="w-full bg-stone-100 dark:bg-stone-900 p-3 rounded font-mono text-stone-600 dark:text-stone-300 border border-stone-200 dark:border-stone-800 focus:outline-none resize-none" rows="4"></textarea>
+                <div class="flex justify-end mt-2">
+                    <button onclick="copyAdminExportData()" class="bg-stone-800 hover:bg-stone-700 text-stone-200 px-4 py-1.5 rounded transition-colors">一鍵複製數據</button>
+                </div>
             </div>
         </section>
 
@@ -254,17 +264,17 @@
 
     </main>
 
-    <!-- 頁尾 (極簡乾淨古典版權宣告) -->
+    <!-- 頁尾 -->
     <footer class="w-full max-w-4xl mx-auto px-6 py-12 mt-12 border-t border-stone-200/60 dark:border-stone-800/60 text-center font-sans text-xs text-stone-400 dark:text-stone-600 z-10">
         <p class="tracking-widest">© 2026 《無盡的遠征》. All Rights Reserved.</p>
     </footer>
 
     <script>
-        // 徹底刪除所有預設文章範例，初始狀態為完全空白
+        // 站長在發布至 GitHub Pages 時，可以將導出的 JSON 置於此陣列中
         const DEFAULT_POSTS = [];
 
-        // 更新快取 Key 名稱為 v6，強制繞過瀏覽器中殘留的舊測試數據
-        const CACHE_KEY = 'infinite_expedition_posts_v6';
+        // 使用 v7 金鑰，強制排空瀏覽器快取殘留文章，保證初始狀態完全空白
+        const CACHE_KEY = 'infinite_expedition_posts_v7';
 
         // 從 localStorage 載入文章
         let posts = JSON.parse(localStorage.getItem(CACHE_KEY));
@@ -297,6 +307,7 @@
 
             // 渲染列表
             renderPosts();
+            updateExportData();
         }
 
         // 渲染文章清單
@@ -364,21 +375,25 @@
             }
         });
 
-        // 切換站長寫作權限模式 (完全安靜解鎖)
+        // 切換站長寫作權限模式 (完全安靜解鎖，不留提示)
         function toggleSecretMode() {
             isSecretUnlocked = !isSecretUnlocked;
             const writeBtn = document.getElementById('write-btn');
             const adminDeleteBtn = document.getElementById('admin-delete-btn');
             const adminEditBtn = document.getElementById('admin-edit-btn');
+            const adminExportSection = document.getElementById('admin-export-section');
 
             if (isSecretUnlocked) {
                 if (writeBtn) writeBtn.classList.remove('hidden');
                 if (adminDeleteBtn) adminDeleteBtn.classList.remove('hidden');
                 if (adminEditBtn) adminEditBtn.classList.remove('hidden');
+                if (adminExportSection) adminExportSection.classList.remove('hidden');
+                updateExportData();
             } else {
                 if (writeBtn) writeBtn.classList.add('hidden');
                 if (adminDeleteBtn) adminDeleteBtn.classList.add('hidden');
                 if (adminEditBtn) adminEditBtn.classList.add('hidden');
+                if (adminExportSection) adminExportSection.classList.add('hidden');
                 // 如果目前在寫作介面，則強制導回首頁
                 if (currentView === 'write-post') {
                     navigateTo('home');
@@ -467,6 +482,7 @@
                             posts = posts.filter(p => p.id !== id);
                             localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
                             renderPosts();
+                            updateExportData();
                             navigateTo('home');
                         });
                     };
@@ -600,7 +616,25 @@
             document.getElementById('submit-btn-text').textContent = "保存此篇至瀏覽器";
 
             renderPosts();
+            updateExportData();
             navigateTo('home');
+        }
+
+        // 更新導出文字區塊的內容
+        function updateExportData() {
+            const exportArea = document.getElementById('admin-export-area');
+            if (exportArea) {
+                exportArea.value = JSON.stringify(posts);
+            }
+        }
+
+        // 複製站長備份數據
+        function copyAdminExportData() {
+            const exportArea = document.getElementById('admin-export-area');
+            if (exportArea) {
+                exportArea.select();
+                document.execCommand('copy');
+            }
         }
 
         // 切換深色/淺色模式
