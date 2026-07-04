@@ -22,10 +22,10 @@
                     },
                     colors: {
                         parchment: {
-                            light: '#f4efe6', // 經典溫潤羊皮紙底色
-                            text: '#2b251f',  // 暖碳黑色，減少純黑的生硬感
-                            dark: '#1a1613',  // 深色模式：深夜暖墨黑
-                            darkText: '#e5ded4' // 深色模式：暖白羊皮紙字體
+                            light: '#f5ecd8',  // 優雅的復古暖黃羊皮紙底色
+                            text: '#2b241a',   // 古典暖墨黑，減少純黑的生硬感
+                            dark: '#1a1612',   // 深色模式：深夜暖墨黑
+                            darkText: '#e3dac9' // 深色模式：暖白羊皮紙字體
                         },
                         accent: {
                             DEFAULT: '#8c2d19', // 古典赭紅
@@ -45,8 +45,8 @@
 
         /* 
            SVG 粗糙手造紙張纖維濾鏡 
-           透過低 baseFrequency (0.006) 產生大面積的纖維起伏與斑駁感，
-           呈現出類似實體厚磅水彩紙的凹凸起伏，避免了細沙狀的灰塵感。
+           透過低 baseFrequency (0.005) 產生大面積的不規則紙張起伏與斑駁感，
+           呈現出類似實體厚磅水彩紙的凹凸質地，絕無細沙狀的灰塵感。
         */
         .paper-overlay {
             position: fixed;
@@ -56,9 +56,9 @@
             height: 100%;
             pointer-events: none;
             z-index: 9999;
-            opacity: 0.16; /* 控制纖維深淺度 */
+            opacity: 0.15; /* 控制纖維深淺度 */
             mix-blend-mode: multiply;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cfilter id='roughPaper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006' numOctaves='4' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23fff' surfaceScale='3.5'%3E%3CfeDistantLight azimuth='50' elevation='55'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23roughPaper)'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cfilter id='roughPaper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.005' numOctaves='3' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23fff' surfaceScale='3.0'%3E%3CfeDistantLight azimuth='60' elevation='50'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23roughPaper)'/%3E%3C/svg%3E");
         }
 
         /* 深色模式下的紋理混合調校 */
@@ -67,7 +67,7 @@
             mix-blend-mode: screen;
         }
 
-        /* 自訂滾動條樣式 */
+        /* 自訂細緻滾動條 */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -82,11 +82,510 @@
             background: rgba(217, 106, 83, 0.2);
         }
 
-        /* 視圖切換動畫 */
+        /* 視圖平滑切換動畫 */
         .view-transition {
-            transition: opacity 0.30s ease-in-out, transform 0.30s ease-in-out;
+            transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
         }
         .view-hidden {
             display: none;
             opacity: 0;
-            transform:
+            transform: translateY(10px);
+        }
+    </style>
+</head>
+<body class="bg-parchment-light text-parchment-text min-h-screen flex flex-col relative overflow-x-hidden selection:bg-amber-200 selection:text-amber-900">
+
+    <!-- 紙張纖維浮層（覆蓋全螢幕） -->
+    <div class="paper-overlay"></div>
+
+    <!-- 頂部輕量通知條 (代替原生 alert/confirm) -->
+    <div id="toast-notification" class="fixed top-0 left-0 w-full transform -translate-y-full transition-transform duration-300 ease-in-out z-50 bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark px-4 py-3 shadow-lg flex justify-between items-center text-sm font-sans">
+        <span id="toast-message" class="mx-auto text-center font-medium">提示訊息</span>
+        <button onclick="closeToast()" class="absolute right-4 hover:opacity-80"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <!-- 頂部自訂確認操作條 -->
+    <div id="confirm-bar" class="fixed top-0 left-0 w-full transform -translate-y-full transition-transform duration-300 ease-in-out z-50 bg-stone-800 text-stone-100 px-4 py-4 shadow-lg flex flex-col sm:flex-row justify-center items-center gap-4 text-sm font-sans">
+        <span id="confirm-message" class="text-center font-medium">您確定要執行此操作嗎？</span>
+        <div class="flex gap-2">
+            <button id="confirm-yes" class="bg-accent hover:bg-red-800 px-4 py-1.5 rounded text-white font-medium transition-colors">確認</button>
+            <button id="confirm-no" class="bg-stone-600 hover:bg-stone-500 px-4 py-1.5 rounded text-stone-200 font-medium transition-colors">取消</button>
+        </div>
+    </div>
+
+    <!-- 頂部優雅導覽列 -->
+    <header class="w-full max-w-4xl mx-auto px-6 pt-8 md:pt-12 flex justify-between items-center z-10">
+        <!-- 左上角大標題（站長暗號觸發點） -->
+        <div class="flex flex-col cursor-pointer select-none group" onclick="triggerSecretClick()">
+            <h1 class="text-2xl md:text-3xl font-bold font-serif tracking-widest text-accent dark:text-accent-dark transition-colors duration-300 relative">
+                《無盡的遠征》
+                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent dark:bg-accent-dark transition-all duration-500 group-hover:w-full"></span>
+            </h1>
+            <span class="text-xs font-sans tracking-widest text-stone-500 dark:text-stone-400 mt-1 uppercase">The Endless Expedition</span>
+        </div>
+
+        <!-- 右上角工具列 -->
+        <div class="flex items-center gap-4 md:gap-6 font-sans">
+            <!-- 寫作按鈕 (預設完全隱藏) -->
+            <button id="write-btn" onclick="navigateTo('write-post')" class="hidden bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark text-xs font-medium tracking-wider px-3.5 py-1.5 rounded-full hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5">
+                <i class="fa-solid fa-feather-pointed mr-1.5"></i>撰寫文章
+            </button>
+            
+            <!-- 深淺色切換 -->
+            <button onclick="toggleDarkMode()" class="text-stone-600 dark:text-stone-300 hover:text-accent dark:hover:text-accent-dark transition-colors text-lg" title="切換主題">
+                <i id="theme-icon" class="fa-solid fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- 主內容容器 -->
+    <main class="flex-grow w-full max-w-3xl mx-auto px-6 py-12 z-10">
+        
+        <!-- ================= 視圖：首頁 (列表) ================= -->
+        <section id="view-home" class="view-transition">
+            <!-- 詩意首頁引言 -->
+            <div class="border-l-2 border-stone-300 dark:border-stone-700 pl-6 py-2 my-8 text-stone-600 dark:text-stone-400 italic text-base leading-relaxed tracking-wider font-serif">
+                <p class="mb-2">馬匹一起衝出起跑線。</p>
+                <p class="mb-2">褐色的馬兒奔跑時勢頭強勁，隆隆的震動一直傳到了看台。七匹食草動物奮力向前衝刺，馬蹄在土地上翻飛，震人心魄。</p>
+                <p class="mb-2">我盯著馬蹄有節奏的舞動，不由得心想，地球就是靠這個轉動的吧。</p>
+                <p class="mb-4">這七匹馬肯定帶動了地球的旋轉，肯定是這樣的。</p>
+                <p class="text-right text-sm font-sans not-italic text-stone-500 dark:text-stone-500">— 伊坂幸太郎《重力小丑》</p>
+            </div>
+
+            <!-- 分類篩選導覽 (賽馬故事、隨筆、同人文) -->
+            <div class="flex flex-wrap gap-2 my-10 border-b border-stone-200 dark:border-stone-800 pb-4 font-sans text-sm">
+                <button onclick="filterCategory('全部')" class="cat-btn active px-4 py-1.5 rounded-full bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark font-medium transition-all duration-200" data-cat="全部">全部</button>
+                <button onclick="filterCategory('賽馬故事')" class="cat-btn px-4 py-1.5 rounded-full text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-all duration-200" data-cat="賽馬故事">賽馬故事</button>
+                <button onclick="filterCategory('隨筆')" class="cat-btn px-4 py-1.5 rounded-full text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-all duration-200" data-cat="隨筆">隨筆</button>
+                <button onclick="filterCategory('同人文')" class="cat-btn px-4 py-1.5 rounded-full text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-all duration-200" data-cat="同人文">同人文</button>
+            </div>
+
+            <!-- 文章列表區域 -->
+            <div id="posts-container" class="space-y-16">
+                <!-- 動態注入文章列表 -->
+            </div>
+        </section>
+
+        <!-- ================= 視圖：閱讀單篇文章 ================= -->
+        <section id="view-post" class="view-transition view-hidden">
+            <!-- 返回按鈕 -->
+            <button onclick="navigateTo('home')" class="font-sans text-xs tracking-wider text-stone-500 dark:text-stone-400 hover:text-accent dark:hover:text-accent-dark flex items-center gap-2 mb-8 transition-colors">
+                <i class="fa-solid fa-arrow-left-long"></i> 返回遠征列表
+            </button>
+
+            <!-- 內文主體 -->
+            <article id="single-post-content">
+                <!-- 動態注入文章內容 -->
+            </article>
+
+            <!-- 閱讀導覽列 (下一章與刪除鈕) -->
+            <div class="border-t border-stone-200 dark:border-stone-800 mt-16 pt-8 flex flex-col sm:flex-row justify-between items-center gap-6 font-sans">
+                <!-- 刪除文章 (同樣只在解鎖站長暗號後，給站長管理本地快取) -->
+                <button id="admin-delete-btn" class="hidden text-xs text-stone-400 dark:text-stone-600 hover:text-red-600 dark:hover:text-red-400 transition-colors flex items-center gap-2">
+                    <i class="fa-regular fa-trash-can"></i> 刪除此篇
+                </button>
+                
+                <!-- 下一章導航 (右對齊) -->
+                <div id="next-chapter-container" class="w-full sm:w-auto ml-auto">
+                    <!-- 動態渲染下一章按鈕 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 視圖：寫作模式 (站長限定) ================= -->
+        <section id="view-write" class="view-transition view-hidden">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-xl font-bold font-serif tracking-widest text-accent dark:text-accent-dark">新增遠征足跡</h2>
+                <button onclick="navigateTo('home')" class="font-sans text-xs text-stone-500 hover:text-stone-700 dark:hover:text-stone-300">
+                    取消並返回
+                </button>
+            </div>
+
+            <form id="write-form" onsubmit="handlePublish(event)" class="space-y-6 font-sans text-sm">
+                <!-- 標題輸入 -->
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">文章標題</label>
+                    <input type="text" id="post-title" required class="w-full bg-transparent border-b border-stone-300 dark:border-stone-700 py-2 focus:border-accent dark:focus:border-accent-dark outline-none font-serif text-lg text-stone-800 dark:text-stone-100 transition-colors" placeholder="請輸入標題...">
+                </div>
+
+                <!-- 分類與日期 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">分類</label>
+                        <select id="post-category" class="w-full bg-transparent border-b border-stone-300 dark:border-stone-700 py-2 focus:border-accent dark:focus:border-accent-dark outline-none text-stone-800 dark:text-stone-100 transition-colors">
+                            <option value="賽馬故事">賽馬故事</option>
+                            <option value="隨筆">隨筆</option>
+                            <option value="同人文">同人文</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">發表日期</label>
+                        <input type="date" id="post-date" required class="w-full bg-transparent border-b border-stone-300 dark:border-stone-700 py-2 focus:border-accent dark:focus:border-accent-dark outline-none text-stone-800 dark:text-stone-100 transition-colors">
+                    </div>
+                </div>
+
+                <!-- 摘要輸入 -->
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">前言 / 簡短摘要</label>
+                    <textarea id="post-summary" rows="2" required class="w-full bg-transparent border-b border-stone-300 dark:border-stone-700 py-2 focus:border-accent dark:focus:border-accent-dark outline-none transition-colors resize-none leading-relaxed" placeholder="輸入一小段精美的前導摘要，將出現在首頁清單中..."></textarea>
+                </div>
+
+                <!-- 正文編輯區 -->
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">完整正文 (支援斷行)</label>
+                    <textarea id="post-content" rows="12" required class="w-full bg-transparent border border-stone-300 dark:border-stone-700 rounded-lg p-4 focus:border-accent dark:focus:border-accent-dark outline-none font-serif leading-loose transition-colors resize-y" placeholder="在這裡，揮灑你的故事與遠征足跡..."></textarea>
+                </div>
+
+                <!-- 儲存發布 -->
+                <div class="flex justify-end pt-4">
+                    <button type="submit" class="bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark font-medium tracking-widest px-8 py-2.5 rounded hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
+                        <i class="fa-solid fa-bookmark mr-2"></i>保存此篇至瀏覽器
+                    </button>
+                </div>
+            </form>
+        </section>
+
+    </main>
+
+    <!-- 頁尾 (最極簡，無任何重置與清除按鈕) -->
+    <footer class="w-full max-w-4xl mx-auto px-6 py-12 mt-12 border-t border-stone-200/60 dark:border-stone-800/60 text-center font-sans text-xs text-stone-400 dark:text-stone-600 z-10">
+        <p class="tracking-widest">© 2026 《無盡的遠征》. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // 初始化空白文章資料庫：徹底刪除所有預設文章範例
+        const DEFAULT_POSTS = [];
+
+        // 從 localStorage 載入文章
+        let posts = JSON.parse(localStorage.getItem('infinite_expedition_posts'));
+        if (!posts) {
+            posts = [...DEFAULT_POSTS];
+            localStorage.setItem('infinite_expedition_posts', JSON.stringify(posts));
+        }
+
+        // 系統變數
+        let currentFilter = '全部';
+        let currentView = 'home';
+        let secretClickCount = 0;
+        let isSecretUnlocked = false;
+        let activeConfirmCallback = null;
+
+        // 當頁面載入完成後執行
+        window.onload = function() {
+            // 初始化深色模式設定
+            if (localStorage.getItem('theme') === 'dark' || 
+                (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('theme-icon').className = 'fa-solid fa-sun';
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.getElementById('theme-icon').className = 'fa-solid fa-moon';
+            }
+
+            // 初始化寫作日期為今天
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('post-date').value = today;
+
+            // 渲染列表
+            renderPosts();
+        }
+
+        // 渲染文章清單 (首頁)
+        function renderPosts() {
+            const container = document.getElementById('posts-container');
+            container.innerHTML = '';
+
+            // 依據分類過濾
+            const filteredPosts = currentFilter === '全部' 
+                ? posts 
+                : posts.filter(p => p.category === currentFilter);
+
+            // 依據日期由新到舊排序
+            const sortedPosts = [...filteredPosts].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            if (sortedPosts.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-20 font-serif">
+                        <i class="fa-solid fa-compass text-stone-300 dark:text-stone-700 text-4xl mb-4"></i>
+                        <p class="text-stone-400 dark:text-stone-600 tracking-wider">
+                            無盡的道路上，正等待著你踏出第一步...
+                        </p>
+                        <p class="text-xs text-stone-400/60 dark:text-stone-600/60 mt-2 font-sans">
+                            ( 站長提示：連點左上角標題 5 次即可開啟新篇章撰寫 )
+                        </p>
+                    </div>
+                `;
+                return;
+            }
+
+            sortedPosts.forEach(post => {
+                const article = document.createElement('article');
+                article.className = 'group transition-all duration-300 border-b border-stone-200/50 dark:border-stone-800/50 pb-10';
+                article.innerHTML = `
+                    <div class="flex items-center gap-3 text-xs font-sans text-stone-500 dark:text-stone-400 mb-3">
+                        <span class="bg-stone-200/60 dark:bg-stone-800 px-2 py-0.5 rounded text-accent dark:text-accent-dark font-medium">${post.category}</span>
+                        <span>•</span>
+                        <span>${post.date}</span>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold font-serif mb-4 text-stone-800 dark:text-stone-100 group-hover:text-accent dark:group-hover:text-accent-dark transition-colors duration-300 leading-snug">
+                        <a href="javascript:void(0)" onclick="viewPostDetail(${post.id})">${post.title}</a>
+                    </h3>
+                    <p class="text-stone-600 dark:text-stone-400 leading-relaxed font-serif text-sm mb-6 line-clamp-3">
+                        ${post.summary}
+                    </p>
+                    <button onclick="viewPostDetail(${post.id})" class="font-sans text-xs font-semibold tracking-wider text-accent dark:text-accent-dark hover:underline transition-all flex items-center gap-1">
+                        繼續閱讀 <i class="fa-solid fa-angle-right text-[10px]"></i>
+                    </button>
+                `;
+                container.appendChild(article);
+            });
+        }
+
+        // 站長暗號：點擊左上角大標題 5 次
+        function triggerSecretClick() {
+            secretClickCount++;
+            if (secretClickCount >= 5) {
+                toggleSecretMode();
+                secretClickCount = 0;
+            }
+        }
+
+        // 站長暗號鍵盤快捷鍵: Ctrl + Shift + E
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.shiftKey && e.key.toUpperCase() === 'E') {
+                e.preventDefault();
+                toggleSecretMode();
+            }
+        });
+
+        // 切換站長寫作權限模式
+        function toggleSecretMode() {
+            isSecretUnlocked = !isSecretUnlocked;
+            const writeBtn = document.getElementById('write-btn');
+            const adminDeleteBtn = document.getElementById('admin-delete-btn');
+
+            if (isSecretUnlocked) {
+                writeBtn.classList.remove('hidden');
+                adminDeleteBtn.classList.remove('hidden');
+                showToast("🔑 站長身份認證成功！隱藏的寫作控制台已解鎖。");
+            } else {
+                writeBtn.classList.add('hidden');
+                adminDeleteBtn.classList.add('hidden');
+                showToast("🔒 寫作面板已安全上鎖。");
+                // 如果目前在寫作介面，則強制導回首頁
+                if (currentView === 'write-post') {
+                    navigateTo('home');
+                }
+            }
+        }
+
+        // 平滑導航控制 (SPA 視圖轉換)
+        function navigateTo(viewId) {
+            const views = {
+                'home': document.getElementById('view-home'),
+                'single-post': document.getElementById('view-post'),
+                'write-post': document.getElementById('view-write')
+            };
+
+            // 隱藏所有視圖
+            Object.values(views).forEach(v => {
+                v.classList.add('view-hidden');
+            });
+
+            // 顯示指定視圖並平滑淡入
+            let activeView = views[viewId];
+            if (viewId === 'home') activeView = views['home'];
+            if (viewId === 'post-detail') activeView = views['single-post'];
+            if (viewId === 'write-post') activeView = views['write-post'];
+
+            activeView.classList.remove('view-hidden');
+            currentView = viewId;
+
+            // 滾動回頂端
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 篩選分類
+        function filterCategory(cat) {
+            currentFilter = cat;
+            
+            // 切換按鈕 active 樣式
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if (btn.getAttribute('data-cat') === cat) {
+                    btn.className = "cat-btn active px-4 py-1.5 rounded-full bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark font-medium transition-all duration-200";
+                } else {
+                    btn.className = "cat-btn px-4 py-1.5 rounded-full text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-all duration-200";
+                }
+            });
+
+            renderPosts();
+            navigateTo('home');
+        }
+
+        // 閱讀單篇文章詳細內容
+        function viewPostDetail(id) {
+            const post = posts.find(p => p.id === id);
+            if (!post) return;
+
+            const contentArea = document.getElementById('single-post-content');
+            
+            // 將內容中所有的換行符替換成 HTML 段落，維持中式古典大段落排版
+            const formattedContent = post.content
+                .split('\n')
+                .filter(paragraph => paragraph.trim() !== '')
+                .map(paragraph => `<p class="mb-6 indent-8 text-stone-700 dark:text-stone-300 leading-loose tracking-wide font-serif text-base text-justify">${paragraph}</p>`)
+                .join('');
+
+            contentArea.innerHTML = `
+                <div class="flex items-center gap-3 text-xs font-sans text-stone-500 dark:text-stone-400 mb-4">
+                    <span class="bg-stone-200/60 dark:bg-stone-800 px-2.5 py-1 rounded text-accent dark:text-accent-dark font-semibold">${post.category}</span>
+                    <span>•</span>
+                    <span>${post.date}</span>
+                </div>
+                <h2 class="text-2xl md:text-3xl font-bold font-serif mb-8 text-stone-800 dark:text-stone-100 leading-snug tracking-wide border-b border-stone-200 dark:border-stone-800 pb-6">${post.title}</h2>
+                <div class="content-body">
+                    ${formattedContent}
+                </div>
+            `;
+
+            // 設定刪除按鈕邏輯
+            const deleteBtn = document.getElementById('admin-delete-btn');
+            if (isSecretUnlocked) {
+                deleteBtn.classList.remove('hidden');
+                deleteBtn.onclick = function() {
+                    triggerConfirm("您確定要刪除這篇珍貴的遠征紀錄嗎？", function() {
+                        posts = posts.filter(p => p.id !== id);
+                        localStorage.setItem('infinite_expedition_posts', JSON.stringify(posts));
+                        showToast("🗑️ 文章已成功移出本地手札。");
+                        renderPosts();
+                        navigateTo('home');
+                    });
+                };
+            } else {
+                deleteBtn.classList.add('hidden');
+            }
+
+            // 下一章智慧導航渲染 (只查找同分類文章)
+            renderNextChapterNav(post);
+
+            navigateTo('post-detail');
+        }
+
+        // 智慧下一章按鈕渲染
+        function renderNextChapterNav(currentPost) {
+            const nextContainer = document.getElementById('next-chapter-container');
+            nextContainer.innerHTML = '';
+
+            // 尋找同分類的所有文章並按時間排序（最新發表優先）
+            const catPosts = posts
+                .filter(p => p.category === currentPost.category)
+                .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            // 當同分類文章存在 2 篇或以上 (複數) 時才渲染下一章按鍵
+            if (catPosts.length >= 2) {
+                const currentIndex = catPosts.findIndex(p => p.id === currentPost.id);
+                // 循環導向下一篇 (如果是最後一篇，則回到第一篇)
+                const nextIndex = (currentIndex + 1) % catPosts.length;
+                const nextPost = catPosts[nextIndex];
+
+                nextContainer.innerHTML = `
+                    <button onclick="viewPostDetail(${nextPost.id})" class="group w-full sm:w-auto flex items-center justify-between sm:justify-end gap-3 px-5 py-3 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-accent dark:hover:border-accent-dark transition-all duration-300 bg-stone-100/10 hover:bg-stone-200/20 dark:hover:bg-stone-800/20">
+                        <div class="text-right">
+                            <span class="block text-[10px] text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-0.5">下一章</span>
+                            <span class="block text-sm font-serif font-semibold text-stone-700 dark:text-stone-300 group-hover:text-accent dark:group-hover:text-accent-dark truncate max-w-[200px]">${nextPost.title}</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-stone-400 group-hover:text-accent dark:group-hover:text-accent-dark transition-colors"></i>
+                    </button>
+                `;
+            }
+        }
+
+        // 新增文章發布邏輯
+        function handlePublish(e) {
+            e.preventDefault();
+
+            const title = document.getElementById('post-title').value.trim();
+            const category = document.getElementById('post-category').value;
+            const date = document.getElementById('post-date').value;
+            const summary = document.getElementById('post-summary').value.trim();
+            const content = document.getElementById('post-content').value;
+
+            const newPost = {
+                id: Date.now(), // 產生隨機唯一 ID
+                title,
+                category,
+                date,
+                summary,
+                content
+            };
+
+            posts.unshift(newPost); // 添加到陣列最前面
+            localStorage.setItem('infinite_expedition_posts', JSON.stringify(posts));
+
+            // 重設表單
+            document.getElementById('write-form').reset();
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('post-date').value = today;
+
+            showToast("✨ 成功發布新足跡！內容已安全保存於瀏覽器中。");
+            renderPosts();
+            navigateTo('home');
+        }
+
+        // 切換深色/淺色模式
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            const themeIcon = document.getElementById('theme-icon');
+            
+            if (isDark) {
+                themeIcon.className = 'fa-solid fa-sun';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.className = 'fa-solid fa-moon';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Toast 輕量通知管理
+        function showToast(message) {
+            const toast = document.getElementById('toast-notification');
+            const msgSpan = document.getElementById('toast-message');
+            msgSpan.textContent = message;
+            toast.classList.remove('-translate-y-full');
+
+            // 5秒後自動關閉
+            setTimeout(closeToast, 5000);
+        }
+
+        function closeToast() {
+            const toast = document.getElementById('toast-notification');
+            toast.classList.add('-translate-y-full');
+        }
+
+        // 自訂高質感確認動作條
+        function triggerConfirm(message, onConfirm) {
+            const confirmBar = document.getElementById('confirm-bar');
+            const messageSpan = document.getElementById('confirm-message');
+            messageSpan.textContent = message;
+            confirmBar.classList.remove('-translate-y-full');
+
+            activeConfirmCallback = onConfirm;
+
+            document.getElementById('confirm-yes').onclick = function() {
+                if (activeConfirmCallback) activeConfirmCallback();
+                closeConfirm();
+            };
+
+            document.getElementById('confirm-no').onclick = function() {
+                closeConfirm();
+            };
+        }
+
+        function closeConfirm() {
+            const confirmBar = document.getElementById('confirm-bar');
+            confirmBar.classList.add('-translate-y-full');
+            activeConfirmCallback = null;
+        }
+    </script>
+</body>
+</html>
