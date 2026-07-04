@@ -3,135 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>無盡的遠征</title>
+    <title>無盡的遠征 — 個人文字手札</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+TC:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script>
-        if (localStorage.getItem('theme') === 'dark' || 
-            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        }
-
         tailwind.config = {
             darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                        serif: ['"Noto Serif TC"', 'Georgia', 'serif'],
-                    },
-                    colors: {
-                        parchment: {
-                            light: '#f5ecd8',
-                            text: '#2b241a',
-                            dark: '#1a1612',
-                            darkText: '#e3dac9'
-                        },
-                        accent: {
-                            DEFAULT: '#8c2d19',
-                            dark: '#d96a53'
-                        }
-                    }
-                }
-            }
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['"Noto Serif TC"', 'serif'] }, colors: { parchment: { light: '#f5ecd8', text: '#2b241a', dark: '#1a1612', darkText: '#e3dac9' }, accent: { DEFAULT: '#8c2d19', dark: '#d96a53' } } } }
         }
     </script>
     
     <style>
         body { font-family: 'Noto Serif TC', Georgia, serif; transition: background-color 0.5s ease, color 0.5s ease; }
-        .paper-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;
-            opacity: 0.15; mix-blend-mode: multiply;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cfilter id='roughPaper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.005' numOctaves='3' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23fff' surfaceScale='3.0'%3E%3CfeDistantLight azimuth='60' elevation='50'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23roughPaper)'/%3E%3C/svg%3E");
-        }
+        .paper-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; opacity: 0.15; mix-blend-mode: multiply; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cfilter id='roughPaper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.005' numOctaves='3' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23fff' surfaceScale='3.0'%3E%3CfeDistantLight azimuth='60' elevation='50'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23roughPaper)'/%3E%3C/svg%3E"); }
         .dark .paper-overlay { opacity: 0.08; mix-blend-mode: screen; }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-thumb { background: rgba(140, 45, 25, 0.2); border-radius: 999px; }
         .view-transition { transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out; }
         .view-hidden { display: none; opacity: 0; transform: translateY(10px); }
     </style>
 </head>
-<body class="bg-parchment-light text-parchment-text dark:bg-parchment-dark dark:text-parchment-darkText min-h-screen flex flex-col relative overflow-x-hidden selection:bg-amber-200 selection:text-amber-900">
-
+<body class="bg-parchment-light text-parchment-text dark:bg-parchment-dark dark:text-parchment-darkText min-h-screen">
     <div class="paper-overlay"></div>
-    <div id="toast-notification" class="fixed top-0 left-0 w-full transform -translate-y-full transition-transform duration-300 ease-in-out z-50 bg-accent text-white px-4 py-3 text-center text-sm font-sans">
-        <span id="toast-message">提示訊息</span>
-    </div>
-
-    <header class="w-full max-w-4xl mx-auto px-6 pt-8 md:pt-12 flex justify-between items-center z-10">
-        <div class="flex flex-col cursor-pointer select-none group" onclick="triggerSecretClick()">
-            <h1 class="text-2xl md:text-3xl font-bold font-serif tracking-widest text-accent dark:text-accent-dark transition-colors duration-300 relative">
-                《無盡的遠征》
-            </h1>
+    
+    <!-- 導航頭部 -->
+    <header class="w-full max-w-4xl mx-auto px-6 pt-12 flex justify-between items-center">
+        <div onclick="triggerSecretClick()" class="cursor-pointer">
+            <h1 class="text-3xl font-bold font-serif text-accent dark:text-accent-dark tracking-widest">《無盡的遠征》</h1>
         </div>
-        <div class="flex items-center gap-4 font-sans">
-            <button id="write-btn" onclick="navigateTo('write-post')" class="hidden bg-accent text-white text-xs px-3.5 py-1.5 rounded-full hover:shadow-md transition-all">撰寫文章</button>
-            <button onclick="toggleDarkMode()" class="text-lg"><i id="theme-icon" class="fa-solid fa-moon"></i></button>
-        </div>
+        <button onclick="toggleDarkMode()"><i id="theme-icon" class="fa-solid fa-moon"></i></button>
     </header>
 
-    <main class="flex-grow w-full max-w-3xl mx-auto px-6 py-12 z-10">
-        <section id="view-home" class="view-transition">
-            <div id="posts-container" class="space-y-16"></div>
-            <div id="admin-export-section" class="hidden mt-20 p-6 border-2 border-dashed border-stone-300 dark:border-stone-700 rounded-lg">
-                <h4 class="text-xs font-bold text-accent uppercase mb-2">👑 站長數據導出區</h4>
-                <textarea id="admin-export-list" readonly class="w-full bg-stone-100 dark:bg-stone-900 p-3 rounded font-mono text-xs" rows="4"></textarea>
-                <button onclick="copyAdminList()" class="mt-2 bg-stone-800 text-stone-200 px-4 py-1.5 rounded">複製目錄數據 (自動清洗)</button>
-            </div>
-        </section>
+    <main class="w-full max-w-3xl mx-auto px-6 py-12">
+        <div id="posts-container" class="space-y-16"></div>
 
-        <section id="view-post" class="view-transition view-hidden">
-            <button onclick="navigateTo('home')" class="text-xs mb-8 hover:text-accent"><i class="fa-solid fa-arrow-left"></i> 返回</button>
-            <article id="single-post-content"></article>
-        </section>
-
-        <section id="view-write" class="view-transition view-hidden">
-            <form id="write-form" onsubmit="handlePublish(event)" class="space-y-6">
-                <input type="text" id="post-title" placeholder="標題" class="w-full bg-transparent border-b py-2 outline-none">
-                <input type="text" id="post-category" placeholder="分類" class="w-full bg-transparent border-b py-2 outline-none">
-                <textarea id="post-content" rows="12" class="w-full border p-4 outline-none" placeholder="正文..."></textarea>
-                <button type="submit" class="bg-accent text-white px-8 py-2">發布</button>
-            </form>
-        </section>
+        <!-- 數據管理區 (隱藏) -->
+        <div id="admin-export-section" class="hidden mt-20 p-6 border-2 border-dashed border-stone-300 dark:border-stone-700 rounded-lg">
+            <h4 class="text-xs font-bold text-accent uppercase mb-4">👑 站長數據導出區 (自動過濾隱形字元)</h4>
+            <textarea id="admin-export-area" readonly class="w-full bg-stone-100 dark:bg-stone-900 p-3 rounded font-mono text-xs" rows="6"></textarea>
+            <button onclick="copyAdminExportData()" class="mt-4 bg-accent text-white px-6 py-2 rounded">複製乾淨目錄數據</button>
+        </div>
     </main>
 
     <script>
-        const INDEX_CACHE_KEY = 'infinite_expedition_index_v1';
-        let postsIndex = JSON.parse(localStorage.getItem(INDEX_CACHE_KEY)) || [];
+        const CACHE_KEY = 'infinite_expedition_posts_v12';
+        let posts = JSON.parse(localStorage.getItem(CACHE_KEY)) || [];
 
-        function copyAdminList() {
-            // 關鍵修改：強制清洗所有非法字元，保證導出絕對乾淨
-            const cleanData = JSON.stringify(postsIndex, null, 2).replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
-            navigator.clipboard.writeText(cleanData);
-            showToast("📋 目錄已自動清洗並複製！保證不含任何隱形字元。");
+        function renderPosts() {
+            const container = document.getElementById('posts-container');
+            container.innerHTML = posts.map(post => `
+                <article class="border-b border-stone-200 dark:border-stone-800 pb-10">
+                    <h3 class="text-2xl font-bold font-serif">${post.title}</h3>
+                    <p class="text-sm mt-4 leading-relaxed">${post.summary}</p>
+                </article>
+            `).join('');
+            
+            // 每次渲染自動更新導出數據
+            const exportArea = document.getElementById('admin-export-area');
+            if (exportArea) {
+                // 【核心修改點：強制過濾隱形字元】
+                const cleanJson = JSON.stringify(posts, null, 2).replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
+                exportArea.value = cleanJson;
+            }
         }
 
-        function showToast(msg) {
-            const toast = document.getElementById('toast-notification');
-            toast.querySelector('span').textContent = msg;
-            toast.classList.remove('-translate-y-full');
-            setTimeout(() => toast.classList.add('-translate-y-full'), 3000);
+        function copyAdminExportData() {
+            const exportArea = document.getElementById('admin-export-area');
+            navigator.clipboard.writeText(exportArea.value);
+            alert("✅ 數據已自動過濾雜質並複製！");
         }
 
-        function triggerSecretClick() { if (++secretClickCount >= 5) toggleSecretMode(); }
-        let secretClickCount = 0;
-        function toggleSecretMode() {
-            const isUnlocked = document.getElementById('write-btn').classList.toggle('hidden');
-            document.getElementById('admin-export-section').classList.toggle('hidden');
-            showToast(isUnlocked ? "🔒 已上鎖" : "🔑 已解鎖管理區");
+        function triggerSecretClick() {
+            if (++secretCount >= 5) {
+                document.getElementById('admin-export-section').classList.remove('hidden');
+                alert("🔑 管理權限已解鎖");
+            }
         }
-        function navigateTo(v) { document.querySelectorAll('.view-transition').forEach(el => el.classList.add('view-hidden')); document.getElementById('view-'+v).classList.remove('view-hidden'); }
+        let secretCount = 0;
+
         function toggleDarkMode() { document.documentElement.classList.toggle('dark'); }
-        function handlePublish(e) {
-            e.preventDefault();
-            const post = { id: Date.now(), title: document.getElementById('post-title').value, category: document.getElementById('post-category').value, date: new Date().toISOString().split('T')[0], content: document.getElementById('post-content').value };
-            postsIndex.unshift(post);
-            localStorage.setItem(INDEX_CACHE_KEY, JSON.stringify(postsIndex));
-            showToast("✨ 發布成功，請前往首頁下方複製目錄！");
-            navigateTo('home');
-        }
+
+        window.onload = renderPosts;
     </script>
 </body>
 </html>
