@@ -165,7 +165,7 @@
 
             <!-- 分類篩選導覽 -->
             <div class="flex flex-wrap gap-2 my-10 border-b border-stone-200 dark:border-stone-800 pb-4 font-sans text-sm" id="category-filter-container">
-                <!-- 分類按鈕將動態更新，確保選取狀態正確 -->
+                <!-- 分類按鈕將動態更新 -->
             </div>
 
             <!-- 文章動態列表區域 -->
@@ -292,8 +292,9 @@
     </footer>
 
     <script>
-        const CACHE_KEY = 'infinite_expedition_posts_clean_v15';
+        const CACHE_KEY = 'infinite_expedition_posts_clean_v16'; // 更新版號確保乾淨載入
 
+        // --- 核心防呆清理函式 ---
         function sanitizeText(text) {
             if (typeof text !== 'string') return '';
             return text.replace(/[\u0000-\u001F\u007F-\u009F]/g, "").trim();
@@ -309,10 +310,10 @@
             }
         }
 
-        // 系統狀態變數
+        // --- 系統狀態變數 ---
         let posts = [];            
         let currentFilter = '全部';
-        let searchQuery = ''; // 用於檢索框
+        let searchQuery = ''; 
         let currentView = 'home';
         let secretClickCount = 0;
         let isSecretUnlocked = false;
@@ -320,6 +321,7 @@
         let editingPostId = null;
 
         window.onload = async function() {
+            // 初始化深淺色圖示
             const themeIcon = document.getElementById('theme-icon');
             if (document.documentElement.classList.contains('dark')) {
                 if (themeIcon) themeIcon.className = 'fa-solid fa-sun';
@@ -327,15 +329,18 @@
                 if (themeIcon) themeIcon.className = 'fa-solid fa-moon';
             }
 
+            // 初始化日期輸入框為今天
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('post-date').value = today;
 
             await loadWebsiteData();
         }
 
+        // --- STREAMING_CHUNK:Loading and syncing data ---
         async function loadWebsiteData() {
             let loadedPosts = [];
 
+            // 1. 嘗試從 GitHub 抓取最新目錄 (加上時間戳防止快取)
             try {
                 const response = await fetch(`posts-list.json?_t=${Date.now()}`);
                 if (response.ok) {
@@ -349,6 +354,7 @@
                 console.warn("無法與線上 posts-list.json 同步，將加載本地暫存文章：", e);
             }
 
+            // 2. 讀取本地暫存
             let localCache = [];
             try {
                 localCache = JSON.parse(localStorage.getItem(CACHE_KEY)) || [];
@@ -356,6 +362,7 @@
                 localCache = [];
             }
 
+            // 3. 合併資料 (本地較新則覆蓋)
             localCache.forEach(localPost => {
                 const index = loadedPosts.findIndex(p => String(p.id) === String(localPost.id));
                 if (index !== -1) {
@@ -365,6 +372,7 @@
                 }
             });
 
+            // 4. 清洗最終資料
             posts = loadedPosts.filter(p => p && p.id && p.title).map(p => ({
                 id: p.id,
                 title: sanitizeText(p.title),
@@ -381,14 +389,13 @@
             updateExportData();
         }
 
-        // --- 功能：統計字數與篇數 ---
+        // --- STREAMING_CHUNK:Rendering functions (Stats, Search, Filters) ---
         function updateStats() {
             const totalPosts = posts.length;
             const totalWords = posts.reduce((sum, p) => sum + (p.wordCount || 0), 0);
             document.getElementById('site-stats').innerHTML = `共收錄 <span class="font-bold text-accent dark:text-accent-dark">${totalPosts}</span> 篇日誌 ｜ 總計 <span class="font-bold text-accent dark:text-accent-dark">${totalWords.toLocaleString()}</span> 字`;
         }
 
-        // --- 功能：即時檢索 ---
         function handleSearch() {
             searchQuery = document.getElementById('search-input').value.toLowerCase();
             renderPosts();
@@ -414,11 +421,11 @@
             }).join('');
         }
 
+        // --- STREAMING_CHUNK:Rendering post list ---
         function renderPosts() {
             const container = document.getElementById('posts-container');
             container.innerHTML = '';
 
-            // 結合分類與搜尋過濾
             const filteredPosts = posts.filter(p => {
                 const matchCat = currentFilter === '全部' || p.category === currentFilter;
                 const matchSearch = p.title.toLowerCase().includes(searchQuery) || p.summary.toLowerCase().includes(searchQuery);
@@ -464,6 +471,7 @@
             });
         }
 
+        // --- STREAMING_CHUNK:Handling single post view and navigation ---
         async function viewPostDetail(id) {
             const post = posts.find(p => String(p.id) === String(id));
             if (!post) return;
@@ -495,13 +503,12 @@
             loadingIndicator.classList.add('hidden');
             finalContent = sanitizeText(finalContent);
 
-            // --- 功能：優化版內文精確斷行 ---
-            // 利用正規表達式切割段落。雙換行建立新段落(<p>)，單換行保留(<br>)
+            // 內文精確斷行邏輯
             const formattedContent = finalContent
-                .split(/\n\s*\n/) 
+                .split(/\n\s*\n/) // 使用雙換行切分段落
                 .filter(paragraph => paragraph.trim() !== '')
                 .map(paragraph => {
-                    const pWithBr = paragraph.trim().replace(/\n/g, '<br>');
+                    const pWithBr = paragraph.trim().replace(/\n/g, '<br>'); // 單換行保留 <br>
                     return `<p class="mb-6 indent-8 text-stone-700 dark:text-stone-300 leading-loose tracking-wide font-serif text-base text-justify">${pWithBr}</p>`;
                 })
                 .join('');
@@ -555,24 +562,20 @@
             renderPostNavigation(post);
         }
 
-        // --- 功能：完美上一篇 / 下一篇導航 ---
         function renderPostNavigation(currentPost) {
             const navContainer = document.getElementById('post-navigation');
             if (!navContainer) return;
             navContainer.innerHTML = '';
 
-            // 依據當前選擇的分類來篩選，若在「全部」就找全部的上下篇
             const list = currentFilter === '全部' ? posts : posts.filter(p => p.category === currentFilter);
             const sortedList = [...list].sort((a, b) => new Date(b.date) - new Date(a.date));
             const currentIndex = sortedList.findIndex(p => String(p.id) === String(currentPost.id));
 
-            // 注意：陣列是從新排到舊，所以 index-1 是較新的(下一篇)，index+1 是較舊的(上一篇)
-            const nextPost = currentIndex > 0 ? sortedList[currentIndex - 1] : null; 
-            const prevPost = currentIndex < sortedList.length - 1 ? sortedList[currentIndex + 1] : null; 
+            const nextPost = currentIndex > 0 ? sortedList[currentIndex - 1] : null; // 較新
+            const prevPost = currentIndex < sortedList.length - 1 ? sortedList[currentIndex + 1] : null; // 較早
 
             let navHtml = '';
 
-            // 左側：上一篇 (較舊)
             if (prevPost) {
                 navHtml += `
                     <button onclick="viewPostDetail(${prevPost.id})" class="group w-full sm:w-1/2 flex items-center justify-start gap-4 px-5 py-4 rounded-xl border border-stone-300 dark:border-stone-700 hover:border-accent dark:hover:border-accent-dark transition-all duration-300 bg-stone-100/30 hover:bg-stone-200/50 dark:hover:bg-stone-800/30 text-left">
@@ -587,7 +590,6 @@
                 navHtml += `<div class="hidden sm:block sm:w-1/2"></div>`;
             }
 
-            // 右側：下一篇 (較新)
             if (nextPost) {
                 navHtml += `
                     <button onclick="viewPostDetail(${nextPost.id})" class="group w-full sm:w-1/2 flex items-center justify-end gap-4 px-5 py-4 rounded-xl border border-stone-300 dark:border-stone-700 hover:border-accent dark:hover:border-accent-dark transition-all duration-300 bg-stone-100/30 hover:bg-stone-200/50 dark:hover:bg-stone-800/30 text-right ml-auto">
@@ -605,6 +607,7 @@
             navContainer.innerHTML = navHtml;
         }
 
+        // --- STREAMING_CHUNK:Handling admin features and data export ---
         function triggerSecretClick() {
             secretClickCount++;
             if (secretClickCount >= 5) {
@@ -747,6 +750,7 @@
                 wordCount: p.wordCount
             }));
 
+            // 強制過濾所有隱形字元
             const cleanedDirectoryJson = JSON.stringify(directoryList, null, 2)
                 .replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
 
@@ -783,6 +787,7 @@
             }
         }
 
+        // --- STREAMING_CHUNK:Utility functions (Theme, UI helpers) ---
         function toggleDarkMode() {
             const isDark = document.documentElement.classList.toggle('dark');
             const themeIcon = document.getElementById('theme-icon');
