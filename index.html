@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-TW" class="scroll-smooth">
 <head>
-    <!-- 👑 站長文章發布區：請在下方中括號內貼上你導出的數據（位於第 5 行，極易尋找） 👑 -->
+    <!-- 👑 站長文章發布區：請在下方中括號內貼上你導出的數據（位於第 5 行，極易尋找） -->
     <script>const DEFAULT_POSTS = [];</script>
 
     <meta charset="UTF-8">
@@ -10,7 +10,7 @@
     <!-- 引入 Tailwind CSS 進行現代化響應式排版 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- 引入 Google Fonts 中文字型 (思源宋體與 Inter) 提升文字溫度 -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+TC:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600&family=Noto+Serif+TC:wght=300;400;600;700&display=swap" rel="stylesheet">
     <!-- 引入 FontAwesome 圖示 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -272,8 +272,8 @@
     </footer>
 
     <script>
-        // 使用 v8 金鑰，強制更新同步
-        const CACHE_KEY = 'infinite_expedition_posts_v8';
+        // 使用 v10 金鑰，強制更新同步
+        const CACHE_KEY = 'infinite_expedition_posts_v10';
 
         // 👑 智慧型自動修復與防呆解析：不論貼上格式如何，皆自動清洗並濾除任何損壞數據
         function sanitizePosts(rawInput) {
@@ -323,18 +323,18 @@
             rawLocal = [];
         }
         
-        // 【核心修正】同樣對 A 帳號本地瀏覽器殘留的快取數據進行大掃除！
+        // 對本地瀏覽器殘留的快取數據進行大掃除
         let cleanLocalPosts = sanitizePosts(rawLocal);
 
         // 智慧型同步：合併洗乾淨的本地資料與洗乾淨的預設資料
         posts = [...cleanLocalPosts];
         cleanDefaultPosts.forEach(gp => {
-            if (!posts.some(lp => lp.id === gp.id)) {
+            if (!posts.some(lp => String(lp.id) === String(gp.id))) {
                 posts.push(gp);
             }
         });
 
-        // 重新存回 LocalStorage，徹底將 A 帳號的髒數據洗掉
+        // 重新存回 LocalStorage，徹底將髒數據洗掉
         localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
 
         // 系統變數
@@ -499,7 +499,7 @@
 
         // 閱讀單篇文章詳細內容
         function viewPostDetail(id) {
-            const post = posts.find(p => p.id === id);
+            const post = posts.find(p => String(p.id) === String(id));
             if (!post) return;
 
             const contentArea = document.getElementById('single-post-content');
@@ -523,29 +523,32 @@
                 </div>
             `;
 
-            // 設定管理按鈕邏輯
+            // 獲取按鈕元素
             const deleteBtn = document.getElementById('admin-delete-btn');
             const editBtn = document.getElementById('admin-edit-btn');
 
+            // 【核心修復】無條件在背景綁定點擊事件，不論當下是否處於解鎖狀態
+            if (deleteBtn) {
+                deleteBtn.onclick = function() {
+                    triggerConfirm("您確定要刪除這篇珍貴的遠征紀錄嗎？", function() {
+                        posts = posts.filter(p => String(p.id) !== String(id));
+                        localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
+                        renderPosts();
+                        updateExportData();
+                        navigateTo('home');
+                    });
+                };
+            }
+            if (editBtn) {
+                editBtn.onclick = function() {
+                    editPost(id);
+                };
+            }
+
+            // 僅根據解鎖狀態控制按鈕的可見性 (不影響 onclick 事件)
             if (isSecretUnlocked) {
-                if (deleteBtn) {
-                    deleteBtn.classList.remove('hidden');
-                    deleteBtn.onclick = function() {
-                        triggerConfirm("您確定要刪除這篇珍貴的遠征紀錄嗎？", function() {
-                            posts = posts.filter(p => p.id !== id);
-                            localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
-                            renderPosts();
-                            updateExportData();
-                            navigateTo('home');
-                        });
-                    };
-                }
-                if (editBtn) {
-                    editBtn.classList.remove('hidden');
-                    editBtn.onclick = function() {
-                        editPost(id);
-                    };
-                }
+                if (deleteBtn) deleteBtn.classList.remove('hidden');
+                if (editBtn) editBtn.classList.remove('hidden');
             } else {
                 if (deleteBtn) deleteBtn.classList.add('hidden');
                 if (editBtn) editBtn.classList.add('hidden');
@@ -559,7 +562,7 @@
 
         // 進入編輯文章模式
         function editPost(id) {
-            const post = posts.find(p => p.id === id);
+            const post = posts.find(p => String(p.id) === String(id));
             if (!post) return;
 
             editingPostId = id;
@@ -605,7 +608,7 @@
 
             // 當同分類文章存在 2 篇 or 以上時才渲染下一章按鍵
             if (catPosts.length >= 2) {
-                const currentIndex = catPosts.findIndex(p => p.id === currentPost.id);
+                const currentIndex = catPosts.findIndex(p => String(p.id) === String(currentPost.id));
                 // 循環導向下一篇
                 const nextIndex = (currentIndex + 1) % catPosts.length;
                 const nextPost = catPosts[nextIndex];
@@ -634,7 +637,7 @@
 
             if (editingPostId) {
                 // 編輯模式：更新現有文章數據
-                const index = posts.findIndex(p => p.id === editingPostId);
+                const index = posts.findIndex(p => String(p.id) === String(editingPostId));
                 if (index !== -1) {
                     posts[index] = {
                         ...posts[index],
@@ -729,6 +732,7 @@
             }
         }
 
+        // 關閉確認條
         function closeConfirm() {
             const confirmBar = document.getElementById('confirm-bar');
             if (confirmBar) confirmBar.classList.add('-translate-y-full');
@@ -737,10 +741,3 @@
     </script>
 </body>
 </html>
-```
-eof
-
-### 📬 更新完畢！
-我已重構了啟動時的同步機制。現在，只要你把這段代碼更新至 GitHub：
-1. **A 帳號重新整理網頁**：網頁載入的瞬間，JavaScript 就會自動對 A 帳號的 LocalStorage 進行強制掃毒，將帶有 `undefined` 的壞文章永久抹除。
-2. **完美恢復**：A 帳號的畫面上那行礙眼的 `undefined` 就會瞬間消失，只留下你辛苦創作的「日蝕之日」與其他完好的文章囉！
