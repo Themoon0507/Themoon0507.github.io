@@ -275,7 +275,7 @@
         // 使用 v8 金鑰，強制更新同步
         const CACHE_KEY = 'infinite_expedition_posts_v8';
 
-        // 👑 智慧型自動修復與防呆解析：不論站長如何貼上資料，都能完美自動解析並扁平化
+        // 👑 智慧型自動修復與防呆解析：不論貼上格式如何，皆自動清洗並濾除任何損壞數據
         function sanitizePosts(rawInput) {
             let parsed = [];
             if (!rawInput) return parsed;
@@ -298,29 +298,44 @@
             } catch (e) {
                 console.error("數據解析失敗：", e);
             }
-            // 確保過濾掉任何無效或未定義的空物件
-            return parsed.filter(item => item && typeof item === 'object' && !Array.isArray(item) && item.id);
+            // 嚴格過濾：必須是物件、有 ID、有標題，且標題絕不能是 "undefined" 或空值
+            return parsed.filter(item => 
+                item && 
+                typeof item === 'object' && 
+                !Array.isArray(item) && 
+                item.id && 
+                item.title && 
+                item.title !== 'undefined' && 
+                item.title !== undefined &&
+                item.title !== ''
+            );
         }
 
         // 初始化文章列表
         let posts = [];
         let cleanDefaultPosts = sanitizePosts(DEFAULT_POSTS);
-        let localPosts = JSON.parse(localStorage.getItem(CACHE_KEY));
-
-        // 智慧型同步：如果本地沒有快取，或者檢測到 GitHub (DEFAULT_POSTS) 裡有本地沒有的新文章，立刻進行無縫同步
-        if (!localPosts || localPosts.length === 0) {
-            posts = [...cleanDefaultPosts];
-            localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
-        } else {
-            posts = [...localPosts];
-            // 比對 DEFAULT_POSTS 中的每篇文章是否已被同步至讀者本地，如果沒有則併入
-            cleanDefaultPosts.forEach(gp => {
-                if (!posts.some(lp => lp.id === gp.id)) {
-                    posts.push(gp);
-                }
-            });
-            localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
+        
+        // 讀取本地快取
+        let rawLocal = [];
+        try {
+            rawLocal = JSON.parse(localStorage.getItem(CACHE_KEY)) || [];
+        } catch(e) {
+            rawLocal = [];
         }
+        
+        // 【核心修正】同樣對 A 帳號本地瀏覽器殘留的快取數據進行大掃除！
+        let cleanLocalPosts = sanitizePosts(rawLocal);
+
+        // 智慧型同步：合併洗乾淨的本地資料與洗乾淨的預設資料
+        posts = [...cleanLocalPosts];
+        cleanDefaultPosts.forEach(gp => {
+            if (!posts.some(lp => lp.id === gp.id)) {
+                posts.push(gp);
+            }
+        });
+
+        // 重新存回 LocalStorage，徹底將 A 帳號的髒數據洗掉
+        localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
 
         // 系統變數
         let currentFilter = '全部';
@@ -722,3 +737,10 @@
     </script>
 </body>
 </html>
+```
+eof
+
+### 📬 更新完畢！
+我已重構了啟動時的同步機制。現在，只要你把這段代碼更新至 GitHub：
+1. **A 帳號重新整理網頁**：網頁載入的瞬間，JavaScript 就會自動對 A 帳號的 LocalStorage 進行強制掃毒，將帶有 `undefined` 的壞文章永久抹除。
+2. **完美恢復**：A 帳號的畫面上那行礙眼的 `undefined` 就會瞬間消失，只留下你辛苦創作的「日蝕之日」與其他完好的文章囉！
