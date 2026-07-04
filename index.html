@@ -132,7 +132,6 @@
                 </div>
                 <div class="w-full md:w-64 relative">
                     <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-stone-400"></i>
-                    <!-- 將「檢索」改為更簡單的「搜尋」 -->
                     <input type="text" id="search-input" oninput="handleSearch()" placeholder="搜尋日誌..." class="w-full pl-9 pr-4 py-2 bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-700 rounded-full focus:outline-none focus:border-accent dark:focus:border-accent-dark transition-colors text-stone-700 dark:text-stone-300">
                 </div>
             </div>
@@ -184,14 +183,13 @@
 
         <!-- ================= 視圖：閱讀單篇文章 ================= -->
         <section id="view-post" class="view-transition view-hidden">
-            <!-- 詞彙簡化：返回目錄 -> 返回列表 -->
             <button onclick="navigateTo('home')" class="font-sans text-xs tracking-wider text-stone-500 dark:text-stone-400 hover:text-accent dark:hover:text-accent-dark flex items-center gap-2 mb-8 transition-colors">
                 <i class="fa-solid fa-arrow-left-long"></i> 返回列表
             </button>
 
             <div id="post-loading" class="hidden text-center py-20 font-serif text-stone-400">
                 <i class="fa-solid fa-feather-pointed animate-bounce text-3xl mb-4 text-accent"></i>
-                <p>正在載入紀錄...</p>
+                <p>正在載入遠征紀錄...</p>
             </div>
 
             <!-- 正文主體 -->
@@ -231,7 +229,6 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">分類</label>
-                        <!-- 將原本的手動輸入改為固定選項的下拉選單 -->
                         <select id="post-category" required class="w-full bg-transparent border-b border-stone-300 dark:border-stone-700 py-2 focus:border-accent dark:focus:border-accent-dark outline-none text-stone-800 dark:text-stone-100 transition-colors">
                             <option value="賽馬科普" class="text-stone-800">賽馬科普</option>
                             <option value="賽馬故事" class="text-stone-800">賽馬故事</option>
@@ -353,7 +350,6 @@
                 content: p.content ? sanitizeText(p.content) : ''
             }));
 
-            // 強制確保首頁篩選按鈕列的正確渲染順序與激活狀態
             filterCategory(currentFilter);
             updateStats();
             updateExportData();
@@ -373,7 +369,6 @@
         function filterCategory(cat) {
             currentFilter = cat;
             
-            // 手動更新固定的那六顆分類按鈕狀態，避免順序被打亂
             document.querySelectorAll('.cat-btn').forEach(btn => {
                 if (btn.getAttribute('data-cat') === cat) {
                     btn.className = "cat-btn active px-4 py-1.5 rounded-full bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark font-medium transition-all duration-200";
@@ -466,12 +461,11 @@
             loadingIndicator.classList.add('hidden');
             finalContent = sanitizeText(finalContent);
 
-            // --- 優化的斷行渲染機制 (完美支援連續換行) ---
             const formattedContent = finalContent
-                .split(/\n\s*\n/) // 使用雙換行切分大段落
+                .split(/\n\s*\n/) 
                 .filter(paragraph => paragraph.trim() !== '')
                 .map(paragraph => {
-                    const pWithBr = paragraph.trim().replace(/\n/g, '<br>'); // 保留段落內的單一換行
+                    const pWithBr = paragraph.trim().replace(/\n/g, '<br>'); 
                     return `<p class="mb-6 indent-8 text-stone-700 dark:text-stone-300 leading-loose tracking-wide font-serif text-base text-justify">${pWithBr}</p>`;
                 })
                 .join('');
@@ -584,20 +578,50 @@
             }
         });
 
+        // 核心密碼驗證邏輯
         function toggleSecretMode() {
-            isSecretUnlocked = !isSecretUnlocked;
-            const writeBtn = document.getElementById('write-btn');
-            const adminExportSection = document.getElementById('admin-export-section');
+            if (!isSecretUnlocked) {
+                // 尚未解鎖，請求輸入密碼
+                const pwd = window.prompt("請輸入站長專屬密碼以解鎖編輯權限：");
+                
+                if (pwd === "Justin951130") {
+                    isSecretUnlocked = true;
+                    
+                    const writeBtn = document.getElementById('write-btn');
+                    const adminExportSection = document.getElementById('admin-export-section');
+                    if (writeBtn) writeBtn.classList.remove('hidden');
+                    if (adminExportSection) adminExportSection.classList.remove('hidden');
+                    
+                    // 若當前在單篇文章頁面，同步顯示編輯/刪除按鈕
+                    const deleteBtn = document.getElementById('admin-delete-btn');
+                    const editBtn = document.getElementById('admin-edit-btn');
+                    if (deleteBtn && currentView === 'post-detail') deleteBtn.classList.remove('hidden');
+                    if (editBtn && currentView === 'post-detail') editBtn.classList.remove('hidden');
 
-            if (isSecretUnlocked) {
-                if (writeBtn) writeBtn.classList.remove('hidden');
-                if (adminExportSection) adminExportSection.classList.remove('hidden');
-                showToast("🔑 站長模式已解鎖。");
-                updateExportData();
+                    showToast("🔑 密碼正確！站長模式已完全解鎖。");
+                    updateExportData();
+                } else if (pwd !== null) { // 如果按了取消則不提示，若亂打則提示錯誤
+                    showToast("❌ 密碼錯誤，拒絕存取。");
+                }
+                
             } else {
+                // 已經解鎖的狀態下再次觸發，直接上鎖 (不需要再輸入密碼)
+                isSecretUnlocked = false;
+                
+                const writeBtn = document.getElementById('write-btn');
+                const adminExportSection = document.getElementById('admin-export-section');
                 if (writeBtn) writeBtn.classList.add('hidden');
                 if (adminExportSection) adminExportSection.classList.add('hidden');
-                showToast("🔒 站長模式已上鎖。");
+                
+                // 隱藏單篇文章頁面的按鈕
+                const deleteBtn = document.getElementById('admin-delete-btn');
+                const editBtn = document.getElementById('admin-edit-btn');
+                if (deleteBtn) deleteBtn.classList.add('hidden');
+                if (editBtn) editBtn.classList.add('hidden');
+
+                showToast("🔒 站長模式已安全上鎖。");
+                
+                // 若當前在寫作介面，強制踢回首頁
                 if (currentView === 'write-post') {
                     navigateTo('home');
                 }
@@ -687,7 +711,7 @@
             showToast("✨ 成功發布暫存！請在下方複製程式碼上傳 GitHub。");
             
             updateStats();
-            filterCategory(currentFilter); // 重新篩選
+            filterCategory(currentFilter);
             updateExportData(targetId, content);
             navigateTo('home');
 
