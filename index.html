@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-TW" class="scroll-smooth">
 <head>
-    <script>const DEFAULT_POSTS = [];</script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>無盡的遠征</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600&family=Noto+Serif+TC:wght=300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+TC:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script>
@@ -28,14 +27,14 @@
                     },
                     colors: {
                         parchment: {
-                            light: '#f5ecd8',  // 優雅的復古暖黃羊皮紙底色
-                            text: '#2b241a',   // 古典暖墨黑
-                            dark: '#1a1612',   // 深色模式：深夜暖墨黑
-                            darkText: '#e3dac9' // 深色模式：暖白羊皮紙字體
+                            light: '#f5ecd8',
+                            text: '#2b241a',
+                            dark: '#1a1612',
+                            darkText: '#e3dac9'
                         },
                         accent: {
-                            DEFAULT: '#8c2d19', // 古典赭紅
-                            dark: '#d96a53'    // 深色模式下的暖珊瑚橘紅
+                            DEFAULT: '#8c2d19',
+                            dark: '#d96a53'
                         }
                     }
                 }
@@ -49,10 +48,7 @@
             transition: background-color 0.5s ease, color 0.5s ease;
         }
 
-        /* SVG 粗糙手造紙張纖維濾鏡 
-           透過低 baseFrequency (0.005) 產生大面積的不規則紙張起伏與斑駁感，
-           呈現出類似實體厚磅水彩紙的凹凸質地，絕無細沙狀的灰塵感。
-        */
+        /* SVG 粗糙手造紙張纖維濾鏡 */
         .paper-overlay {
             position: fixed;
             top: 0;
@@ -61,42 +57,23 @@
             height: 100%;
             pointer-events: none;
             z-index: 9999;
-            opacity: 0.15; /* 控制纖維深淺度 */
+            opacity: 0.15;
             mix-blend-mode: multiply;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cfilter id='roughPaper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.005' numOctaves='3' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23fff' surfaceScale='3.0'%3E%3CfeDistantLight azimuth='60' elevation='50'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23roughPaper)'/%3E%3C/svg%3E");
         }
 
-        /* 深色模式下的紋理混合調校 */
         .dark .paper-overlay {
             opacity: 0.08;
             mix-blend-mode: screen;
         }
 
-        /* 自訂細緻滾動條 */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(140, 45, 25, 0.2);
-            border-radius: 999px;
-        }
-        .dark ::-webkit-scrollbar-thumb {
-            background: rgba(217, 106, 83, 0.2);
-            border-radius: 999px;
-        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(140, 45, 25, 0.2); border-radius: 999px; }
+        .dark ::-webkit-scrollbar-thumb { background: rgba(217, 106, 83, 0.2); }
 
-        /* 視圖平滑切換動畫 */
-        .view-transition {
-            transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
-        }
-        .view-hidden {
-            display: none;
-            opacity: 0;
-            transform: translateY(10px);
-        }
+        .view-transition { transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out; }
+        .view-hidden { display: none; opacity: 0; transform: translateY(10px); }
     </style>
 </head>
 <body class="bg-parchment-light text-parchment-text dark:bg-parchment-dark dark:text-parchment-darkText min-h-screen flex flex-col relative overflow-x-hidden selection:bg-amber-200 selection:text-amber-900">
@@ -116,15 +93,6 @@
         </div>
     </div>
 
-    <div id="password-bar" class="fixed top-0 left-0 w-full transform -translate-y-full transition-transform duration-300 ease-in-out z-50 bg-stone-800 text-stone-100 px-4 py-4 shadow-lg flex flex-col sm:flex-row justify-center items-center gap-4 text-sm font-sans">
-        <span class="font-medium text-stone-200"><i class="fa-solid fa-key mr-2 text-accent dark:text-accent-dark"></i>請輸入站長權限密碼：</span>
-        <div class="flex gap-2 w-full sm:w-auto">
-            <input type="password" id="admin-password-input" class="bg-stone-900 border border-stone-700 rounded px-3 py-1.5 text-stone-100 placeholder-stone-500 focus:outline-none focus:border-accent dark:focus:border-accent-dark w-full sm:w-48" placeholder="輸入密碼...">
-            <button id="password-submit" class="bg-accent hover:bg-red-800 px-4 py-1.5 rounded text-white font-medium transition-colors shrink-0">驗證解鎖</button>
-            <button id="password-cancel" class="bg-stone-600 hover:bg-stone-500 px-4 py-1.5 rounded text-stone-200 font-medium transition-colors shrink-0">取消</button>
-        </div>
-    </div>
-
     <header class="w-full max-w-4xl mx-auto px-6 pt-8 md:pt-12 flex justify-between items-center z-10">
         <div class="flex flex-col cursor-pointer select-none group" onclick="triggerSecretClick()">
             <h1 class="text-2xl md:text-3xl font-bold font-serif tracking-widest text-accent dark:text-accent-dark transition-colors duration-300 relative">
@@ -134,48 +102,40 @@
             <span class="text-xs font-sans tracking-widest text-stone-500 dark:text-stone-400 mt-1 uppercase">The Endless Expedition</span>
         </div>
 
-        <div class="flex items-center gap-4 md:gap-6 font-sans">
+        <div class="flex items-center gap-3 md:gap-5 font-sans">
             <button id="write-btn" onclick="navigateTo('write-post')" class="hidden bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark text-xs font-medium tracking-wider px-3.5 py-1.5 rounded-full hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5">
                 <i class="fa-solid fa-feather-pointed mr-1.5"></i>撰寫文章
             </button>
             
+            <button onclick="toggleFontSize()" class="text-stone-600 dark:text-stone-300 hover:text-accent dark:hover:text-accent-dark transition-colors font-bold text-sm px-2 py-1 border border-stone-300 dark:border-stone-700 rounded" title="調整字體大小">
+                <span id="font-size-label">A 小</span>
+            </button>
+
             <button onclick="toggleDarkMode()" class="text-stone-600 dark:text-stone-300 hover:text-accent dark:hover:text-accent-dark transition-colors text-lg" title="切換主題">
                 <i id="theme-icon" class="fa-solid fa-moon"></i>
             </button>
         </div>
     </header>
 
-    <section class="w-full max-w-4xl mx-auto px-6 mt-6 z-10 font-sans">
-        <div class="flex flex-col md:flex-row gap-4 items-center justify-between p-4 bg-stone-100/50 dark:bg-stone-900/30 rounded-xl border border-stone-200 dark:border-stone-800/80">
-            <div class="relative w-full md:w-80">
-                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 dark:text-stone-500 text-xs"></i>
-                <input type="text" id="search-input" oninput="handleSearch()" class="w-full bg-stone-200/30 dark:bg-stone-950/40 border border-stone-300 dark:border-stone-800 rounded-full py-1.5 pl-9 pr-9 text-xs text-stone-850 dark:text-stone-100 placeholder-stone-450 dark:placeholder-stone-500 focus:outline-none focus:border-accent dark:focus:border-accent-dark focus:ring-1 focus:ring-accent dark:focus:ring-accent-dark transition-all duration-300" placeholder="檢索足跡 (標題、內文、分類)...">
-                <button id="search-clear-btn" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 dark:text-stone-500 hover:text-accent dark:hover:text-accent-dark">
-                    <i class="fa-solid fa-circle-xmark text-xs"></i>
-                </button>
-            </div>
-            <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-stone-500 dark:text-stone-400">
-                <span class="flex items-center gap-1.5">
-                    <i class="fa-solid fa-feather text-accent dark:text-accent-dark opacity-80"></i>
-                    網站文章篇數：<strong id="total-posts-count" class="text-stone-700 dark:text-stone-200 font-bold">0</strong> 篇
-                </span>
-                <span class="text-stone-300 dark:text-stone-850 hidden sm:inline">|</span>
-                <span class="flex items-center gap-1.5">
-                    <i class="fa-solid fa-calculator text-accent dark:text-accent-dark opacity-80"></i>
-                    網站總字數：<strong id="total-words-count" class="text-stone-700 dark:text-stone-200 font-bold">0</strong> 字
-                </span>
-                <span class="text-stone-300 dark:text-stone-850 hidden sm:inline">|</span>
-                <span class="flex items-center gap-1.5">
-                    <i class="fa-solid fa-envelope text-accent dark:text-accent-dark opacity-80"></i>
-                    筆者信箱：<a href="mailto:rcon@93097@gmail.com" class="font-medium text-stone-700 dark:text-stone-200 hover:text-accent dark:hover:text-accent-dark transition-colors">rcon@93097@gmail.com</a>
-                </span>
-            </div>
-        </div>
-    </section>
-
-    <main class="flex-grow w-full max-w-3xl mx-auto px-6 py-12 z-10">
+    <main class="flex-grow w-full max-w-3xl mx-auto px-6 py-10 z-10">
         
         <section id="view-home" class="view-transition">
+            
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 bg-stone-100/50 dark:bg-stone-800/30 p-4 rounded-xl border border-stone-200/50 dark:border-stone-700/50 shadow-sm mb-8 font-sans text-sm backdrop-blur-sm">
+                <div class="font-medium tracking-wide text-stone-600 dark:text-stone-400 leading-relaxed" id="site-stats">
+                    載入統計中...
+                </div>
+                <div class="flex items-center gap-2 w-full md:w-auto">
+                    <button onclick="toggleSortOrder()" class="px-3 py-2 bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-700 rounded-full hover:border-accent dark:hover:border-accent-dark transition-colors text-xs text-stone-700 dark:text-stone-300 whitespace-nowrap" title="切換排序">
+                        <i class="fa-solid fa-arrow-up-short-wide mr-1"></i><span id="sort-order-label">最新由上往下</span>
+                    </button>
+                    <div class="w-full md:w-48 relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-stone-400 text-xs"></i>
+                        <input type="text" id="search-input" oninput="handleSearch()" placeholder="搜尋..." class="w-full pl-8 pr-4 py-1.5 bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-700 rounded-full focus:outline-none focus:border-accent dark:focus:border-accent-dark transition-colors text-stone-700 dark:text-stone-300 text-xs">
+                    </div>
+                </div>
+            </div>
+
             <div class="border-l-2 border-stone-300 dark:border-stone-700 pl-6 py-2 my-8 text-stone-600 dark:text-stone-400 italic text-base leading-relaxed tracking-wider font-serif">
                 <p class="mb-2">馬匹一起衝出起跑線。</p>
                 <p class="mb-2">褐色的馬兒奔跑時勢頭強勁，隆隆的震動一直傳到了看台。七匹食草動物奮力向前衝刺，馬蹄在土地上翻飛，震人心魄。</p>
@@ -184,70 +144,66 @@
                 <p class="text-right text-sm font-sans not-italic text-stone-500 dark:text-stone-500">— 伊坂幸太郎《重力小丑》</p>
             </div>
 
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 my-10 border-b border-stone-200 dark:border-stone-800 pb-4 font-sans text-sm">
-                <div id="category-bar" class="flex flex-wrap gap-2">
-                    <button onclick="filterCategory('全部')" class="cat-btn active px-4 py-1.5 rounded-full bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark font-medium transition-all duration-200" data-cat="全部">全部</button>
-                    <button onclick="filterCategory('賽馬科普')" class="cat-btn px-4 py-1.5 rounded-full text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-all duration-200" data-cat="賽馬科普">賽馬科普</button>
-                    <button onclick="filterCategory('賽馬故事')" class="cat-btn px-4 py-1.5 rounded-full text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-all duration-200" data-cat="賽馬故事">賽馬故事</button>
-                    <button onclick="filterCategory('隨筆')" class="cat-btn px-4 py-1.5 rounded-full text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-all duration-200" data-cat="隨筆">隨筆</button>
-                    <button onclick="filterCategory('同人文')" class="cat-btn px-4 py-1.5 rounded-full text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-all duration-200" data-cat="同人文">同人文</button>
-                    <button onclick="filterCategory('更新日誌')" class="cat-btn px-4 py-1.5 rounded-full text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-all duration-200" data-cat="更新日誌">更新日誌</button>
-                </div>
-                
-                <div class="flex items-center gap-2 self-end md:self-auto shrink-0">
-                    <button onclick="toggleSortOrder()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-accent text-stone-600 dark:text-stone-400 hover:text-accent dark:hover:text-accent-dark transition-colors text-xs font-medium bg-stone-100/30 dark:bg-stone-900/30">
-                        <i id="sort-icon" class="fa-solid fa-arrow-down-9-1"></i>
-                        <span id="sort-text">最新優先 (倒序)</span>
-                    </button>
-                </div>
-            </div>
-
-            <div id="posts-container" class="space-y-16">
+            <div class="flex flex-wrap gap-2 my-10 border-b border-stone-200 dark:border-stone-800 pb-4 font-sans text-sm" id="category-filter-container">
                 </div>
 
-            <div id="pagination-container" class="flex justify-center items-center gap-4 mt-16 mb-8 font-sans text-sm">
-                </div>
+            <div id="posts-container" class="space-y-16"></div>
+
+            <div id="pagination-container" class="flex justify-center items-center gap-4 mt-12 font-sans text-xs"></div>
 
             <div id="admin-export-section" class="hidden mt-20 p-6 border-2 border-dashed border-stone-300 dark:border-stone-700 rounded-lg font-sans text-xs">
-                <h4 class="font-bold text-accent dark:text-accent-dark tracking-wider mb-2 uppercase">👑 站長專屬：導出文章數據至 GitHub</h4>
-                <p class="text-stone-500 dark:text-stone-400 mb-4 leading-relaxed">請將下方文字框內產生的全部文字複製，並回到 GitHub 編輯 `index.html` 檔案，貼上到最上方的 `const DEFAULT_POSTS = [];` 的中括號中，即可使所有人都能看見最新內容！</p>
-                <textarea id="admin-export-area" readonly class="w-full bg-stone-100 dark:bg-stone-900 p-3 rounded font-mono text-stone-600 dark:text-stone-300 border border-stone-200 dark:border-stone-800 focus:outline-none resize-none" rows="4"></textarea>
-                <div class="flex justify-end mt-2">
-                    <button onclick="copyAdminExportData()" class="bg-stone-800 hover:bg-stone-700 text-stone-200 px-4 py-1.5 rounded transition-colors">一鍵複製數據</button>
+                <h4 class="font-bold text-accent dark:text-accent-dark tracking-wider mb-2 uppercase">👑 站長專屬：乾淨數據匯出工具</h4>
+                <p class="text-stone-500 dark:text-stone-400 mb-4 leading-relaxed">
+                    本工具已內建<b>自動清洗過濾器</b>，匯出時將自動消滅任何軟體產生的隱形控制字元，確保 GitHub 的 `posts-list.json` 保持 100% 格式純淨。
+                </p>
+                
+                <div class="space-y-4">
+                    <div>
+                        <span class="block font-semibold mb-1 text-stone-700 dark:text-stone-300">步驟 1. 複製乾淨目錄數據 (貼入 `posts-list.json`)</span>
+                        <textarea id="admin-export-area" readonly class="w-full bg-stone-100 dark:bg-stone-900 p-3 rounded font-mono text-stone-600 dark:text-stone-300 border border-stone-200 dark:border-stone-800 focus:outline-none resize-none" rows="4"></textarea>
+                        <button onclick="copyAdminExportData()" class="mt-2 bg-stone-800 hover:bg-stone-700 text-stone-200 px-4 py-1.5 rounded transition-colors w-full sm:w-auto">一鍵複製乾淨 JSON</button>
+                    </div>
+                    
+                    <div id="text-export-container" class="hidden">
+                        <span class="block font-semibold mb-1 text-stone-700 dark:text-stone-300">步驟 2. 複製當前文章正文 (在 `posts/` 資料夾中建立對應的 `.txt` 檔案)</span>
+                        <div class="bg-stone-200/50 dark:bg-stone-800 p-2 rounded mb-1 text-stone-600 dark:text-stone-400 flex justify-between items-center">
+                            <span>推薦檔名：<span id="recommend-filename" class="font-bold font-mono text-accent dark:text-accent-dark"></span></span>
+                        </div>
+                        <textarea id="article-text-area" readonly class="w-full bg-stone-100 dark:bg-stone-900 p-3 rounded font-mono text-stone-600 dark:text-stone-300 border border-stone-200 dark:border-stone-800 focus:outline-none resize-none" rows="6"></textarea>
+                        <button onclick="copyArticleTextData()" class="mt-2 bg-stone-800 hover:bg-stone-700 text-stone-200 px-4 py-1.5 rounded transition-colors w-full sm:w-auto">一鍵複製正文文本</button>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="view-post" class="view-transition view-hidden">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-stone-200/60 dark:border-stone-800/60">
-                <button onclick="navigateTo('home')" class="font-sans text-xs tracking-wider text-stone-500 dark:text-stone-400 hover:text-accent dark:hover:text-accent-dark flex items-center gap-2 transition-colors">
-                    <i class="fa-solid fa-arrow-left-long"></i> 返回列表
+            <button onclick="navigateTo('home')" class="font-sans text-xs tracking-wider text-stone-500 dark:text-stone-400 hover:text-accent dark:hover:text-accent-dark flex items-center gap-2 mb-8 transition-colors">
+                <i class="fa-solid fa-arrow-left-long"></i> 返回列表
+            </button>
+
+            <div id="post-loading" class="hidden text-center py-20 font-serif text-stone-400">
+                <i class="fa-solid fa-feather-pointed animate-bounce text-3xl mb-4 text-accent"></i>
+                <p>正在展開卷軸，載入遠征紀錄...</p>
+            </div>
+
+            <article id="single-post-content"></article>
+
+            <div class="mt-12 mb-4 text-center">
+                <button onclick="scrollToTop()" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-stone-300 dark:border-stone-700 bg-white/80 dark:bg-stone-800/80 text-stone-600 dark:text-stone-300 hover:text-accent dark:hover:text-accent-dark hover:border-accent dark:hover:border-accent-dark transition-all text-xs font-sans tracking-wider shadow-sm hover:shadow">
+                    <i class="fa-solid fa-arrow-up"></i> 回到頂端
                 </button>
-                
-                <div class="flex items-center gap-2 text-xs font-sans text-stone-500 dark:text-stone-400">
-                    <span class="mr-1"><i class="fa-solid fa-font mr-1"></i>字體大小：</span>
-                    <button onclick="changeFontSize('small')" id="btn-fs-small" class="px-2.5 py-1 rounded transition-all text-[11px]">小</button>
-                    <button onclick="changeFontSize('medium')" id="btn-fs-medium" class="px-2.5 py-1 rounded transition-all text-[11px]">中</button>
-                    <button onclick="changeFontSize('large')" id="btn-fs-large" class="px-2.5 py-1 rounded transition-all text-[11px]">大</button>
-                </div>
             </div>
 
-            <article id="single-post-content">
-                </article>
-
-            <div class="border-t border-stone-200 dark:border-stone-800 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 font-sans">
-                <div class="flex items-center gap-4 shrink-0">
-                    <button id="admin-edit-btn" class="hidden text-xs text-stone-400 dark:text-stone-600 hover:text-accent dark:hover:text-accent-dark transition-colors flex items-center gap-2">
-                        <i class="fa-regular fa-pen-to-square"></i> 編輯此篇
-                    </button>
-                    <button id="admin-delete-btn" class="hidden text-xs text-stone-400 dark:text-stone-600 hover:text-red-600 dark:hover:text-red-400 transition-colors flex items-center gap-2">
-                        <i class="fa-regular fa-trash-can"></i> 刪除此篇
-                    </button>
-                </div>
-                
-                <div id="next-chapter-container" class="w-full md:w-auto ml-auto">
-                    </div>
+            <div class="border-t border-stone-200 dark:border-stone-800 pt-6 flex justify-end gap-4 font-sans">
+                <button id="admin-edit-btn" class="hidden text-xs text-stone-400 dark:text-stone-600 hover:text-accent dark:hover:text-accent-dark transition-colors flex items-center gap-2">
+                    <i class="fa-regular fa-pen-to-square"></i> 編輯此篇
+                </button>
+                <button id="admin-delete-btn" class="hidden text-xs text-stone-400 dark:text-stone-600 hover:text-red-600 dark:hover:text-red-400 transition-colors flex items-center gap-2">
+                    <i class="fa-regular fa-trash-can"></i> 刪除暫存
+                </button>
             </div>
+            
+            <div id="post-navigation" class="mt-6 flex flex-col sm:flex-row justify-between items-stretch gap-4 font-sans"></div>
         </section>
 
         <section id="view-write" class="view-transition view-hidden">
@@ -266,15 +222,14 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">分類 (可選擇或手動輸入新分類名稱)</label>
-                        <input type="text" id="post-category" required list="category-suggestions" class="w-full bg-transparent border-b border-stone-300 dark:border-stone-700 py-2 focus:border-accent dark:focus:border-accent-dark outline-none text-stone-800 dark:text-stone-100 transition-colors" placeholder="請選擇或手動輸入分類...">
-                        <datalist id="category-suggestions">
-                            <option value="賽馬科普">
-                            <option value="賽馬故事">
-                            <option value="隨筆">
-                            <option value="同人文">
-                            <option value="更新日誌">
-                        </datalist>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">分類</label>
+                        <select id="post-category" class="w-full bg-transparent border-b border-stone-300 dark:border-stone-700 py-2 focus:border-accent dark:focus:border-accent-dark outline-none text-stone-800 dark:text-stone-100 transition-colors">
+                            <option value="賽馬科普" class="bg-white dark:bg-stone-900">賽馬科普</option>
+                            <option value="賽馬故事" class="bg-white dark:bg-stone-900">賽馬故事</option>
+                            <option value="隨筆" class="bg-white dark:bg-stone-900">隨筆</option>
+                            <option value="同人文" class="bg-white dark:bg-stone-900">同人文</option>
+                            <option value="更新日誌" class="bg-white dark:bg-stone-900">更新日誌</option>
+                        </select>
                     </div>
                     <div>
                         <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">發表日期</label>
@@ -284,17 +239,17 @@
 
                 <div>
                     <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">前言 / 簡短摘要</label>
-                    <textarea id="post-summary" rows="2" required class="w-full bg-transparent border-b border-stone-300 dark:border-stone-700 py-2 focus:border-accent dark:focus:border-accent-dark outline-none transition-colors resize-none leading-relaxed" placeholder="輸入一小段精美的前導摘要，將出現在首頁清單中..."></textarea>
+                    <textarea id="post-summary" rows="2" required class="w-full bg-transparent border-b border-stone-300 dark:border-stone-700 py-2 focus:border-accent dark:focus:border-accent-dark outline-none transition-colors resize-none leading-relaxed" placeholder="出現在首頁清單的前導摘要..."></textarea>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">完整正文 (支援斷行)</label>
-                    <textarea id="post-content" rows="12" required class="w-full bg-transparent border border-stone-300 dark:border-stone-700 rounded-lg p-4 focus:border-accent dark:focus:border-accent-dark outline-none font-serif leading-loose transition-colors resize-y" placeholder="在這裡，揮灑你的故事與遠征足跡..."></textarea>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">完整正文 (嚴格保留您輸入時的換行與空白格)</label>
+                    <textarea id="post-content" rows="14" required class="w-full bg-transparent border border-stone-300 dark:border-stone-700 rounded-lg p-4 focus:border-accent dark:focus:border-accent-dark outline-none font-serif leading-relaxed transition-colors resize-y" placeholder="揮灑你的遠征足跡..."></textarea>
                 </div>
 
                 <div class="flex justify-end pt-4">
                     <button type="submit" class="bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark font-medium tracking-widest px-8 py-2.5 rounded hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
-                        <i class="fa-solid fa-bookmark mr-2"></i><span id="submit-btn-text">保存此篇至瀏覽器</span>
+                        <i class="fa-solid fa-bookmark mr-2"></i><span id="submit-btn-text">保存並準備導出數據</span>
                     </button>
                 </div>
             </form>
@@ -307,95 +262,42 @@
     </footer>
 
     <script>
-        // 👑 升級快取金鑰至 v18，強制清洗歷史髒數據並啟用全新自動修補與同步引擎
-        const CACHE_KEY = 'infinite_expedition_posts_v18';
+        const CACHE_KEY = 'infinite_expedition_posts_clean_v15';
+        const CATEGORIES = ['全部', '賽馬科普', '賽馬故事', '隨筆', '同人文', '更新日誌'];
 
-        // 👑 智慧型自動修復與防呆解析：不論貼上格式如何，皆自動清洗並濾除任何損壞數據
-        function sanitizePosts(rawInput) {
-            let parsed = [];
-            if (!rawInput) return parsed;
-            
+        function sanitizeText(text) {
+            if (typeof text !== 'string') return '';
+            return text.replace(/[\u0000-\u0009\u000B-\u001F\u007F-\u009F]/g, "");
+        }
+
+        function parseCleanJson(rawString) {
             try {
-                if (typeof rawInput === 'string') {
-                    const temp = JSON.parse(rawInput);
-                    if (Array.isArray(temp)) parsed = temp;
-                } else if (Array.isArray(rawInput)) {
-                    // 自動修復「雙重中括號 [[...]]」的經典問題
-                    if (rawInput.length === 1 && Array.isArray(rawInput[0])) {
-                        parsed = rawInput[0];
-                    } else if (rawInput.length === 1 && typeof rawInput[0] === 'string') {
-                        const temp = JSON.parse(rawInput[0]);
-                        if (Array.isArray(temp)) parsed = temp;
-                    } else {
-                        parsed = rawInput;
-                    }
-                }
+                const cleaned = rawString.replace(/[\u0000-\u0009\u000B-\u001F\u007F-\u009F]/g, "");
+                return JSON.parse(cleaned);
             } catch (e) {
-                console.error("數據解析失敗：", e);
+                console.error("JSON 格式毀損：", e);
+                return null;
             }
-            // 嚴格過濾：必須是物件、有 ID、有標題，且標題與分類絕不能是 "undefined" 或空值
-            return parsed.filter(item => 
-                item && 
-                typeof item === 'object' && 
-                !Array.isArray(item) && 
-                item.id && 
-                item.title && 
-                item.title !== 'undefined' && 
-                item.title !== undefined &&
-                item.title !== '' &&
-                item.category &&
-                item.category !== 'undefined' &&
-                item.category !== undefined &&
-                item.category !== ''
-            );
         }
 
-        // 初始化文章列表
         let posts = [];
-        let cleanDefaultPosts = sanitizePosts(DEFAULT_POSTS);
-        
-        // 讀取本地快取
-        let rawLocal = [];
-        try {
-            rawLocal = JSON.parse(localStorage.getItem(CACHE_KEY)) || [];
-        } catch(e) {
-            rawLocal = [];
-        }
-        
-        // 對本地瀏覽器殘留的快取數據進行大掃除
-        let cleanLocalPosts = sanitizePosts(rawLocal);
-
-        // 智慧型同步：合併洗乾淨的本地資料與洗乾淨的預設資料
-        posts = [...cleanLocalPosts];
-        cleanDefaultPosts.forEach(gp => {
-            if (!posts.some(lp => String(lp.id) === String(gp.id))) {
-                posts.push(gp);
-            }
-        });
-
-        // 重新存回 LocalStorage，徹底將髒數據與 undefined 髒快取洗乾淨
-        localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
-
-        // 系統狀態變數
         let currentFilter = '全部';
-        let currentSearchQuery = ''; // 當前檢索輸入字詞
+        let searchQuery = ''; 
+        let sortOrder = 'desc';
+        let currentPage = 1;
+        const POSTS_PER_PAGE = 10;
+
+        let currentFontSize = parseInt(localStorage.getItem('fontSizeIndex')) || 0;
+        const fontSizes = ['text-base', 'text-lg', 'text-xl'];
+        const fontSizeLabels = ['A 小', 'A 中', 'A 大'];
+
         let currentView = 'home';
         let secretClickCount = 0;
         let isSecretUnlocked = false;
         let activeConfirmCallback = null;
-        let editingPostId = null; // 當前正在編輯的文章 ID
-        
-        // 分頁相關設定變數
-        let currentPage = 1;
-        const POSTS_PER_PAGE = 10;
-        
-        // 排序設定 (預設為 desc: 最新優先/倒序)
-        let currentSortOrder = localStorage.getItem('expedition_sort_order') || 'desc';
-        // 字體大小設定 (預設為 small)
-        let currentFontSize = localStorage.getItem('expedition_font_size') || 'small';
+        let editingPostId = null;
 
-        // 當頁面載入完成後執行
-        window.onload = function() {
+        window.onload = async function() {
             const themeIcon = document.getElementById('theme-icon');
             if (document.documentElement.classList.contains('dark')) {
                 if (themeIcon) themeIcon.className = 'fa-solid fa-sun';
@@ -403,226 +305,175 @@
                 if (themeIcon) themeIcon.className = 'fa-solid fa-moon';
             }
 
-            // 初始化寫作日期為今天
+            updateFontSizeLabel();
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('post-date').value = today;
 
-            // 載入與初始化 UI 狀態
-            updateSortUI();
-            dynamicRenderCategoryFilters();
+            await loadWebsiteData();
+        }
+
+        async function loadWebsiteData() {
+            let loadedPosts = [];
+            try {
+                const response = await fetch(`posts-list.json?_t=${Date.now()}`);
+                if (response.ok) {
+                    const rawText = await response.text();
+                    const liveList = parseCleanJson(rawText);
+                    if (Array.isArray(liveList)) loadedPosts = liveList;
+                }
+            } catch (e) {
+                console.warn("使用本地暫存狀態：", e);
+            }
+
+            let localCache = JSON.parse(localStorage.getItem(CACHE_KEY)) || [];
+            localCache.forEach(localPost => {
+                const index = loadedPosts.findIndex(p => String(p.id) === String(localPost.id));
+                if (index !== -1) loadedPosts[index] = localPost;
+                else loadedPosts.unshift(localPost);
+            });
+
+            posts = loadedPosts.filter(p => p && p.id && p.title).map(p => ({
+                id: p.id,
+                title: sanitizeText(p.title),
+                category: sanitizeText(p.category) || '隨筆',
+                date: sanitizeText(p.date),
+                summary: sanitizeText(p.summary),
+                wordCount: p.wordCount || (p.content ? p.content.length : 0),
+                content: p.content ? sanitizeText(p.content) : ''
+            }));
+
+            updateStats();
+            renderCategoryFilter();
             renderPosts();
-            calculateStats(); // 初始化計算字數與篇數
             updateExportData();
         }
 
-        // 🧮 智慧混合語系字數計算器 (精準算中文字元與英文單字)
-        function getWordCount(str) {
-            if (!str) return 0;
-            // 匹配中文字元並單獨計算
-            const chineseMatch = str.match(/[\u4e00-\u9fa5]/g) || [];
-            const chineseCount = chineseMatch.length;
-            
-            // 將中文字元抽空後，利用正規表達式精準切分英文單字與數字
-            const cleanEnglish = str.replace(/[\u4e00-\u9fa5]/g, ' ');
-            const englishWords = cleanEnglish.split(/[\s,.\-\/#!$%\^&\*;:{}=\-_`~()?"']+/).filter(w => w.trim().length > 0);
-            const englishCount = englishWords.length;
-
-            return chineseCount + englishCount;
-        }
-
-        // 📊 即時統計全站總篇數與總字數
-        function calculateStats() {
-            const postsCountEl = document.getElementById('total-posts-count');
-            const wordsCountEl = document.getElementById('total-words-count');
-            if (!postsCountEl || !wordsCountEl) return;
-
+        function updateStats() {
             const totalPosts = posts.length;
-            let totalWords = 0;
-
-            posts.forEach(p => {
-                const titleWords = getWordCount(p.title || '');
-                const summaryWords = getWordCount(p.summary || '');
-                const contentWords = getWordCount(p.content || '');
-                totalWords += (titleWords + summaryWords + contentWords);
-            });
-
-            postsCountEl.textContent = totalPosts.toLocaleString();
-            wordsCountEl.textContent = totalWords.toLocaleString();
+            const totalWords = posts.reduce((sum, p) => sum + (p.wordCount || 0), 0);
+            document.getElementById('site-stats').innerHTML = `共收錄 <span class="font-bold text-accent dark:text-accent-dark">${totalPosts}</span> 篇日誌 ｜ 總計 <span class="font-bold text-accent dark:text-accent-dark">${totalWords.toLocaleString()}</span> 字 ｜ <span class="text-stone-500 dark:text-stone-400 inline-block mt-1 sm:mt-0"><i class="fa-regular fa-envelope mr-1"></i>筆者信箱：<a href="mailto:rcon@93097@gmail.com" class="hover:text-accent dark:hover:text-accent-dark transition-colors">rcon@93097@gmail.com</a></span>`;
         }
 
-        // 🔍 實時檢索邏輯
         function handleSearch() {
-            const searchInput = document.getElementById('search-input');
-            const clearBtn = document.getElementById('search-clear-btn');
-            if (!searchInput || !clearBtn) return;
-
-            currentSearchQuery = searchInput.value.trim().toLowerCase();
-
-            if (currentSearchQuery) {
-                clearBtn.classList.remove('hidden');
-                // 貼心體驗：若正在閱讀或撰寫，輸入檢索時自動瞬移導回首頁呈現結果
-                if (currentView !== 'home') {
-                    navigateTo('home', true);
-                }
-            } else {
-                clearBtn.classList.add('hidden');
-            }
-
-            currentPage = 1; // 檢索時重置回第一頁
+            searchQuery = document.getElementById('search-input').value.toLowerCase();
+            currentPage = 1;
             renderPosts();
         }
 
-        // 🧹 清空檢索欄
-        function clearSearch() {
-            const searchInput = document.getElementById('search-input');
-            const clearBtn = document.getElementById('search-clear-btn');
-            if (searchInput) searchInput.value = '';
-            if (clearBtn) clearBtn.classList.add('hidden');
-            currentSearchQuery = '';
-            currentPage = 1; // 清空檢索時重置回第一頁
-            renderPosts();
-        }
-
-        // 動態讀取現有文章的所有分類，自動加到分類篩選欄中
-        // 設定「賽馬科普」緊接在「全部」後面，而「更新日誌」強制擺放至最尾端
-        function dynamicRenderCategoryFilters() {
-            const categoryBar = document.getElementById('category-bar');
-            if (!categoryBar) return;
-
-            // 獲取所有現有文章的唯一分類
-            const uniqueCategories = [];
-            posts.forEach(p => {
-                if (p.category && !uniqueCategories.includes(p.category)) {
-                    uniqueCategories.push(p.category);
-                }
-            });
-
-            // 建立標準優先順序的分類清單
-            const finalCategories = ['全部', '賽馬科普', '賽馬故事', '隨筆', '同人文'];
-            
-            // 將動態新增且不在預設名單中的分類加入
-            uniqueCategories.forEach(cat => {
-                if (!finalCategories.includes(cat) && cat !== '更新日誌') {
-                    finalCategories.push(cat);
-                }
-            });
-
-            // 強制將「更新日誌」排在最尾端
-            finalCategories.push('更新日誌');
-
-            categoryBar.innerHTML = '';
-            finalCategories.forEach(cat => {
-                const isActive = (cat === currentFilter);
-                const button = document.createElement('button');
-                button.onclick = () => filterCategory(cat);
-                button.className = isActive 
-                    ? "cat-btn active px-4 py-1.5 rounded-full bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark font-medium transition-all duration-200"
-                    : "cat-btn px-4 py-1.5 rounded-full text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-all duration-200";
-                button.setAttribute('data-cat', cat);
-                button.textContent = cat;
-                categoryBar.appendChild(button);
-            });
-        }
-
-        // 切換正序/倒序排列
         function toggleSortOrder() {
-            currentSortOrder = currentSortOrder === 'desc' ? 'asc' : 'desc';
-            localStorage.setItem('expedition_sort_order', currentSortOrder);
-            currentPage = 1; // 切換排序時重置回第一頁
-            updateSortUI();
+            sortOrder = sortOrder === 'desc' ? 'asc' : 'desc';
+            const label = document.getElementById('sort-order-label');
+            if (sortOrder === 'desc') {
+                label.textContent = "最新由上往下";
+            } else {
+                label.textContent = "最舊由上往下";
+            }
+            currentPage = 1;
             renderPosts();
         }
 
-        // 更新排序 UI 元件狀態
-        function updateSortUI() {
-            const sortIcon = document.getElementById('sort-icon');
-            const sortText = document.getElementById('sort-text');
-            if (!sortIcon || !sortText) return;
-
-            if (currentSortOrder === 'desc') {
-                sortIcon.className = 'fa-solid fa-arrow-down-9-1';
-                sortText.textContent = '最新優先 (倒序)';
-            } else {
-                sortIcon.className = 'fa-solid fa-arrow-up-1-9';
-                sortText.textContent = '最早優先 (順序)';
+        function toggleFontSize() {
+            currentFontSize = (currentFontSize + 1) % 3;
+            localStorage.setItem('fontSizeIndex', currentFontSize);
+            updateFontSizeLabel();
+            
+            const contentBody = document.querySelector('.content-body');
+            if (contentBody) {
+                contentBody.classList.remove(...fontSizes);
+                contentBody.classList.add(fontSizes[currentFontSize]);
             }
         }
 
-        // 渲染列表與分頁
+        function updateFontSizeLabel() {
+            const label = document.getElementById('font-size-label');
+            if (label) label.textContent = fontSizeLabels[currentFontSize];
+        }
+
+        function filterCategory(cat) {
+            currentFilter = cat;
+            currentPage = 1;
+            renderCategoryFilter();
+            renderPosts();
+            navigateTo('home');
+        }
+
+        function renderCategoryFilter() {
+            const container = document.getElementById('category-filter-container');
+            container.innerHTML = CATEGORIES.map(cat => {
+                const isActive = cat === currentFilter;
+                const activeClass = isActive 
+                    ? "bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark shadow-sm" 
+                    : "text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50";
+                return `<button onclick="filterCategory('${cat}')" class="px-4 py-1 rounded-full font-medium transition-all duration-200 text-xs ${activeClass}">${cat}</button>`;
+            }).join('');
+        }
+
+        function extractOrderIndex(title) {
+            const zhNumMap = { '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6, '七': 7, '八': 8, '九': 9, '十': 10 };
+            const matchZh = title.match(/之([一二三四五六七八九十])/);
+            if (matchZh) return zhNumMap[matchZh[1]] || 0;
+            const matchNum = title.match(/(?:之|\#|\s)(\d+)/);
+            if (matchNum) return parseInt(matchNum[1]);
+            return 0;
+        }
+
         function renderPosts() {
             const container = document.getElementById('posts-container');
             const paginationContainer = document.getElementById('pagination-container');
             container.innerHTML = '';
             if (paginationContainer) paginationContainer.innerHTML = '';
 
-            // 1. 依據分類過濾
-            let filteredPosts = currentFilter === '全部' 
-                ? posts 
-                : posts.filter(p => p.category === currentFilter);
+            const filteredPosts = posts.filter(p => {
+                const matchCat = currentFilter === '全部' || p.category === currentFilter;
+                const matchSearch = p.title.toLowerCase().includes(searchQuery) || p.summary.toLowerCase().includes(searchQuery);
+                return matchCat && matchSearch;
+            });
 
-            // 2. 依據檢索字詞過濾 (同時檢索標題、摘要、分類與正文)
-            if (currentSearchQuery) {
-                filteredPosts = filteredPosts.filter(p => {
-                    const titleMatch = (p.title || '').toLowerCase().includes(currentSearchQuery);
-                    const summaryMatch = (p.summary || '').toLowerCase().includes(currentSearchQuery);
-                    const categoryMatch = (p.category || '').toLowerCase().includes(currentSearchQuery);
-                    const contentMatch = (p.content || '').toLowerCase().includes(currentSearchQuery);
-                    return titleMatch || summaryMatch || categoryMatch || contentMatch;
-                });
-            }
-
-            // 3. 依據日期與排序設定進行排序 (防呆校正日期解析，確保 100% 排列生效)
             const sortedPosts = [...filteredPosts].sort((a, b) => {
-                const dateA = a.date ? new Date(a.date).getTime() : 0;
-                const dateB = b.date ? new Date(b.date).getTime() : 0;
-                
-                const valA = isNaN(dateA) ? 0 : dateA;
-                const valB = isNaN(dateB) ? 0 : dateB;
-
-                if (valA === valB) {
-                    return currentSortOrder === 'desc' ? b.id - a.id : a.id - b.id;
+                const dateDiff = new Date(b.date) - new Date(a.date);
+                if (dateDiff !== 0) {
+                    return sortOrder === 'desc' ? dateDiff : -dateDiff;
                 }
-                return currentSortOrder === 'desc' ? valB - valA : valA - valB;
+                const orderA = extractOrderIndex(a.title);
+                const orderB = extractOrderIndex(b.title);
+                if (orderA !== orderB) {
+                    return sortOrder === 'desc' ? (orderB - orderA) : (orderA - orderB);
+                }
+                return sortOrder === 'desc' ? (b.id - a.id) : (a.id - b.id);
             });
 
             if (sortedPosts.length === 0) {
                 container.innerHTML = `
                     <div class="text-center py-20 font-serif">
-                        <i class="fa-solid fa-compass text-stone-300 dark:text-stone-700 text-4xl mb-4"></i>
-                        <p class="text-stone-400 dark:text-stone-600 tracking-wider">
-                            ${currentSearchQuery ? '查無符合檢索字詞的遠征足跡...' : '無盡的道路上，正等待著你踏出第一步...'}
-                        </p>
-                    </div>
-                `;
+                        <i class="fa-solid fa-compass text-stone-300 dark:text-stone-700 text-4xl mb-4 animate-pulse"></i>
+                        <p class="text-stone-400 dark:text-stone-600 tracking-wider">沒有找到符合條件的足跡...</p>
+                    </div>`;
                 return;
             }
 
-            // 4. 計算分頁數據
+            // 分頁邏輯計算
             const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
-            if (currentPage > totalPages && totalPages > 0) {
-                currentPage = totalPages;
-            } else if (currentPage < 1) {
-                currentPage = 1;
-            }
+            if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
 
             const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
-            const endIndex = startIndex + POSTS_PER_PAGE;
-            const paginatedPosts = sortedPosts.slice(startIndex, endIndex);
+            const paginatedPosts = sortedPosts.slice(startIndex, startIndex + POSTS_PER_PAGE);
 
-            // 渲染當前頁面的文章
             paginatedPosts.forEach(post => {
                 const article = document.createElement('article');
-                article.className = 'group transition-all duration-300 border-b border-stone-200/50 dark:border-stone-800/50 pb-10';
+                article.className = 'group transition-all duration-300 border-b border-stone-200/50 dark:border-stone-800/50 pb-8';
                 article.innerHTML = `
-                    <div class="flex items-center gap-3 text-xs font-sans text-stone-500 dark:text-stone-400 mb-3">
+                    <div class="flex items-center gap-3 text-xs font-sans text-stone-500 dark:text-stone-400 mb-2">
                         <span class="bg-stone-200/60 dark:bg-stone-800 px-2 py-0.5 rounded text-accent dark:text-accent-dark font-medium">${post.category}</span>
                         <span>•</span>
                         <span>${post.date}</span>
+                        <span>•</span>
+                        <span>${post.wordCount} 字</span>
                     </div>
-                    <h3 class="text-xl md:text-2xl font-bold font-serif mb-4 text-stone-800 dark:text-stone-100 group-hover:text-accent dark:group-hover:text-accent-dark transition-colors duration-300 leading-snug">
+                    <h3 class="text-xl md:text-2xl font-bold font-serif mb-3 text-stone-800 dark:text-stone-100 group-hover:text-accent dark:group-hover:text-accent-dark transition-colors duration-300 leading-snug">
                         <a href="javascript:void(0)" onclick="viewPostDetail(${post.id})">${post.title}</a>
                     </h3>
-                    <p class="text-stone-600 dark:text-stone-400 leading-relaxed font-serif text-sm mb-6 line-clamp-3">
+                    <p class="text-stone-600 dark:text-stone-400 leading-relaxed font-serif text-sm mb-4 line-clamp-3">
                         ${post.summary}
                     </p>
                     <button onclick="viewPostDetail(${post.id})" class="font-sans text-xs font-semibold tracking-wider text-accent dark:text-accent-dark hover:underline transition-all flex items-center gap-1">
@@ -632,305 +483,95 @@
                 container.appendChild(article);
             });
 
-            // 5. 渲染分頁導航按鈕
-            renderPagination(totalPages);
+            // 渲染分頁按鈕
+            if (paginationContainer && totalPages > 1) {
+                paginationContainer.innerHTML = `
+                    <button onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled class="px-4 py-2 rounded-full border border-stone-200 dark:border-stone-800 text-stone-400 dark:text-stone-600 cursor-not-allowed"' : 'class="px-4 py-2 rounded-full border border-stone-300 dark:border-stone-700 hover:border-accent dark:hover:border-accent-dark hover:text-accent dark:hover:text-accent-dark transition-colors bg-white/60 dark:bg-stone-900/60 font-medium shadow-sm"'}>
+                        <i class="fa-solid fa-chevron-left mr-1.5"></i>上一頁
+                    </button>
+                    <span class="font-serif tracking-widest text-stone-600 dark:text-stone-400 px-2">
+                        第 <strong class="text-accent dark:text-accent-dark font-sans">${currentPage}</strong> / <span class="font-sans">${totalPages}</span> 頁
+                    </span>
+                    <button onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled class="px-4 py-2 rounded-full border border-stone-200 dark:border-stone-800 text-stone-400 dark:text-stone-600 cursor-not-allowed"' : 'class="px-4 py-2 rounded-full border border-stone-300 dark:border-stone-700 hover:border-accent dark:hover:border-accent-dark hover:text-accent dark:hover:text-accent-dark transition-colors bg-white/60 dark:bg-stone-900/60 font-medium shadow-sm"'}>
+                        下一頁<i class="fa-solid fa-chevron-right ml-1.5"></i>
+                    </button>
+                `;
+            }
         }
 
-        // 渲染分頁按鈕 HTML
-        function renderPagination(totalPages) {
-            const container = document.getElementById('pagination-container');
-            if (!container) return;
-            
-            if (totalPages <= 1) {
-                container.innerHTML = '';
-                return;
-            }
-
-            let html = '';
-
-            // 上一頁按鈕
-            if (currentPage > 1) {
-                html += `<button onclick="changePage(${currentPage - 1})" class="px-5 py-2 rounded-full border border-stone-300 dark:border-stone-700 text-stone-600 dark:text-stone-300 hover:border-accent hover:text-accent dark:hover:border-accent-dark dark:hover:text-accent-dark transition-all duration-300 bg-transparent flex items-center gap-2 font-medium tracking-wide shadow-sm hover:shadow-md transform hover:-translate-x-0.5"><i class="fa-solid fa-angle-left text-[11px]"></i> 上一頁</button>`;
-            } else {
-                html += `<button disabled class="px-5 py-2 rounded-full border border-stone-200 dark:border-stone-800 text-stone-400 dark:text-stone-600 cursor-not-allowed bg-transparent flex items-center gap-2 font-medium tracking-wide"><i class="fa-solid fa-angle-left text-[11px]"></i> 上一頁</button>`;
-            }
-
-            // 頁碼指示器
-            html += `<span class="text-stone-500 dark:text-stone-400 font-medium tracking-widest text-xs mx-6">第 <span class="text-stone-800 dark:text-stone-200">${currentPage}</span> / ${totalPages} 頁</span>`;
-
-            // 下一頁按鈕
-            if (currentPage < totalPages) {
-                html += `<button onclick="changePage(${currentPage + 1})" class="px-5 py-2 rounded-full border border-stone-300 dark:border-stone-700 text-stone-600 dark:text-stone-300 hover:border-accent hover:text-accent dark:hover:border-accent-dark dark:hover:text-accent-dark transition-all duration-300 bg-transparent flex items-center gap-2 font-medium tracking-wide shadow-sm hover:shadow-md transform hover:translate-x-0.5">下一頁 <i class="fa-solid fa-angle-right text-[11px]"></i></button>`;
-            } else {
-                html += `<button disabled class="px-5 py-2 rounded-full border border-stone-200 dark:border-stone-800 text-stone-400 dark:text-stone-600 cursor-not-allowed bg-transparent flex items-center gap-2 font-medium tracking-wide">下一頁 <i class="fa-solid fa-angle-right text-[11px]"></i></button>`;
-            }
-
-            container.innerHTML = html;
-        }
-
-        // 切換頁面事件
-        function changePage(newPage) {
-            currentPage = newPage;
+        function changePage(page) {
+            currentPage = page;
             renderPosts();
-            
-            // 滾動回列表頂部附近 (以分類列為基準點)
-            const categoryBar = document.getElementById('category-bar');
-            if (categoryBar) {
-                const offsetTop = categoryBar.getBoundingClientRect().top + window.scrollY - 120;
-                window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-            }
-        }
-
-        // 站長暗號：點擊左上角大標題 5 次
-        function triggerSecretClick() {
-            secretClickCount++;
-            if (secretClickCount >= 5) {
-                handleSecretTrigger();
-                secretClickCount = 0;
-            }
-        }
-
-        // 站長暗號鍵盤快捷鍵: Ctrl + Shift + E
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && e.shiftKey && e.key.toUpperCase() === 'E') {
-                e.preventDefault();
-                handleSecretTrigger();
-            }
-        });
-
-        // 處理暗號觸發
-        function handleSecretTrigger() {
-            if (isSecretUnlocked) {
-                // 如果已經解鎖，再次觸發暗號代表「直接關閉/上鎖」，不需密碼
-                toggleSecretMode(false);
-                showToast("🔒 站長模式已安全上鎖。");
-            } else {
-                // 如果是鎖定狀態，彈出密碼輸入框
-                openPasswordPrompt();
-            }
-        }
-
-        // 開啟密碼驗證框
-        function openPasswordPrompt() {
-            const passwordBar = document.getElementById('password-bar');
-            const passwordInput = document.getElementById('admin-password-input');
-            if (!passwordBar || !passwordInput) return;
-
-            passwordInput.value = '';
-            passwordBar.classList.remove('-translate-y-full');
-            passwordInput.focus();
-
-            // 綁定送出驗證
-            document.getElementById('password-submit').onclick = submitPassword;
-
-            // 綁定鍵盤 Enter 鍵
-            passwordInput.onkeydown = function(e) {
-                if (e.key === 'Enter') {
-                    submitPassword();
-                }
-            };
-
-            // 綁定取消按鈕
-            document.getElementById('password-cancel').onclick = closePasswordPrompt;
-        }
-
-        // 驗證密碼
-        function submitPassword() {
-            const passwordInput = document.getElementById('admin-password-input');
-            if (!passwordInput) return;
-
-            const inputVal = passwordInput.value;
-            // 🔒 強制安全校驗密碼：Justin951130
-            if (inputVal === 'Justin951130') {
-                toggleSecretMode(true);
-                closePasswordPrompt();
-                showToast("🔑 站長身份認證成功！已解鎖管理與寫作功能。");
-            } else {
-                showToast("❌ 密碼錯誤，存取遭拒。");
-                passwordInput.value = '';
-                passwordInput.focus();
-            }
-        }
-
-        // 關閉密碼驗證框
-        function closePasswordPrompt() {
-            const passwordBar = document.getElementById('password-bar');
-            if (passwordBar) {
-                passwordBar.classList.add('-translate-y-full');
-            }
-        }
-
-        // 控制站長模式開關 (安靜解鎖)
-        function toggleSecretMode(forceState) {
-            if (typeof forceState === 'boolean') {
-                isSecretUnlocked = forceState;
-            } else {
-                isSecretUnlocked = !isSecretUnlocked;
-            }
-
-            const writeBtn = document.getElementById('write-btn');
-            const adminDeleteBtn = document.getElementById('admin-delete-btn');
-            const adminEditBtn = document.getElementById('admin-edit-btn');
-            const adminExportSection = document.getElementById('admin-export-section');
-
-            if (isSecretUnlocked) {
-                if (writeBtn) writeBtn.classList.remove('hidden');
-                if (adminDeleteBtn) adminDeleteBtn.classList.remove('hidden');
-                if (adminEditBtn) adminEditBtn.classList.remove('hidden');
-                if (adminExportSection) adminExportSection.classList.remove('hidden');
-                updateExportData();
-            } else {
-                if (writeBtn) writeBtn.classList.add('hidden');
-                if (adminDeleteBtn) adminDeleteBtn.classList.add('hidden');
-                if (adminEditBtn) adminEditBtn.classList.add('hidden');
-                if (adminExportSection) adminExportSection.classList.add('hidden');
-                // 如果目前在寫作介面，則強制導回首頁
-                if (currentView === 'write-post') {
-                    navigateTo('home');
-                }
-            }
-        }
-
-        // 平滑導航控制 (SPA 視圖轉換，加入 instantScroll 參數控制跳轉效果)
-        function navigateTo(viewId, instantScroll = false) {
-            const views = {
-                'home': document.getElementById('view-home'),
-                'single-post': document.getElementById('view-post'),
-                'write-post': document.getElementById('view-write')
-            };
-
-            // 隱藏所有視圖
-            Object.values(views).forEach(v => {
-                if (v) v.classList.add('view-hidden');
-            });
-
-            // 顯示指定視圖並平滑淡入
-            let activeView = views[viewId];
-            if (viewId === 'home') activeView = views['home'];
-            if (viewId === 'post-detail') activeView = views['single-post'];
-            if (viewId === 'write-post') activeView = views['write-post'];
-
-            if (activeView) activeView.classList.remove('view-hidden');
-            currentView = viewId;
-
-            // 滾動回頂端 (如果是下一章，則直接瞬移不進行 smooth 滾動)
-            if (instantScroll) {
-                window.scrollTo(0, 0);
+            const container = document.getElementById('category-filter-container');
+            if (container) {
+                container.scrollIntoView({ behavior: 'smooth' });
             } else {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
 
-        // 篩選分類
-        function filterCategory(cat) {
-            currentFilter = cat;
-            currentPage = 1; // 切換分類時重置回第一頁
-            
-            // 切換按鈕 active 樣式
-            document.querySelectorAll('.cat-btn').forEach(btn => {
-                if (btn.getAttribute('data-cat') === cat) {
-                    btn.className = "cat-btn active px-4 py-1.5 rounded-full bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark font-medium transition-all duration-200";
-                } else {
-                    btn.className = "cat-btn px-4 py-1.5 rounded-full text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-all duration-200";
-                }
-            });
-
-            renderPosts();
-            navigateTo('home');
-        }
-
-        // 更改閱讀視圖的字體大小
-        function changeFontSize(size) {
-            currentFontSize = size;
-            localStorage.setItem('expedition_font_size', size);
-            applyFontSize();
-        }
-
-        // 套用目前字級樣式至閱讀主體
-        function applyFontSize() {
-            const contentBody = document.querySelector('#single-post-content .content-body');
-            if (!contentBody) return;
-
-            // 清除現有的字級 Class
-            contentBody.classList.remove('text-base', 'text-lg', 'text-xl');
-
-            // 依據當前字級設定套用對應樣式
-            if (currentFontSize === 'small') {
-                contentBody.classList.add('text-base');
-            } else if (currentFontSize === 'medium') {
-                contentBody.classList.add('text-lg');
-            } else if (currentFontSize === 'large') {
-                contentBody.classList.add('text-xl');
-            }
-
-            // 更新字體控制面板按鈕 active 樣式
-            ['small', 'medium', 'large'].forEach(size => {
-                const btn = document.getElementById(`btn-fs-${size}`);
-                if (btn) {
-                    if (size === currentFontSize) {
-                        btn.className = "px-2.5 py-1 rounded bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark font-medium transition-all text-[11px]";
-                    } else {
-                        btn.className = "px-2.5 py-1 rounded border border-stone-300 dark:border-stone-700 text-stone-600 dark:text-stone-400 hover:border-accent transition-all text-[11px] bg-transparent";
-                    }
-                }
-            });
-        }
-
-        // 查看單篇文章詳細內容 (加入第三個參數 instantScroll)
-        function viewPostDetail(id, instantScroll = false) {
+        async function viewPostDetail(id) {
             const post = posts.find(p => String(p.id) === String(id));
             if (!post) return;
 
             const contentArea = document.getElementById('single-post-content');
+            const loadingIndicator = document.getElementById('post-loading');
             
-            // 將內容中所有的換行符替換成 HTML 段落，大段落縮排
-            const formattedContent = post.content
-                .split('\n')
-                .filter(paragraph => paragraph.trim() !== '')
-                .map(paragraph => `<p class="mb-6 indent-8 text-stone-700 dark:text-stone-300 leading-loose tracking-wide font-serif text-justify">${paragraph}</p>`)
-                .join('');
+            contentArea.innerHTML = '';
+            loadingIndicator.classList.remove('hidden');
+            navigateTo('post-detail');
+
+            let finalContent = "";
+            if (post.content && post.content !== "") {
+                finalContent = post.content;
+            } else {
+                try {
+                    const res = await fetch(`posts/${id}.txt?_t=${Date.now()}`);
+                    if (res.ok) finalContent = await res.text();
+                    else finalContent = "⚠️ 文章載入失敗，請確認 `posts/" + id + ".txt` 是否存在。";
+                } catch (e) {
+                    finalContent = "⚠️ 發生連線異常，無法下載正文。";
+                }
+            }
+
+            loadingIndicator.classList.add('hidden');
+            finalContent = sanitizeText(finalContent);
+
+            const selectedFontSizeClass = fontSizes[currentFontSize];
 
             contentArea.innerHTML = `
                 <div class="flex items-center gap-3 text-xs font-sans text-stone-500 dark:text-stone-400 mb-4">
                     <span class="bg-stone-200/60 dark:bg-stone-800 px-2.5 py-1 rounded text-accent dark:text-accent-dark font-semibold">${post.category}</span>
                     <span>•</span>
                     <span>${post.date}</span>
+                    <span>•</span>
+                    <span>${post.wordCount} 字</span>
                 </div>
                 <h2 class="text-2xl md:text-3xl font-bold font-serif mb-8 text-stone-800 dark:text-stone-100 leading-snug tracking-wide border-b border-stone-200 dark:border-stone-800 pb-6">${post.title}</h2>
-                <div class="content-body transition-all duration-300">
-                    ${formattedContent}
+                <div class="content-body font-serif whitespace-pre-wrap text-stone-700 dark:text-stone-300 leading-relaxed tracking-wide ${selectedFontSizeClass}">
+${finalContent}
                 </div>
             `;
 
-            // 套用目前所選的字級
-            applyFontSize();
-
-            // 獲取編輯與刪除按鈕元素
             const deleteBtn = document.getElementById('admin-delete-btn');
             const editBtn = document.getElementById('admin-edit-btn');
 
-            // 無條件在背景綁定點擊事件，確保事件存在
             if (deleteBtn) {
                 deleteBtn.onclick = function() {
-                    triggerConfirm("您確定要刪除這篇珍貴的遠征紀錄嗎？", function() {
+                    triggerConfirm("確定要刪除本地暫存嗎？", function() {
                         posts = posts.filter(p => String(p.id) !== String(id));
-                        localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
-                        dynamicRenderCategoryFilters();
+                        const filteredLocal = (JSON.parse(localStorage.getItem(CACHE_KEY)) || []).filter(p => String(p.id) !== String(id));
+                        localStorage.setItem(CACHE_KEY, JSON.stringify(filteredLocal));
+                        showToast("🗑️ 文章暫存已刪除。");
+                        updateStats();
                         renderPosts();
-                        calculateStats(); // 即時重新計算數據統計
-                        updateExportData();
                         navigateTo('home');
-                        showToast("🗑️ 文章已成功移出本地手札。");
                     });
                 };
             }
-            if (editBtn) {
-                editBtn.onclick = function() {
-                    editPost(id);
-                };
-            }
 
-            // 僅根據解鎖狀態控制按鈕的可見性
+            if (editBtn) editBtn.onclick = () => editPost(id, finalContent);
+
             if (isSecretUnlocked) {
                 if (deleteBtn) deleteBtn.classList.remove('hidden');
                 if (editBtn) editBtn.classList.remove('hidden');
@@ -939,172 +580,250 @@
                 if (editBtn) editBtn.classList.add('hidden');
             }
 
-            // 下一章與上一章智慧導航渲染 (只查找同分類文章)
-            renderNextChapterNav(post);
-
-            navigateTo('post-detail', instantScroll);
+            renderPostNavigation(post);
         }
 
-        // 進入編輯文章模式
-        function editPost(id) {
+        // 回到頂端平滑滾動功能
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderPostNavigation(currentPost) {
+            const navContainer = document.getElementById('post-navigation');
+            if (!navContainer) return;
+
+            const list = currentFilter === '全部' ? posts : posts.filter(p => p.category === currentFilter);
+            const sortedList = [...list].sort((a, b) => new Date(b.date) - new Date(a.date));
+            const currentIndex = sortedList.findIndex(p => String(p.id) === String(currentPost.id));
+            const nextPost = currentIndex > 0 ? sortedList[currentIndex - 1] : null;
+            const prevPost = currentIndex < sortedList.length - 1 ? sortedList[currentIndex + 1] : null; 
+
+            let navHtml = '';
+            if (prevPost) {
+                navHtml += `
+                    <button onclick="viewPostDetail(${prevPost.id})" class="group w-full sm:w-1/2 flex items-center justify-start gap-4 px-5 py-4 rounded-xl border border-stone-300 dark:border-stone-700 hover:border-accent dark:hover:border-accent-dark transition-all duration-300 bg-stone-100/30 hover:bg-stone-200/50 dark:hover:bg-stone-800/30 text-left">
+                        <i class="fa-solid fa-chevron-left text-stone-400 group-hover:text-accent dark:group-hover:text-accent-dark transition-colors"></i>
+                        <div class="overflow-hidden">
+                            <span class="block text-[10px] text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-1">上一篇 (較早)</span>
+                            <span class="block text-sm font-serif font-semibold text-stone-700 dark:text-stone-300 group-hover:text-accent dark:group-hover:text-accent-dark truncate w-full">${prevPost.title}</span>
+                        </div>
+                    </button>`;
+            } else {
+                navHtml += `<div class="hidden sm:block sm:w-1/2"></div>`;
+            }
+
+            if (nextPost) {
+                navHtml += `
+                    <button onclick="viewPostDetail(${nextPost.id})" class="group w-full sm:w-1/2 flex items-center justify-end gap-4 px-5 py-4 rounded-xl border border-stone-300 dark:border-stone-700 hover:border-accent dark:hover:border-accent-dark transition-all duration-300 bg-stone-100/30 hover:bg-stone-200/50 dark:hover:bg-stone-800/30 text-right ml-auto">
+                        <div class="overflow-hidden">
+                            <span class="block text-[10px] text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-1">下一篇 (較新)</span>
+                            <span class="block text-sm font-serif font-semibold text-stone-700 dark:text-stone-300 group-hover:text-accent dark:group-hover:text-accent-dark truncate w-full">${nextPost.title}</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-stone-400 group-hover:text-accent dark:group-hover:text-accent-dark transition-colors"></i>
+                    </button>`;
+            } else {
+                navHtml += `<div class="hidden sm:block sm:w-1/2"></div>`;
+            }
+
+            navContainer.innerHTML = navHtml;
+        }
+
+        function triggerSecretClick() {
+            secretClickCount++;
+            if (secretClickCount >= 5) {
+                attemptUnlockSecretMode();
+                secretClickCount = 0;
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.shiftKey && e.key.toUpperCase() === 'E') {
+                e.preventDefault();
+                attemptUnlockSecretMode();
+            }
+        });
+
+        function attemptUnlockSecretMode() {
+            if (isSecretUnlocked) {
+                isSecretUnlocked = false;
+                toggleSecretUI();
+                showToast("🔒 編輯模式已鎖定。");
+            } else {
+                const pwd = prompt("請輸入站長解鎖密碼：");
+                if (pwd === "Justin951130") {
+                    isSecretUnlocked = true;
+                    toggleSecretUI();
+                    showToast("🔓 密碼正確！編輯模式已成功解鎖。");
+                } else if (pwd !== null) {
+                    showToast("❌ 密碼錯誤，拒絕存取。");
+                }
+            }
+        }
+
+        function toggleSecretUI() {
+            const writeBtn = document.getElementById('write-btn');
+            const adminExportSection = document.getElementById('admin-export-section');
+
+            if (isSecretUnlocked) {
+                if (writeBtn) writeBtn.classList.remove('hidden');
+                if (adminExportSection) adminExportSection.classList.remove('hidden');
+                updateExportData();
+            } else {
+                if (writeBtn) writeBtn.classList.add('hidden');
+                if (adminExportSection) adminExportSection.classList.add('hidden');
+                if (currentView === 'write-post') navigateTo('home');
+            }
+
+            const deleteBtn = document.getElementById('admin-delete-btn');
+            const editBtn = document.getElementById('admin-edit-btn');
+            if (deleteBtn && editBtn && currentView === 'post-detail') {
+                if (isSecretUnlocked) {
+                    deleteBtn.classList.remove('hidden');
+                    editBtn.classList.remove('hidden');
+                } else {
+                    deleteBtn.classList.add('hidden');
+                    editBtn.classList.add('hidden');
+                }
+            }
+        }
+
+        function navigateTo(viewId) {
+            const views = {
+                'home': document.getElementById('view-home'),
+                'post-detail': document.getElementById('view-post'),
+                'write-post': document.getElementById('view-write')
+            };
+            Object.values(views).forEach(v => {
+                if (v) v.classList.add('view-hidden');
+            });
+            const activeView = views[viewId];
+            if (activeView) activeView.classList.remove('view-hidden');
+            currentView = viewId;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function editPost(id, content) {
             const post = posts.find(p => String(p.id) === String(id));
             if (!post) return;
 
             editingPostId = id;
-
-            // 回填表單欄位
             document.getElementById('post-title').value = post.title;
             document.getElementById('post-category').value = post.category;
             document.getElementById('post-date').value = post.date;
             document.getElementById('post-summary').value = post.summary;
-            document.getElementById('post-content').value = post.content;
+            document.getElementById('post-content').value = content;
 
-            // 調整寫作介面標題與按鈕字樣
             document.getElementById('write-view-title').textContent = "編輯遠征足跡";
-            document.getElementById('submit-btn-text').textContent = "保存修改並發布";
+            document.getElementById('submit-btn-text').textContent = "更新並產出新數據";
 
             navigateTo('write-post');
         }
 
-        // 取消寫作
         function cancelWrite() {
             editingPostId = null;
             document.getElementById('write-form').reset();
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('post-date').value = today;
 
-            // 還原預設標題與按鈕字樣
             document.getElementById('write-view-title').textContent = "新增遠征足跡";
-            document.getElementById('submit-btn-text').textContent = "保存此篇至瀏覽器";
+            document.getElementById('submit-btn-text').textContent = "保存並準備導出數據";
 
             navigateTo('home');
         }
 
-        // 智慧章節按鈕渲染 (確保按照時間正序，並完美呈現上一章與下一章)
-        function renderNextChapterNav(currentPost) {
-            const nextContainer = document.getElementById('next-chapter-container');
-            if (!nextContainer) return;
-            nextContainer.innerHTML = '';
-
-            // 尋找同分類的所有文章並「嚴格依時間正序排序」(最舊的在前面，之一 ➔ 之二)
-            const catPosts = posts
-                .filter(p => p.category === currentPost.category)
-                .sort((a, b) => {
-                    const dateA = a.date ? new Date(a.date).getTime() : 0;
-                    const dateB = b.date ? new Date(b.date).getTime() : 0;
-                    if (dateA !== dateB) {
-                        return dateA - dateB; // 舊的排在前方
-                    }
-                    return String(a.id).localeCompare(String(b.id)); // 日期一樣則比對 id
-                });
-
-            // 當同分類文章存在 2 篇或以上時才渲染導航按鍵
-            if (catPosts.length >= 2) {
-                const currentIndex = catPosts.findIndex(p => String(p.id) === String(currentPost.id));
-                // 循環導向上一篇與下一篇
-                const prevIndex = (currentIndex - 1 + catPosts.length) % catPosts.length;
-                const nextIndex = (currentIndex + 1) % catPosts.length;
-                
-                const prevPost = catPosts[prevIndex];
-                const nextPost = catPosts[nextIndex];
-
-                // 傳入 true 作為第二個參數，指示 viewPostDetail 瞬移跳轉，不要有滾動效果
-                nextContainer.innerHTML = `
-                    <div class="grid grid-cols-2 gap-4 w-full md:w-[480px]">
-                        <button onclick="viewPostDetail(${prevPost.id}, true)" class="group flex items-center gap-3 px-4 py-3 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-accent dark:hover:border-accent-dark transition-all duration-300 bg-stone-100/10 hover:bg-stone-200/20 dark:hover:bg-stone-800/20 text-left">
-                            <i class="fa-solid fa-chevron-left text-stone-400 group-hover:text-accent dark:group-hover:text-accent-dark transition-colors shrink-0"></i>
-                            <div class="min-w-0">
-                                <span class="block text-[10px] text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-0.5">上一章</span>
-                                <span class="block text-sm font-serif font-semibold text-stone-700 dark:text-stone-300 group-hover:text-accent dark:group-hover:text-accent-dark truncate">${prevPost.title}</span>
-                            </div>
-                        </button>
-
-                        <button onclick="viewPostDetail(${nextPost.id}, true)" class="group flex items-center justify-between gap-3 px-4 py-3 rounded-lg border border-stone-300 dark:border-stone-700 hover:border-accent dark:hover:border-accent-dark transition-all duration-300 bg-stone-100/10 hover:bg-stone-200/20 dark:hover:bg-stone-800/20 text-right">
-                            <div class="min-w-0 ml-auto">
-                                <span class="block text-[10px] text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-0.5">下一章</span>
-                                <span class="block text-sm font-serif font-semibold text-stone-700 dark:text-stone-300 group-hover:text-accent dark:group-hover:text-accent-dark truncate">${nextPost.title}</span>
-                            </div>
-                            <i class="fa-solid fa-chevron-right text-stone-400 group-hover:text-accent dark:group-hover:text-accent-dark transition-colors shrink-0"></i>
-                        </button>
-                    </div>
-                `;
-            }
-        }
-
-        // 發布文章處理
         function handlePublish(e) {
             e.preventDefault();
-
-            const title = document.getElementById('post-title').value.trim();
-            const category = document.getElementById('post-category').value.trim();
+            const title = sanitizeText(document.getElementById('post-title').value);
+            const category = document.getElementById('post-category').value;
             const date = document.getElementById('post-date').value;
-            const summary = document.getElementById('post-summary').value.trim();
-            const content = document.getElementById('post-content').value;
+            const summary = sanitizeText(document.getElementById('post-summary').value);
+            const content = sanitizeText(document.getElementById('post-content').value);
+            const wordCount = content.replace(/\s/g, '').length;
+
+            let targetId = editingPostId;
 
             if (editingPostId) {
-                // 編輯模式：更新現有文章數據
                 const index = posts.findIndex(p => String(p.id) === String(editingPostId));
                 if (index !== -1) {
-                    posts[index] = {
-                        ...posts[index],
-                        title,
-                        category,
-                        date,
-                        summary,
-                        content
-                    };
+                    posts[index] = { ...posts[index], title, category, date, summary, content, wordCount };
                 }
-                editingPostId = null; // 清除編輯狀態
+                editingPostId = null;
             } else {
-                // 新增模式：添加新文章
-                const newPost = {
-                    id: Date.now(),
-                    title,
-                    category,
-                    date,
-                    summary,
-                    content
-                };
+                targetId = Date.now();
+                const newPost = { id: targetId, title, category, date, summary, content, wordCount };
                 posts.unshift(newPost);
             }
 
-            localStorage.setItem(CACHE_KEY, JSON.stringify(posts));
+            const localToSave = posts.filter(p => p.content && p.content !== "");
+            localStorage.setItem(CACHE_KEY, JSON.stringify(localToSave));
 
-            // 重設表單與狀態
             document.getElementById('write-form').reset();
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('post-date').value = today;
             document.getElementById('write-view-title').textContent = "新增遠征足跡";
-            document.getElementById('submit-btn-text').textContent = "保存此篇至瀏覽器";
+            document.getElementById('submit-btn-text').textContent = "保存並準備導出數據";
 
-            showToast("✨ 成功保存！請至下方備份導出區一鍵同步到 GitHub。");
-            dynamicRenderCategoryFilters();
-            currentPage = 1; // 新增或編輯完成後回到首頁第一頁方便檢視
+            showToast("✨ 成功發布暫存！請在下方「站長數據匯出」複製程式碼。");
+            
+            updateStats();
+            renderCategoryFilter();
             renderPosts();
-            calculateStats(); // 即時重新計算字數與篇數
-            updateExportData();
+            updateExportData(targetId, content);
             navigateTo('home');
+
+            setTimeout(() => {
+                const panel = document.getElementById('admin-export-section');
+                if (panel) panel.scrollIntoView({ behavior: 'smooth' });
+            }, 500);
         }
 
-        // 更新導出文字區塊的內容
-        function updateExportData() {
+        function updateExportData(newPostId = null, textContent = "") {
             const exportArea = document.getElementById('admin-export-area');
-            if (exportArea) {
-                exportArea.value = JSON.stringify(posts);
+            if (!exportArea) return;
+
+            const directoryList = posts.map(p => ({
+                id: p.id,
+                title: sanitizeText(p.title),
+                category: sanitizeText(p.category),
+                date: sanitizeText(p.date),
+                summary: sanitizeText(p.summary),
+                wordCount: p.wordCount
+            }));
+            const cleanedDirectoryJson = JSON.stringify(directoryList, null, 2)
+                .replace(/[\u0000-\u0009\u000B-\u001F\u007F-\u009F]/g, "");
+            exportArea.value = cleanedDirectoryJson;
+
+            const textContainer = document.getElementById('text-export-container');
+            const recommendFilename = document.getElementById('recommend-filename');
+            const articleTextArea = document.getElementById('article-text-area');
+            if (newPostId && textContent) {
+                if (textContainer) textContainer.classList.remove('hidden');
+                if (recommendFilename) recommendFilename.textContent = `${newPostId}.txt`;
+                if (articleTextArea) articleTextArea.value = sanitizeText(textContent);
+            } else {
+                if (textContainer) textContainer.classList.add('hidden');
             }
         }
 
-        // 複製站長備份數據
         function copyAdminExportData() {
             const exportArea = document.getElementById('admin-export-area');
             if (exportArea) {
                 exportArea.select();
                 document.execCommand('copy');
-                showToast("📋 文章數據複製成功！現在可以前往 GitHub 的 DEFAULT_POSTS 貼上了。");
+                showToast("📋 乾淨目錄數據已複製！請覆蓋 GitHub 上的 `posts-list.json`。");
             }
         }
 
-        // 切換深色/淺色模式
+        function copyArticleTextData() {
+            const articleTextArea = document.getElementById('article-text-area');
+            if (articleTextArea) {
+                articleTextArea.select();
+                document.execCommand('copy');
+                showToast("📋 文章正文文本已複製！請在 GitHub 的 `posts/` 內建立對應的 .txt 檔案並貼上。");
+            }
+        }
+
         function toggleDarkMode() {
             const isDark = document.documentElement.classList.toggle('dark');
             const themeIcon = document.getElementById('theme-icon');
@@ -1118,14 +837,12 @@
             }
         }
 
-        // Toast 輕量通知管理
         function showToast(message) {
             const toast = document.getElementById('toast-notification');
             const msgSpan = document.getElementById('toast-message');
-            msgSpan.textContent = message;
-            toast.classList.remove('-translate-y-full');
+            if (msgSpan) msgSpan.textContent = message;
+            if (toast) toast.classList.remove('-translate-y-full');
 
-            // 4秒後自動關閉
             setTimeout(closeToast, 4000);
         }
 
@@ -1134,7 +851,6 @@
             if (toast) toast.classList.add('-translate-y-full');
         }
 
-        // 自訂確認動作條
         function triggerConfirm(message, onConfirm) {
             const confirmBar = document.getElementById('confirm-bar');
             const messageSpan = document.getElementById('confirm-message');
@@ -1142,24 +858,16 @@
             if (confirmBar) confirmBar.classList.remove('-translate-y-full');
 
             activeConfirmCallback = onConfirm;
+            document.getElementById('confirm-yes').onclick = function() {
+                if (activeConfirmCallback) activeConfirmCallback();
+                closeConfirm();
+            };
 
-            const yesBtn = document.getElementById('confirm-yes');
-            if (yesBtn) {
-                yesBtn.onclick = function() {
-                    if (activeConfirmCallback) activeConfirmCallback();
-                    closeConfirm();
-                };
-            }
-
-            const noBtn = document.getElementById('confirm-no');
-            if (noBtn) {
-                noBtn.onclick = function() {
-                    closeConfirm();
-                };
-            }
+            document.getElementById('confirm-no').onclick = function() {
+                closeConfirm();
+            };
         }
 
-        // 關閉確認條
         function closeConfirm() {
             const confirmBar = document.getElementById('confirm-bar');
             if (confirmBar) confirmBar.classList.add('-translate-y-full');
