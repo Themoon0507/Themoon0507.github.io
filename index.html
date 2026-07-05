@@ -714,7 +714,7 @@ ${finalContent}
             document.getElementById('post-summary').value = post.summary;
             document.getElementById('post-content').value = content;
 
-            document.getElementById('write-view-title').textContent = "編輯遠征足跡";
+            document.getElementById('write-view-title').textContent = "編輯";
             document.getElementById('submit-btn-text').textContent = "更新並產出新數據";
 
             navigateTo('write-post');
@@ -726,7 +726,7 @@ ${finalContent}
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('post-date').value = today;
 
-            document.getElementById('write-view-title').textContent = "新增遠征足跡";
+            document.getElementById('write-view-title').textContent = "新增";
             document.getElementById('submit-btn-text').textContent = "保存並準備導出數據";
 
             navigateTo('home');
@@ -761,7 +761,7 @@ ${finalContent}
             document.getElementById('write-form').reset();
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('post-date').value = today;
-            document.getElementById('write-view-title').textContent = "新增遠征足跡";
+            document.getElementById('write-view-title').textContent = "新增";
             document.getElementById('submit-btn-text').textContent = "保存並準備導出數據";
 
             showToast("✨ 成功發布暫存！請在下方「站長數據匯出」複製程式碼。");
