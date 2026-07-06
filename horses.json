@@ -8,6 +8,125 @@
   },
   {
     "origin": "JP",
+    "mandarin": "銀幕英雄",
+    "original": "スクリーンヒーロー",
+    "en": "Screen Hero",
+    "birth": "2004.4.18"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "天空深處",
+    "original": "ディープスカイ",
+    "en": "Deep Sky",
+    "birth": "2005.4.24"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "伏特加",
+    "original": "ウオッカ",
+    "en": "Vodka",
+    "birth": "2004.4.4"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "梵高藝展",
+    "original": "マツリダゴッホ",
+    "en": "Matsurida Gogh",
+    "birth": "2003.3.15"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "名將森遜",
+    "original": "メイショウサムソン",
+    "en": "Meisho Samson",
+    "birth": "2003.3.7"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "淺草皇帝",
+    "original": "アサクサキングス",
+    "en": "Asakusa Kings",
+    "birth": "2004.3.23"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "東瀛隊長",
+    "original": "トーセンキャプテン",
+    "en": "Tosen Captain",
+    "birth": "2004.4.5"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "大和野豚",
+    "original": "ダイワワイルドボア",
+    "en": "Daiwa Wild Boar",
+    "birth": "2005.2.21"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "尊皇",
+    "original": "アドマイヤモナーク",
+    "en": "Admire Monarch",
+    "birth": "2001.2.27"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "紫月光",
+    "original": "Purple Moon",
+    "en": "Purple Moon",
+    "birth": "2003.1.25"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "永通達",
+    "original": "ネヴァブション",
+    "en": "Never Bouchon",
+    "birth": "2003.2.19"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "大宇宙",
+    "original": "コスモバルク",
+    "en": "Cosmo Bulk",
+    "birth": "2001.2.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "東寶艾倫",
+    "original": "トーホウアラン",
+    "en": "Toho Alan",
+    "birth": "2003.4.16"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "大隅草駒",
+    "original": "オースミグラスワン",
+    "en": "Osumi Grass One",
+    "birth": "2002.3.31"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "六十年代",
+    "original": "Sixties Icon",
+    "en": "Sixties Icon",
+    "birth": "2003.2.16"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "沼畔快駒",
+    "original": "Marsh Side",
+    "en": "Marsh Side",
+    "birth": "2003.4.5"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "教皇訓令",
+    "original": "Papal Bull",
+    "en": "Papal Bull",
+    "birth": "2003.2.29"
+  },
+  {
+    "origin": "JP",
     "mandarin": "極峰",
     "original": "ヴィルシーナ",
     "en": "Verxina",
