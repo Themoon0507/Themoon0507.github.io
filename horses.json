@@ -1,6 +1,48 @@
 [
   {
     "origin": "JP",
+    "mandarin": "夏威夷王",
+    "original": "キングカメハメハ",
+    "en": "King Kamehameha",
+    "birth": "2001.3.20"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "大和主將",
+    "original": "ダイワメジャー",
+    "en": "Daiwa Major",
+    "birth": "2001.4.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "頌讚火星",
+    "original": "アドマイヤマーズ",
+    "en": "Admire Mars",
+    "birth": "2016.3.16"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "拉丁城市",
+    "original": "レシステンシア",
+    "en": "Resistencia",
+    "birth": "2017.3.15"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "純美化身",
+    "original": "ナックビーナス",
+    "en": "Nac Venus",
+    "birth": "2013.3.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "秀逸小島",
+    "original": "セリフォス",
+    "en": "Serifos",
+    "birth": "2019.3.7"
+  },
+  {
+    "origin": "JP",
     "mandarin": "朗日清天",
     "original": "ラブリーデイ",
     "en": "Lovely Day",
