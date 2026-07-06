@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>賽馬名鑑互換檢索系統 ｜ 無盡的遠征</title>
+    <title>賽駒譯名互換檢索系統 ｜ 無盡的遠征</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+TC:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -53,7 +53,7 @@
                 <i class="fa-solid fa-arrow-left-long"></i> 返回主網站
             </a>
             <h1 class="text-2xl md:text-3xl font-bold font-serif tracking-widest text-accent dark:text-accent-dark">
-                賽馬名鑑對照辭典
+                賽駒譯名對照辭典
             </h1>
         </div>
         <button onclick="toggleDarkMode()" class="text-stone-600 dark:text-stone-300 hover:text-accent dark:hover:text-accent-dark transition-colors text-lg" title="切換主題">
@@ -63,9 +63,11 @@
 
     <main class="flex-grow w-full max-w-4xl mx-auto px-6 py-8 z-10 font-sans">
         
+        <!-- 控制與搜尋面板 -->
         <div class="bg-stone-100/60 dark:bg-stone-800/40 p-4 md:p-6 rounded-2xl border border-stone-200/60 dark:border-stone-700/60 shadow-sm mb-8 backdrop-blur-sm">
             <div class="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
                 
+                <!-- 語系來源分類切換 -->
                 <div class="flex flex-wrap gap-2" id="filter-buttons">
                     <button onclick="setFilter('ALL')" id="btn-ALL" class="px-4 py-1.5 rounded-full text-xs font-semibold bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark shadow-sm transition-all">
                         全部收錄
@@ -78,30 +80,38 @@
                     </button>
                 </div>
 
+                <!-- 搜尋框 -->
                 <div class="relative w-full md:w-64">
                     <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 transform -translate-y-1/2 text-stone-400 text-xs"></i>
                     <input type="text" id="search-input" oninput="handleSearch()" placeholder="輸入中/英/日文馬名檢索..." class="w-full pl-9 pr-4 py-2 bg-white/80 dark:bg-stone-900/80 border border-stone-200 dark:border-stone-700 rounded-full focus:outline-none focus:border-accent dark:focus:border-accent-dark transition-colors text-stone-700 dark:text-stone-200 text-xs shadow-inner">
                 </div>
             </div>
             
-            <div class="mt-4 pt-3 border-t border-stone-200/50 dark:border-stone-700/50 flex justify-between text-[11px] text-stone-500 dark:text-stone-400">
-                <span>提示：輸入中文、原名或英文皆可即時對照。</span>
-                <span id="result-count">共 0 筆名單</span>
+            <!-- 提示文字區塊 (更新為多條提示與隨機狀態顯示) -->
+            <div class="mt-4 pt-3 border-t border-stone-200/50 dark:border-stone-700/50 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2 text-[11px] text-stone-500 dark:text-stone-400">
+                <div class="space-y-1 font-serif">
+                    <p><i class="fa-solid fa-circle-info mr-1 text-accent dark:text-accent-dark"></i>提示：輸入中文、原名或英文皆可即時對照。</p>
+                    <p><i class="fa-solid fa-language mr-1 text-accent dark:text-accent-dark"></i>基本依據香港馬會譯名。</p>
+                    <p><i class="fa-solid fa-shuffle mr-1 text-accent dark:text-accent-dark"></i>無檢索狀態下，一次隨機顯示五十條。</p>
+                </div>
+                <span id="result-count" class="font-sans font-semibold text-accent dark:text-accent-dark whitespace-nowrap self-end sm:self-auto">載入中...</span>
             </div>
         </div>
 
+        <!-- 名單顯示卡片清單 -->
         <div id="horses-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
 
     </main>
 
     <footer class="w-full max-w-4xl mx-auto px-6 py-8 mt-auto border-t border-stone-200/60 dark:border-stone-800/60 text-center font-sans text-xs text-stone-400 dark:text-stone-600 z-10">
-        <p class="tracking-widest">© 2026 《無盡的遠征》賽馬名鑑檢索系統</p>
+        <p class="tracking-widest">© 2026 《無盡的遠征》賽駒譯名檢索系統</p>
     </footer>
 
     <script>
         let horsesData = [];
         let currentFilter = 'ALL';
         let searchQuery = '';
+        const DEFAULT_DISPLAY_LIMIT = 50; // 預設隨機顯示的數量上限
 
         window.onload = async function() {
             const themeIcon = document.getElementById('theme-icon');
@@ -150,11 +160,22 @@
             renderHorses();
         }
 
+        // Fisher-Yates 洗牌演算法 (用來實現公平的隨機排列)
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
         function renderHorses() {
             const container = document.getElementById('horses-grid');
             const countLabel = document.getElementById('result-count');
             container.innerHTML = '';
 
+            // 第一步：先依照分類與搜尋字詞過濾
             const filtered = horsesData.filter(h => {
                 const matchCategory = currentFilter === 'ALL' || h.origin === currentFilter;
                 const matchSearch = !searchQuery || 
@@ -164,9 +185,24 @@
                 return matchCategory && matchSearch;
             });
 
-            countLabel.textContent = `顯示 ${filtered.length} / ${horsesData.length} 筆名單`;
+            let finalDisplayList = filtered;
 
-            if (filtered.length === 0) {
+            // 第二步：如果是在「無檢索狀態」（沒輸入關鍵字）下，隨機打亂並取前 50 筆
+            if (!searchQuery) {
+                const shuffled = shuffleArray(filtered);
+                finalDisplayList = shuffled.slice(0, DEFAULT_DISPLAY_LIMIT);
+                
+                if (filtered.length > DEFAULT_DISPLAY_LIMIT) {
+                    countLabel.textContent = `隨機顯示 ${finalDisplayList.length} / 共收錄 ${filtered.length} 筆`;
+                } else {
+                    countLabel.textContent = `顯示 ${finalDisplayList.length} / 共收錄 ${filtered.length} 筆`;
+                }
+            } else {
+                // 有檢索時，完整顯示所有符合搜尋結果的馬匹，不再限制 50 條
+                countLabel.textContent = `搜尋結果：${finalDisplayList.length} 筆 (共收錄 ${horsesData.length} 筆)`;
+            }
+
+            if (finalDisplayList.length === 0) {
                 container.innerHTML = `
                     <div class="col-span-full text-center py-16 font-serif text-stone-400 dark:text-stone-600">
                         <i class="fa-solid fa-horse-head text-3xl mb-3 opacity-50"></i>
@@ -175,7 +211,7 @@
                 return;
             }
 
-            filtered.forEach(horse => {
+            finalDisplayList.forEach(horse => {
                 const isJP = horse.origin === 'JP';
                 const tagColor = isJP 
                     ? "bg-amber-100/80 text-amber-900 dark:bg-amber-950/60 dark:text-amber-300 border-amber-300/50" 
