@@ -87,7 +87,7 @@
                 </div>
             </div>
             
-            <!-- 提示文字區塊 (更新為多條提示與隨機狀態顯示) -->
+            <!-- 提示文字區塊 -->
             <div class="mt-4 pt-3 border-t border-stone-200/50 dark:border-stone-700/50 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2 text-[11px] text-stone-500 dark:text-stone-400">
                 <div class="space-y-1 font-serif">
                     <p><i class="fa-solid fa-circle-info mr-1 text-accent dark:text-accent-dark"></i>提示：輸入中文、原名或英文皆可即時對照。</p>
@@ -111,7 +111,7 @@
         let horsesData = [];
         let currentFilter = 'ALL';
         let searchQuery = '';
-        const DEFAULT_DISPLAY_LIMIT = 50; // 預設隨機顯示的數量上限
+        const DEFAULT_DISPLAY_LIMIT = 50;
 
         window.onload = async function() {
             const themeIcon = document.getElementById('theme-icon');
@@ -135,8 +135,8 @@
             } catch (e) {
                 console.warn("載入資料失敗，顯示備用測試資料：", e);
                 horsesData = [
-                    { origin: "JP", cn: "春秋分", original: "イクイノックス", en: "Equinox" },
-                    { origin: "EN", cn: "范高爾", original: "Frankel", en: "Frankel" }
+                    { origin: "JP", mandarin: "春秋分", original: "イクイノックス", en: "Equinox" },
+                    { origin: "EN", mandarin: "范高爾", original: "Frankel", en: "Frankel" }
                 ];
             }
             renderHorses();
@@ -160,7 +160,6 @@
             renderHorses();
         }
 
-        // Fisher-Yates 洗牌演算法 (用來實現公平的隨機排列)
         function shuffleArray(array) {
             const arr = [...array];
             for (let i = arr.length - 1; i > 0; i--) {
@@ -175,11 +174,11 @@
             const countLabel = document.getElementById('result-count');
             container.innerHTML = '';
 
-            // 第一步：先依照分類與搜尋字詞過濾
+            // 依照分類與搜尋字詞過濾 (已將 h.cn 更改為 h.mandarin)
             const filtered = horsesData.filter(h => {
                 const matchCategory = currentFilter === 'ALL' || h.origin === currentFilter;
                 const matchSearch = !searchQuery || 
-                    (h.cn && h.cn.toLowerCase().includes(searchQuery)) ||
+                    (h.mandarin && h.mandarin.toLowerCase().includes(searchQuery)) ||
                     (h.original && h.original.toLowerCase().includes(searchQuery)) ||
                     (h.en && h.en.toLowerCase().includes(searchQuery));
                 return matchCategory && matchSearch;
@@ -187,7 +186,6 @@
 
             let finalDisplayList = filtered;
 
-            // 第二步：如果是在「無檢索狀態」（沒輸入關鍵字）下，隨機打亂並取前 50 筆
             if (!searchQuery) {
                 const shuffled = shuffleArray(filtered);
                 finalDisplayList = shuffled.slice(0, DEFAULT_DISPLAY_LIMIT);
@@ -198,7 +196,6 @@
                     countLabel.textContent = `顯示 ${finalDisplayList.length} / 共收錄 ${filtered.length} 筆`;
                 }
             } else {
-                // 有檢索時，完整顯示所有符合搜尋結果的馬匹，不再限制 50 條
                 countLabel.textContent = `搜尋結果：${finalDisplayList.length} 筆 (共收錄 ${horsesData.length} 筆)`;
             }
 
@@ -221,14 +218,15 @@
                 const card = document.createElement('div');
                 card.className = "bg-white/60 dark:bg-stone-900/50 border border-stone-200/70 dark:border-stone-800 rounded-xl p-4 flex flex-col justify-between hover:border-accent dark:hover:border-accent-dark transition-all duration-200 shadow-sm hover:shadow";
                 
+                // 卡片標題顯示修改為 horse.mandarin
                 card.innerHTML = `
                     <div>
                         <div class="flex justify-between items-start gap-2 mb-2 border-b border-stone-200/50 dark:border-stone-800/80 pb-2">
-                            <span class="font-serif text-lg font-bold text-stone-800 dark:text-stone-100 tracking-wide">${horse.cn}</span>
+                            <span class="font-serif text-lg font-bold text-stone-800 dark:text-stone-100 tracking-wide">${horse.mandarin || ''}</span>
                             <span class="text-[10px] font-semibold px-2 py-0.5 rounded border ${tagColor} shrink-0">${badgeLabel}</span>
                         </div>
                         <div class="space-y-1 font-mono text-xs pt-1">
-                            <div class="text-accent dark:text-accent-dark font-semibold text-sm leading-snug">${horse.original}</div>
+                            <div class="text-accent dark:text-accent-dark font-semibold text-sm leading-snug">${horse.original || ''}</div>
                             ${horse.en && horse.en !== horse.original ? `<div class="text-stone-500 dark:text-stone-400 text-xs">${horse.en}</div>` : ''}
                         </div>
                     </div>
