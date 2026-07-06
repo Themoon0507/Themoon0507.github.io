@@ -1,6 +1,174 @@
 [
   {
     "origin": "JP",
+    "mandarin": "迷人景致",
+    "original": "ブエナビスタ",
+    "en": "Buena Vista",
+    "birth": "2006.3.14"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "名將怒濤",
+    "original": "メイショウドトウ",
+    "en": "Meisho Doto",
+    "birth": "1996.3.25"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "雅典娜",
+    "original": "Ela Athena",
+    "en": "Ela Athena",
+    "birth": "1996.4.17"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "奇異光芒",
+    "original": "Fantastic Light",
+    "en": "Fantastic Light",
+    "birth": "1996.2.13"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "愛的果實",
+    "original": "Fruits Of Love",
+    "en": "Fruits Of Love",
+    "birth": "1995.2.15"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "黃金蛇",
+    "original": "Golden Snake",
+    "en": "Golden Snake",
+    "birth": "1996.4.18"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "約翰傳召",
+    "original": "John's Call",
+    "en": "John's Call",
+    "birth": "1991.3.13"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "奧斯卡夢",
+    "original": "Reve D'Oscar",
+    "en": "Reve D'Oscar",
+    "birth": "1997.4.24"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "小村莊",
+    "original": "Timboroa",
+    "en": "Timboroa",
+    "birth": "1996.5.17"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "愛麗航程",
+    "original": "アグネスフライト",
+    "en": "Agnes Flight",
+    "birth": "1997.3.2"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "空中神宮",
+    "original": "エアシャカール",
+    "en": "Air Shakur",
+    "birth": "1997.2.26"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "大和德州",
+    "original": "Fantastic Light",
+    "en": "Daiwa Texas",
+    "birth": "1993.4.2"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "飛鷹茶座",
+    "original": "イーグルカフェ",
+    "en": "Eagle Cafe",
+    "birth": "1997.2.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "城中金星",
+    "original": "マチカネキンノホシ",
+    "en": "Machikane Kinnohosi",
+    "birth": "1996.4.2"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "第一絲綢",
+    "original": "シルクプリマドンナ",
+    "en": "Silk Prima Donna",
+    "birth": "1997.4.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "黃金旅程,
+    "original": "ステイゴールド",
+    "en": "Stay Gold",
+    "birth": "1994.3.24"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "始創先鋒",
+    "original": "トレイルブレイザー",
+    "en": "Trailblazer",
+    "birth": "2007.3.15"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "丹山夢",
+    "original": "Danedream",
+    "en": "Danedream",
+    "birth": "2008.5.7"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "犀利蹄",
+    "original": "Shareta",
+    "en": "Shareta",
+    "birth": "2008.5.8"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "犀利靈",
+    "original": "Sarah Lynx",
+    "en": "Sarah Lynx",
+    "birth": "2007.4.18"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "比薩勝駒",
+    "original": "ヴィクトワールピサ",
+    "en": "Victoire Pisa",
+    "birth": "2007.3.31"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "特許任務",
+    "original": "Mission Approved",
+    "en": "Mission Approved",
+    "birth": "2004.1.30"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "重砲大王",
+    "original": "キングトップガン",
+    "en": "King Top Gun",
+    "birth": "2003.4.24"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "飛毛駒",
+    "original": "ペルーサ",
+    "en": "Pelusa",
+    "birth": "2007.3.20" 
+  },
+  {
+    "origin": "JP",
     "mandarin": "夜之影",
     "original": "ダークシャドウ",
     "en": "Dark Shadow",
