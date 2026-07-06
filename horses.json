@@ -1,61 +1,61 @@
 [
   {
     "origin": "JP",
-    "cn": "春秋分",
+    "mandarin": "春秋分",
     "original": "イクイノックス",
     "en": "Equinox"
   },
   {
     "origin": "JP",
-    "cn": "好歌劇",
+    "mandarin": "好歌劇",
     "original": "テイエムオペラオー",
     "en": "T.M. Opera O"
   },
   {
     "origin": "EN",
-    "cn": "范高爾",
+    "mandarin": "范高爾",
     "original": "Frankel",
     "en": "Frankel"
   },
   {
     "origin": "EN",
-    "cn": "祕書處",
+    "mandarin": "祕書處",
     "original": "Secretariat",
     "en": "Secretariat"
   },
   {
     "origin": "JP",
-    "cn": "杏目",
+    "mandarin": "杏目",
     "original": "アーモンドアイ",
     "en": "Almond Eye"
   },
   {
     "origin": "JP",
-    "cn": "十點",
+    "mandarin": "十點",
     "original": "テンポイント",
     "en": "Ten Point"
   },
   {
     "origin": "JP",
-    "cn": "福澤滿途",
+    "mandarin": "福澤滿途",
     "original": "ブレスジャーニー",
     "en": "Bless Journey"
   },
   {
     "origin": "EN",
-    "cn": "雪滿天",
+    "mandarin": "雪滿天",
     "original": "Snowfall",
     "en": "Snowfall"
   },
   {
     "origin": "EN",
-    "cn": "日蝕",
+    "mandarin": "日蝕",
     "original": "Eclipse",
     "en": "Eclipse"
   },
   {
     "origin": "JP",
-    "cn": "領銜",
+    "mandarin": "領銜",
     "original": "タイトルホルダー",
     "en": "Titleholder"
   }
