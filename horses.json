@@ -1,5 +1,96 @@
 [
-    {
+  {
+    "origin": "JP",
+    "mandarin": "朗日清天",
+    "original": "ラブリーデイ",
+    "en": "Lovely Day",
+    "birth": "2010.1.30"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "善得福",
+    "original": "ステファノス",
+    "en": "Staphanos",
+    "birth": "2011.2.13"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "湘南魔瓶",
+    "original": "ショウナンパンドラ",
+    "en": "Shonan Pandora",
+    "birth": "2011.3.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "鴻鵠大志",
+    "original": "アンビシャス",
+    "en": "Ambitious",
+    "birth": "2009.3.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "亞瑟神劍",
+    "original": "クラレント",
+    "en": "Clarente",
+    "birth": "2009.3.2"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "榮進之光",
+    "original": "エイシンヒカリ",
+    "en": "A Shin Hikari",
+    "birth": "2011.5.3"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "天帝頌",
+    "original": "アドマイヤデウス",
+    "en": "Admire Deus",
+    "birth": "2011.6.6"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "最後震撼",
+    "original": "ラストインパクト",
+    "en": "Last Impact",
+    "birth": "2010.1.21"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "機伶迷宮",
+    "original": "カレンミロティック",
+    "en": "Curren Mirotic",
+    "birth": "2008.2.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "順理成章",
+    "original": "ダコール",
+    "en": "Frine",
+    "birth": "2010.3.21"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "雞蛋甜酒",
+    "original": "ダービーフィズ",
+    "en": "D'accord",
+    "birth": "2008.3.17"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "里見皇冠",
+    "original": "サトノクラウン",
+    "en": "Satono Crown",
+    "birth": "2012.3.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "萬千里",
+    "original": "ヴァンセンヌ",
+    "en": "Vincennes",
+    "birth": "2009.4.11"
+  },
+  {
     "origin": "EN",
     "mandarin": "富林特郡",
     "original": "Flintshire",
