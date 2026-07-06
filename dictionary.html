@@ -73,10 +73,10 @@
                         全部收錄
                     </button>
                     <button onclick="setFilter('JP')" id="btn-JP" class="px-4 py-1.5 rounded-full text-xs font-semibold text-stone-600 dark:text-stone-400 hover:bg-stone-200/60 dark:hover:bg-stone-700/50 transition-all">
-                        🇯🇵 日文原名馬
+                        JP 日文原名馬
                     </button>
                     <button onclick="setFilter('EN')" id="btn-EN" class="px-4 py-1.5 rounded-full text-xs font-semibold text-stone-600 dark:text-stone-400 hover:bg-stone-200/60 dark:hover:bg-stone-700/50 transition-all">
-                        🇬🇧 英文原名馬
+                        EN 英文原名馬
                     </button>
                 </div>
 
@@ -216,7 +216,7 @@
                 const tagColor = isJP 
                     ? "bg-amber-100/80 text-amber-900 dark:bg-amber-950/60 dark:text-amber-300 border-amber-300/50" 
                     : "bg-blue-100/80 text-blue-900 dark:bg-blue-950/60 dark:text-blue-300 border-blue-300/50";
-                const badgeLabel = isJP ? "🇯🇵 日文原名" : "🇬🇧 英文原名";
+                const badgeLabel = isJP ? "JP 日文原名" : "EN 英文原名";
 
                 const card = document.createElement('div');
                 card.className = "bg-white/60 dark:bg-stone-900/50 border border-stone-200/70 dark:border-stone-800 rounded-xl p-4 flex flex-col justify-between hover:border-accent dark:hover:border-accent-dark transition-all duration-200 shadow-sm hover:shadow";
