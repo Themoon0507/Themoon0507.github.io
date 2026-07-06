@@ -87,12 +87,12 @@
                 </div>
             </div>
             
-            <!-- 提示文字區塊 -->
+            <!-- 提示文字區塊 (已將隨機顯示提示修改為三十條) -->
             <div class="mt-4 pt-3 border-t border-stone-200/50 dark:border-stone-700/50 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2 text-[11px] text-stone-500 dark:text-stone-400">
                 <div class="space-y-1 font-serif">
                     <p><i class="fa-solid fa-circle-info mr-1 text-accent dark:text-accent-dark"></i>提示：輸入中文、原名或英文皆可即時對照。</p>
                     <p><i class="fa-solid fa-language mr-1 text-accent dark:text-accent-dark"></i>基本依據香港馬會譯名。</p>
-                    <p><i class="fa-solid fa-shuffle mr-1 text-accent dark:text-accent-dark"></i>無檢索狀態下，一次隨機顯示五十條。</p>
+                    <p><i class="fa-solid fa-shuffle mr-1 text-accent dark:text-accent-dark"></i>無檢索狀態下，一次隨機顯示三十條。</p>
                 </div>
                 <span id="result-count" class="font-sans font-semibold text-accent dark:text-accent-dark whitespace-nowrap self-end sm:self-auto">載入中...</span>
             </div>
@@ -111,7 +111,7 @@
         let horsesData = [];
         let currentFilter = 'ALL';
         let searchQuery = '';
-        const DEFAULT_DISPLAY_LIMIT = 50;
+        const DEFAULT_DISPLAY_LIMIT = 30; // 將預設隨機顯示的數量上限改為 30
 
         window.onload = async function() {
             const themeIcon = document.getElementById('theme-icon');
@@ -174,7 +174,6 @@
             const countLabel = document.getElementById('result-count');
             container.innerHTML = '';
 
-            // 依照分類與搜尋字詞過濾 (已將 h.cn 更改為 h.mandarin)
             const filtered = horsesData.filter(h => {
                 const matchCategory = currentFilter === 'ALL' || h.origin === currentFilter;
                 const matchSearch = !searchQuery || 
@@ -218,7 +217,6 @@
                 const card = document.createElement('div');
                 card.className = "bg-white/60 dark:bg-stone-900/50 border border-stone-200/70 dark:border-stone-800 rounded-xl p-4 flex flex-col justify-between hover:border-accent dark:hover:border-accent-dark transition-all duration-200 shadow-sm hover:shadow";
                 
-                // 卡片標題顯示修改為 horse.mandarin
                 card.innerHTML = `
                     <div>
                         <div class="flex justify-between items-start gap-2 mb-2 border-b border-stone-200/50 dark:border-stone-800/80 pb-2">
