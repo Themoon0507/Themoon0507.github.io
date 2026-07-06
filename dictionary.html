@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>賽馬名鑑互換檢索系統 ｜ 無盡的遠征</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+TC:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || 
+            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['"Noto Serif TC"', 'Georgia', 'serif'],
+                    },
+                    colors: {
+                        parchment: { light: '#f5ecd8', text: '#2b241a', dark: '#1a1612', darkText: '#e3dac9' },
+                        accent: { DEFAULT: '#8c2d19', dark: '#d96a53' }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { font-family: 'Noto Serif TC', Georgia, serif; transition: background-color 0.5s ease, color 0.5s ease; }
+        .paper-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; opacity: 0.15; mix-blend-mode: multiply;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cfilter id='roughPaper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.005' numOctaves='3' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23fff' surfaceScale='3.0'%3E%3CfeDistantLight azimuth='60' elevation='50'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23roughPaper)'/%3E%3C/svg%3E");
+        }
+        .dark .paper-overlay { opacity: 0.08; mix-blend-mode: screen; }
+    </style>
+</head>
+<body class="bg-parchment-light text-parchment-text dark:bg-parchment-dark dark:text-parchment-darkText min-h-screen flex flex-col relative selection:bg-amber-200 selection:text-amber-900">
+
+    <div class="paper-overlay"></div>
+
+    <header class="w-full max-w-4xl mx-auto px-6 pt-8 md:pt-12 flex justify-between items-center z-10">
+        <div>
+            <a href="index.html" class="text-xs font-sans tracking-wider text-stone-500 dark:text-stone-400 hover:text-accent dark:hover:text-accent-dark flex items-center gap-2 mb-2 transition-colors">
+                <i class="fa-solid fa-arrow-left-long"></i> 返回主網站
+            </a>
+            <h1 class="text-2xl md:text-3xl font-bold font-serif tracking-widest text-accent dark:text-accent-dark">
+                賽馬名鑑對照辭典
+            </h1>
+        </div>
+        <button onclick="toggleDarkMode()" class="text-stone-600 dark:text-stone-300 hover:text-accent dark:hover:text-accent-dark transition-colors text-lg" title="切換主題">
+            <i id="theme-icon" class="fa-solid fa-moon"></i>
+        </button>
+    </header>
+
+    <main class="flex-grow w-full max-w-4xl mx-auto px-6 py-8 z-10 font-sans">
+        
+        <div class="bg-stone-100/60 dark:bg-stone-800/40 p-4 md:p-6 rounded-2xl border border-stone-200/60 dark:border-stone-700/60 shadow-sm mb-8 backdrop-blur-sm">
+            <div class="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
+                
+                <div class="flex flex-wrap gap-2" id="filter-buttons">
+                    <button onclick="setFilter('ALL')" id="btn-ALL" class="px-4 py-1.5 rounded-full text-xs font-semibold bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark shadow-sm transition-all">
+                        全部收錄
+                    </button>
+                    <button onclick="setFilter('JP')" id="btn-JP" class="px-4 py-1.5 rounded-full text-xs font-semibold text-stone-600 dark:text-stone-400 hover:bg-stone-200/60 dark:hover:bg-stone-700/50 transition-all">
+                        🇯🇵 日文原名馬
+                    </button>
+                    <button onclick="setFilter('EN')" id="btn-EN" class="px-4 py-1.5 rounded-full text-xs font-semibold text-stone-600 dark:text-stone-400 hover:bg-stone-200/60 dark:hover:bg-stone-700/50 transition-all">
+                        🇬🇧 英文原名馬
+                    </button>
+                </div>
+
+                <div class="relative w-full md:w-64">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 transform -translate-y-1/2 text-stone-400 text-xs"></i>
+                    <input type="text" id="search-input" oninput="handleSearch()" placeholder="輸入中/英/日文馬名檢索..." class="w-full pl-9 pr-4 py-2 bg-white/80 dark:bg-stone-900/80 border border-stone-200 dark:border-stone-700 rounded-full focus:outline-none focus:border-accent dark:focus:border-accent-dark transition-colors text-stone-700 dark:text-stone-200 text-xs shadow-inner">
+                </div>
+            </div>
+            
+            <div class="mt-4 pt-3 border-t border-stone-200/50 dark:border-stone-700/50 flex justify-between text-[11px] text-stone-500 dark:text-stone-400">
+                <span>提示：輸入中文、原名或英文皆可即時對照。</span>
+                <span id="result-count">共 0 筆名單</span>
+            </div>
+        </div>
+
+        <div id="horses-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
+
+    </main>
+
+    <footer class="w-full max-w-4xl mx-auto px-6 py-8 mt-auto border-t border-stone-200/60 dark:border-stone-800/60 text-center font-sans text-xs text-stone-400 dark:text-stone-600 z-10">
+        <p class="tracking-widest">© 2026 《無盡的遠征》賽馬名鑑檢索系統</p>
+    </footer>
+
+    <script>
+        let horsesData = [];
+        let currentFilter = 'ALL';
+        let searchQuery = '';
+
+        window.onload = async function() {
+            const themeIcon = document.getElementById('theme-icon');
+            if (document.documentElement.classList.contains('dark')) {
+                if (themeIcon) themeIcon.className = 'fa-solid fa-sun';
+            } else {
+                if (themeIcon) themeIcon.className = 'fa-solid fa-moon';
+            }
+
+            await loadHorsesData();
+        };
+
+        async function loadHorsesData() {
+            try {
+                const response = await fetch(`horses.json?_t=${Date.now()}`);
+                if (response.ok) {
+                    horsesData = await response.json();
+                } else {
+                    console.error("無法讀取 horses.json");
+                }
+            } catch (e) {
+                console.warn("載入資料失敗，顯示備用測試資料：", e);
+                horsesData = [
+                    { origin: "JP", cn: "春秋分", original: "イクイノックス", en: "Equinox" },
+                    { origin: "EN", cn: "范高爾", original: "Frankel", en: "Frankel" }
+                ];
+            }
+            renderHorses();
+        }
+
+        function setFilter(filterType) {
+            currentFilter = filterType;
+            ['ALL', 'JP', 'EN'].forEach(type => {
+                const btn = document.getElementById(`btn-${type}`);
+                if (type === filterType) {
+                    btn.className = "px-4 py-1.5 rounded-full text-xs font-semibold bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark shadow-sm transition-all";
+                } else {
+                    btn.className = "px-4 py-1.5 rounded-full text-xs font-semibold text-stone-600 dark:text-stone-400 hover:bg-stone-200/60 dark:hover:bg-stone-700/50 transition-all";
+                }
+            });
+            renderHorses();
+        }
+
+        function handleSearch() {
+            searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
+            renderHorses();
+        }
+
+        function renderHorses() {
+            const container = document.getElementById('horses-grid');
+            const countLabel = document.getElementById('result-count');
+            container.innerHTML = '';
+
+            const filtered = horsesData.filter(h => {
+                const matchCategory = currentFilter === 'ALL' || h.origin === currentFilter;
+                const matchSearch = !searchQuery || 
+                    (h.cn && h.cn.toLowerCase().includes(searchQuery)) ||
+                    (h.original && h.original.toLowerCase().includes(searchQuery)) ||
+                    (h.en && h.en.toLowerCase().includes(searchQuery));
+                return matchCategory && matchSearch;
+            });
+
+            countLabel.textContent = `顯示 ${filtered.length} / ${horsesData.length} 筆名單`;
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-16 font-serif text-stone-400 dark:text-stone-600">
+                        <i class="fa-solid fa-horse-head text-3xl mb-3 opacity-50"></i>
+                        <p>查無對應馬名，請嘗試其他關鍵字。</p>
+                    </div>`;
+                return;
+            }
+
+            filtered.forEach(horse => {
+                const isJP = horse.origin === 'JP';
+                const tagColor = isJP 
+                    ? "bg-amber-100/80 text-amber-900 dark:bg-amber-950/60 dark:text-amber-300 border-amber-300/50" 
+                    : "bg-blue-100/80 text-blue-900 dark:bg-blue-950/60 dark:text-blue-300 border-blue-300/50";
+                const badgeLabel = isJP ? "🇯🇵 日文原名" : "🇬🇧 英文原名";
+
+                const card = document.createElement('div');
+                card.className = "bg-white/60 dark:bg-stone-900/50 border border-stone-200/70 dark:border-stone-800 rounded-xl p-4 flex flex-col justify-between hover:border-accent dark:hover:border-accent-dark transition-all duration-200 shadow-sm hover:shadow";
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-start gap-2 mb-2 border-b border-stone-200/50 dark:border-stone-800/80 pb-2">
+                            <span class="font-serif text-lg font-bold text-stone-800 dark:text-stone-100 tracking-wide">${horse.cn}</span>
+                            <span class="text-[10px] font-semibold px-2 py-0.5 rounded border ${tagColor} shrink-0">${badgeLabel}</span>
+                        </div>
+                        <div class="space-y-1 font-mono text-xs pt-1">
+                            <div class="text-accent dark:text-accent-dark font-semibold text-sm leading-snug">${horse.original}</div>
+                            ${horse.en && horse.en !== horse.original ? `<div class="text-stone-500 dark:text-stone-400 text-xs">${horse.en}</div>` : ''}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            const themeIcon = document.getElementById('theme-icon');
+            if (isDark) {
+                if (themeIcon) themeIcon.className = 'fa-solid fa-sun';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                if (themeIcon) themeIcon.className = 'fa-solid fa-moon';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+    </script>
+</body>
+</html>
