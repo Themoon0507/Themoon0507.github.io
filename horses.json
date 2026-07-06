@@ -1,6 +1,174 @@
 [
   {
     "origin": "JP",
+    "mandarin": "特別週",
+    "original": "スペシャルウィーク",
+    "en": "Special Week",
+    "birth": "1995.5.2"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "望族",
+    "original": "Montjeu",
+    "en": "Montjeu",
+    "birth": "1996.4.4"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "青春永駐",
+    "original": "フォーエバーヤング",
+    "en": "Forever Young",
+    "birth": "2021.2.24"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "冬季獅",
+    "original": "The Lion In Winter",
+    "en": "The Lion In Winter",
+    "birth": "2022.6.30"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "歌劇舞姿",
+    "original": "Opera Ballo",
+    "en": "Opera Ballo",
+    "birth": "2022.3.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "盈寶威神",
+    "original": "ウィルソンテソーロ",
+    "en": "Wilson Tesoro",
+    "birth": "2019.2.25"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "管治權",
+    "original": "Sovereignty",
+    "en": "Sovereignty",
+    "birth": "2022.2.22"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "極量級",
+    "original": "Magnitude",
+    "en": "Magnitude",
+    "birth": "2022.3.12"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "世遺小城",
+    "original": "Baeza",
+    "en": "Baeza",
+    "birth": "2022.5.13"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "王庭貴女",
+    "original": "Lady of Camelot",
+    "en": "Lady of Camelot",
+    "birth": "2021.9.22"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "占美新星",
+    "original": "Jimmysstar",
+    "en": "Jimmysstar",
+    "birth": "2019.10.20"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "怒風火",
+    "original": "Rothfire",
+    "en": "Rothfire",
+    "birth": "2017.9.6"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "雍容白荷",
+    "original": "リスグラシュー",
+    "en": "Lys Gracieux",
+    "birth": "2014.1.18"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "神業",
+    "original": "キセキ",
+    "en": "Kiseki",
+    "birth": "2014.5.13"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "文雅之士",
+    "original": "スワーヴリチャード",
+    "en": "Suave Richard",
+    "birth": "2014.3.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "艾恩遺跡",
+    "original": "アルアイン",
+    "en": "Al Ain",
+    "birth": "2014.5.1"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "金之霸",
+    "original": "レイデオロ",
+    "en": "Rey de Oro",
+    "birth": "2014.2.5"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "探索火星",
+    "original": "ノーブルマーズ",
+    "en": "Noble Mars",
+    "birth": "2013.5.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "三幕劇",
+    "original": "スティッフェリオ",
+    "en": "Stiffelio",
+    "birth": "2014.2.17"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "關鍵一擊",
+    "original": "クリンチャー",
+    "en": "Clincher",
+    "birth": "2014.3.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "振奮士氣",
+    "original": "エタリオウ",
+    "en": "Etario",
+    "birth": "2015.2.13"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "湘南巴赫",
+    "original": "ショウナンバッハ",
+    "en": "Shonan Bach",
+    "birth": "2011.3.5"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "豐收節",
+    "original": "マカヒキ",
+    "en": "Makahiki",
+    "birth": "2013.1.28"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "猛力進攻",
+    "original": "タツゴウゲキ",
+    "en": "Tatsu Gogeki",
+    "birth": "2012.4.21"
+  },
+  {
+    "origin": "JP",
     "mandarin": "夏威夷王",
     "original": "キングカメハメハ",
     "en": "King Kamehameha",
