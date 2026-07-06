@@ -144,8 +144,35 @@
                 <p class="text-right text-sm font-sans not-italic text-stone-500 dark:text-stone-500">— 伊坂幸太郎《重力小丑》</p>
             </div>
 
-            <div class="flex flex-wrap gap-2 my-10 border-b border-stone-200 dark:border-stone-800 pb-4 font-sans text-sm" id="category-filter-container">
+            <!-- 分類過濾器 -->
+            <div class="flex flex-wrap gap-2 mt-10 mb-4 border-b border-stone-200 dark:border-stone-800 pb-4 font-sans text-sm" id="category-filter-container">
+            </div>
+
+            <!-- 新增：年代與地區過濾器 -->
+            <div id="tag-filter-container" class="flex flex-wrap gap-4 mb-10 font-sans text-sm view-transition">
+                <div class="flex items-center gap-2">
+                    <i class="fa-regular fa-clock text-stone-400 dark:text-stone-500"></i>
+                    <select id="filter-era" onchange="handleTagFilter()" class="bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-700 rounded-full px-4 py-1 text-stone-700 dark:text-stone-300 focus:outline-none focus:border-accent dark:focus:border-accent-dark transition-colors cursor-pointer text-xs">
+                        <option value="">所有年代</option>
+                        <option value="1980">1980年代</option>
+                        <option value="1990">1990年代</option>
+                        <option value="2000">2000年代</option>
+                        <option value="2010">2010年代</option>
+                        <option value="2020">2020年代</option>
+                    </select>
                 </div>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-earth-asia text-stone-400 dark:text-stone-500"></i>
+                    <select id="filter-region" onchange="handleTagFilter()" class="bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-700 rounded-full px-4 py-1 text-stone-700 dark:text-stone-300 focus:outline-none focus:border-accent dark:focus:border-accent-dark transition-colors cursor-pointer text-xs">
+                        <option value="">所有地區</option>
+                        <option value="日本">日本</option>
+                        <option value="香港">香港</option>
+                        <option value="歐洲">歐洲</option>
+                        <option value="美國">美國</option>
+                        <option value="澳洲">澳洲</option>
+                    </select>
+                </div>
+            </div>
 
             <div id="posts-container" class="space-y-16"></div>
 
@@ -237,6 +264,32 @@
                     </div>
                 </div>
 
+                <!-- 新增：編輯模式的年代與地區標籤 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">年代標籤 (選填)</label>
+                        <select id="post-era" class="w-full bg-transparent border-b border-stone-300 dark:border-stone-700 py-2 focus:border-accent dark:focus:border-accent-dark outline-none text-stone-800 dark:text-stone-100 transition-colors">
+                            <option value="" class="bg-white dark:bg-stone-900">無</option>
+                            <option value="1980" class="bg-white dark:bg-stone-900">1980年代</option>
+                            <option value="1990" class="bg-white dark:bg-stone-900">1990年代</option>
+                            <option value="2000" class="bg-white dark:bg-stone-900">2000年代</option>
+                            <option value="2010" class="bg-white dark:bg-stone-900">2010年代</option>
+                            <option value="2020" class="bg-white dark:bg-stone-900">2020年代</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">地區標籤 (選填)</label>
+                        <select id="post-region" class="w-full bg-transparent border-b border-stone-300 dark:border-stone-700 py-2 focus:border-accent dark:focus:border-accent-dark outline-none text-stone-800 dark:text-stone-100 transition-colors">
+                            <option value="" class="bg-white dark:bg-stone-900">無</option>
+                            <option value="日本" class="bg-white dark:bg-stone-900">日本</option>
+                            <option value="香港" class="bg-white dark:bg-stone-900">香港</option>
+                            <option value="歐洲" class="bg-white dark:bg-stone-900">歐洲</option>
+                            <option value="美國" class="bg-white dark:bg-stone-900">美國</option>
+                            <option value="澳洲" class="bg-white dark:bg-stone-900">澳洲</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div>
                     <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">前言 / 簡短摘要</label>
                     <textarea id="post-summary" rows="2" required class="w-full bg-transparent border-b border-stone-300 dark:border-stone-700 py-2 focus:border-accent dark:focus:border-accent-dark outline-none transition-colors resize-none leading-relaxed" placeholder="出現在首頁清單的前導摘要..."></textarea>
@@ -282,6 +335,8 @@
 
         let posts = [];
         let currentFilter = '全部';
+        let currentEra = '';    // 新增：年代狀態
+        let currentRegion = ''; // 新增：地區狀態
         let searchQuery = ''; 
         let sortOrder = 'desc';
         let currentPage = 1;
@@ -336,6 +391,8 @@
                 id: p.id,
                 title: sanitizeText(p.title),
                 category: sanitizeText(p.category) || '隨筆',
+                era: p.era ? sanitizeText(p.era) : '',         // 新增：解析年代
+                region: p.region ? sanitizeText(p.region) : '',// 新增：解析地區
                 date: sanitizeText(p.date),
                 summary: sanitizeText(p.summary),
                 wordCount: p.wordCount || (p.content ? p.content.length : 0),
@@ -356,6 +413,14 @@
 
         function handleSearch() {
             searchQuery = document.getElementById('search-input').value.toLowerCase();
+            currentPage = 1;
+            renderPosts();
+        }
+        
+        // 新增：處理標籤過濾
+        function handleTagFilter() {
+            currentEra = document.getElementById('filter-era').value;
+            currentRegion = document.getElementById('filter-region').value;
             currentPage = 1;
             renderPosts();
         }
@@ -426,7 +491,9 @@
             const filteredPosts = posts.filter(p => {
                 const matchCat = currentFilter === '全部' || p.category === currentFilter;
                 const matchSearch = p.title.toLowerCase().includes(searchQuery) || p.summary.toLowerCase().includes(searchQuery);
-                return matchCat && matchSearch;
+                const matchEra = currentEra === '' || p.era === currentEra;       // 新增：年代過濾
+                const matchRegion = currentRegion === '' || p.region === currentRegion; // 新增：地區過濾
+                return matchCat && matchSearch && matchEra && matchRegion;
             });
 
             const sortedPosts = [...filteredPosts].sort((a, b) => {
@@ -462,9 +529,16 @@
             paginatedPosts.forEach(post => {
                 const article = document.createElement('article');
                 article.className = 'group transition-all duration-300 border-b border-stone-200/50 dark:border-stone-800/50 pb-8';
+                
+                // 動態渲染標籤，改用 flex-wrap 避免手機版擠壓
+                const eraTag = post.era ? `<span class="border border-stone-300 dark:border-stone-700 px-2 py-0.5 rounded text-stone-500 dark:text-stone-400">${post.era}年代</span>` : '';
+                const regionTag = post.region ? `<span class="border border-stone-300 dark:border-stone-700 px-2 py-0.5 rounded text-stone-500 dark:text-stone-400">${post.region}</span>` : '';
+
                 article.innerHTML = `
-                    <div class="flex items-center gap-3 text-xs font-sans text-stone-500 dark:text-stone-400 mb-2">
+                    <div class="flex flex-wrap items-center gap-3 text-xs font-sans text-stone-500 dark:text-stone-400 mb-2">
                         <span class="bg-stone-200/60 dark:bg-stone-800 px-2 py-0.5 rounded text-accent dark:text-accent-dark font-medium">${post.category}</span>
+                        ${eraTag}
+                        ${regionTag}
                         <span>•</span>
                         <span>${post.date}</span>
                         <span>•</span>
@@ -538,10 +612,15 @@
             finalContent = sanitizeText(finalContent);
 
             const selectedFontSizeClass = fontSizes[currentFontSize];
+            
+            const eraTag = post.era ? `<span class="border border-stone-300 dark:border-stone-700 px-2.5 py-1 rounded text-stone-500 dark:text-stone-400">${post.era}年代</span>` : '';
+            const regionTag = post.region ? `<span class="border border-stone-300 dark:border-stone-700 px-2.5 py-1 rounded text-stone-500 dark:text-stone-400">${post.region}</span>` : '';
 
             contentArea.innerHTML = `
-                <div class="flex items-center gap-3 text-xs font-sans text-stone-500 dark:text-stone-400 mb-4">
+                <div class="flex flex-wrap items-center gap-3 text-xs font-sans text-stone-500 dark:text-stone-400 mb-4">
                     <span class="bg-stone-200/60 dark:bg-stone-800 px-2.5 py-1 rounded text-accent dark:text-accent-dark font-semibold">${post.category}</span>
+                    ${eraTag}
+                    ${regionTag}
                     <span>•</span>
                     <span>${post.date}</span>
                     <span>•</span>
@@ -583,7 +662,6 @@ ${finalContent}
             renderPostNavigation(post);
         }
 
-        // 回到頂端平滑滾動功能
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -710,6 +788,8 @@ ${finalContent}
             editingPostId = id;
             document.getElementById('post-title').value = post.title;
             document.getElementById('post-category').value = post.category;
+            document.getElementById('post-era').value = post.era || '';       // 新增：載入年代狀態
+            document.getElementById('post-region').value = post.region || ''; // 新增：載入地區狀態
             document.getElementById('post-date').value = post.date;
             document.getElementById('post-summary').value = post.summary;
             document.getElementById('post-content').value = content;
@@ -736,6 +816,8 @@ ${finalContent}
             e.preventDefault();
             const title = sanitizeText(document.getElementById('post-title').value);
             const category = document.getElementById('post-category').value;
+            const era = sanitizeText(document.getElementById('post-era').value);       // 新增：抓取年代標籤
+            const region = sanitizeText(document.getElementById('post-region').value); // 新增：抓取地區標籤
             const date = document.getElementById('post-date').value;
             const summary = sanitizeText(document.getElementById('post-summary').value);
             const content = sanitizeText(document.getElementById('post-content').value);
@@ -746,12 +828,12 @@ ${finalContent}
             if (editingPostId) {
                 const index = posts.findIndex(p => String(p.id) === String(editingPostId));
                 if (index !== -1) {
-                    posts[index] = { ...posts[index], title, category, date, summary, content, wordCount };
+                    posts[index] = { ...posts[index], title, category, era, region, date, summary, content, wordCount };
                 }
                 editingPostId = null;
             } else {
                 targetId = Date.now();
-                const newPost = { id: targetId, title, category, date, summary, content, wordCount };
+                const newPost = { id: targetId, title, category, era, region, date, summary, content, wordCount };
                 posts.unshift(newPost);
             }
 
@@ -786,6 +868,8 @@ ${finalContent}
                 id: p.id,
                 title: sanitizeText(p.title),
                 category: sanitizeText(p.category),
+                era: sanitizeText(p.era),       // 新增：匯出時保存年代
+                region: sanitizeText(p.region), // 新增：匯出時保存地區
                 date: sanitizeText(p.date),
                 summary: sanitizeText(p.summary),
                 wordCount: p.wordCount
