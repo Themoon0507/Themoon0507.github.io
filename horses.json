@@ -1,5 +1,173 @@
 [
   {
+    "origin": "EN",
+    "mandarin": "設計名師",
+    "original": "Sottsass",
+    "en": "Sottsass",
+    "birth": "2016.3.24"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "伯斯國君",
+    "original": "Persian King",
+    "en": "Persian King",
+    "birth": "2016.2.18"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "莫特馬利",
+    "original": "Motamarris",
+    "en": "Motamarris",
+    "birth": "2016.3.4"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "驚濤海角",
+    "original": "Cape Of Good Hope",
+    "en": "Cape Of Good Hope",
+    "birth": "2016.5.6"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "圓筒煙花",
+    "original": "Roman Candle",
+    "en": "Roman Candle",
+    "birth": "2016.4.8"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "滾石天王",
+    "original": "Rockemperor",
+    "en": "Rockemperor",
+    "birth": "2016.3.23"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "莫霍克人",
+    "original": "Mohawk",
+    "en": "Mohawk",
+    "birth": "2016.1.23"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "衝浪人",
+    "original": "Surfman",
+    "en": "Surfman",
+    "birth": "2016.2.7"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "力保不失",
+    "original": "Kick On",
+    "en": "Kick On",
+    "birth": "2016.3.21"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "加大注碼",
+    "original": "Raise You",
+    "en": "Raise You",
+    "birth": "2016.4.1"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "祖籍法國",
+    "original": "Joe Francais",
+    "en": "Joe Francais",
+    "birth": "2016.2.21"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "峻嶺滑雪",
+    "original": "Slalom",
+    "en": "Slalom",
+    "birth": "2016.5.24"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "實夠伶俐",
+    "original": "Zarkallani",
+    "en": "Zarkallani",
+    "birth": "2016.3.20"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "布倫漢宮",
+    "original": "Blenheim Palace",
+    "en": "Blenheim Palace",
+    "birth": "2016.3.5"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "星宿狂迷",
+    "original": "Starmaniac ",
+    "en": "Starmaniac ",
+    "birth": "2016.4.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "艾恩遺跡",
+    "original": "アルアイン",
+    "en": "Al Ain",
+    "birth": "2014.5.1"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "金之霸",
+    "original": "レイデオロ",
+    "en": "Rey de Oro",
+    "birth": "2014.2.5"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "探索火星",
+    "original": "ノーブルマーズ",
+    "en": "Noble Mars",
+    "birth": "2013.5.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "三幕劇",
+    "original": "スティッフェリオ",
+    "en": "Stiffelio",
+    "birth": "2014.2.17"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "關鍵一擊",
+    "original": "クリンチャー",
+    "en": "Clincher",
+    "birth": "2014.3.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "振奮士氣",
+    "original": "エタリオウ",
+    "en": "Etario",
+    "birth": "2015.2.13"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "湘南巴赫",
+    "original": "ショウナンバッハ",
+    "en": "Shonan Bach",
+    "birth": "2011.3.5"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "豐收節",
+    "original": "マカヒキ",
+    "en": "Makahiki",
+    "birth": "2013.1.28"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "猛力進攻",
+    "original": "タツゴウゲキ",
+    "en": "Tatsu Gogeki",
+    "birth": "2012.4.21"
+  },
+  {
     "origin": "JP",
     "mandarin": "特別週",
     "original": "スペシャルウィーク",
