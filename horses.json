@@ -1,6 +1,195 @@
 [
   {
     "origin": "JP",
+    "mandarin": "夜之影",
+    "original": "ダークシャドウ",
+    "en": "Dark Shadow",
+    "birth": "2007.2.17"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "紅色禮物",
+    "original": "Red Cadeaux",
+    "en": "Red Cadeaux",
+    "birth": "2006.3.6"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "網路電郵",
+    "original": "ジャガーメイル",
+    "en": "Jaguar Mail",
+    "birth": "2004.5.8"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "至勁寶",
+    "original": "Jakkalberry",
+    "en": "Jakkalberry",
+    "birth": "2006.3.5"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "神山",
+    "original": "Mount Athos",
+    "en": "Mount Athos",
+    "birth": "2007.4.19"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "蘇林美亞",
+    "original": "Solemia",
+    "en": "Solemia",
+    "birth": "2008.2.20"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "功夫巨星",
+    "original": "オウケンブルースリ",
+    "en": "Oken Bruce Lee",
+    "birth": "2005.2.24"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "名將關白",
+    "original": "メイショウカンパク",
+    "en": "Meisho Kampaku",
+    "birth": "2007.5.15"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "玫瑰帝國",
+    "original": "ローズキングダム",
+    "en": "Rose Kingdom",
+    "birth": "2007.5.10"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "王子風采",
+    "original": "Sri Putra",
+    "en": "Sri Putra",
+    "birth": "2006.3.19"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "神威啟示",
+    "original": "エピファネイア",
+    "en": "Epiphaneia",
+    "birth": "2010.2.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "一路通",
+    "original": "ジャスタウェイ",
+    "en": "Just a Way",
+    "birth": "2009.3.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "史匹堡",
+    "original": "スピルバーグ",
+    "en": "Spielberg",
+    "birth": "2009.5.12"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "貴婦人",
+    "original": "ジェンティルドンナ",
+    "en": "Gentildonna",
+    "birth": "2009.2.20"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "織女星",
+    "original": "ハープスター",
+    "en": "Harp Star",
+    "birth": "2011.4.24"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "艾雲豪威",
+    "original": "Ivanhowe",
+    "en": "Ivanhowe",
+    "birth": "2010.5.2"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "天下唯一",
+    "original": "ワンアンドオンリー",
+    "en": "One and Only",
+    "birth": "2011.2.23"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "超常駿驥",
+    "original": "フェノーメノ",
+    "en": "Fenomeno",
+    "birth": "2009.4.20"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "明媚島",
+    "original": "イスラボニータ",
+    "en": "Isla Bonita",
+    "birth": "2011.5.21"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "玉藻至尊",
+    "original": "タマモベストプレイ",
+    "en": "Tamamo Best Play",
+    "birth": "2010.2.28"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "有型露比",
+    "original": "デニムアンドルビー",
+    "en": "Denim and Ruby",
+    "birth": "2010.1.31"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "再自由",
+    "original": "アンコイルド",
+    "en": "Uncoiled",
+    "birth": "2009.5.1"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "東瀛佐敦",
+    "original": "トーセンジョーダン",
+    "en": "Tosen Jordan",
+    "birth": "2006.2.4"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "解密精英",
+    "original": "ディサイファ",
+    "en": "Decipher",
+    "birth": "2009.4.20"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "振翅齊飛",
+    "original": "Up With the Birds",
+    "en": "Up With the Birds",
+    "birth": "2010.2.13"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "樹人大族",
+    "original": "サトノシュレン",
+    "en": "Satono Shuren",
+    "birth": "2008.5.17"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "皮革貿易",
+    "original": "Trading Leather",
+    "en": "Trading Leather",
+    "birth": "2010.3.20"
+  },
+  {
+    "origin": "JP",
     "mandarin": "春秋分",
     "original": "イクイノックス",
     "en": "Equinox",
