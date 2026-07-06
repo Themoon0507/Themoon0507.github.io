@@ -1,5 +1,159 @@
 [
   {
+    "origin": "EN",
+    "mandarin": "機靈駿馬",
+    "original": "Curlin",
+    "en": "Curlin",
+    "birth": "2005.3.24"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "戴花",
+    "original": "Makybe Diva",
+    "en": "Makybe Diva",
+    "birth": "1999.3.21"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "卓芙",
+    "original": "Treve",
+    "en": "Treve",
+    "birth": "2010.4.7"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "魚子精華",
+    "original": "Black Caviar",
+    "en": "Black Caviar",
+    "birth": "2006.8.18"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "名店滿街",
+    "original": "ロデオドライブ",
+    "en": "Rodeo Drive",
+    "birth": "2023.3.21"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "日升天開",
+    "original": "エコロアルバ",
+    "en": "Ecoro Alba",
+    "birth": "2023.4.30"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "鑽形結",
+    "original": "ダイヤモンドノット",
+    "en": "Diamond Knot",
+    "birth": "2023.3.29"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "幹勁滿滿",
+    "original": "アスクイキゴミ",
+    "en": "Ask Ikigomi",
+    "birth": "2023.1.31"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "馬上特技",
+    "original": "カヴァレリッツォ",
+    "en": "Cavallerizzo",
+    "birth": "2023.2.28"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "實力牌型",
+    "original": "アドマイヤクワッズ",
+    "en": "Admire Quads",
+    "birth": "2023.1.23"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "勇謀法老",
+    "original": "ユウファラオ",
+    "en": "Yu Pharoah",
+    "birth": "2023.2.1"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "渡假島嶼",
+    "original": "リゾートアイランド",
+    "en": "Resort Island",
+    "birth": "2023.4.19"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "基因王",
+    "original": "ジーネキング",
+    "en": "Gene King",
+    "birth": "2023.3.28"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "驚世雷擊",
+    "original": "サンダーストラック",
+    "en": "Thunderstruck",
+    "birth": "2023.2.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "悅仙",
+    "original": "ハッピーエンジェル",
+    "en": "Happy Angel",
+    "birth": "2023.3.14"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "預約制",
+    "original": "レザベーション",
+    "en": "Reservation",
+    "birth": "2023.4.19"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "月桂花冠",
+    "original": "ローベルクランツ",
+    "en": "Lorbeerkranz",
+    "birth": "2023.2.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "宮廷晚會",
+    "original": "ギルーズボール",
+    "en": "Ghillies Ball",
+    "birth": "2023.5.1"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "烈火劍",
+    "original": "アンドゥーリル",
+    "en": "Anduril",
+    "birth": "2023.2.6"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "華姿探戈",
+    "original": "バルセシート",
+    "en": "Valescito",
+    "birth": "2023.4.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "國鳥來朝",
+    "original": "オルネーロ",
+    "en": "Hornero",
+    "birth": "2023.4.2"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "福小子",
+    "original": "フクチャンショウ",
+    "en": "Fukuchan Sho",
+    "birth": "2023.4.14"
+  },
+  {
     "origin": "JP",
     "mandarin": "天空神",
     "original": "オニャンコポン",
