@@ -87,14 +87,17 @@
                 </div>
             </div>
             
-            <!-- 提示文字區塊 (已將隨機顯示提示修改為三十條) -->
+            <!-- 提示文字區塊 -->
             <div class="mt-4 pt-3 border-t border-stone-200/50 dark:border-stone-700/50 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2 text-[11px] text-stone-500 dark:text-stone-400">
                 <div class="space-y-1 font-serif">
                     <p><i class="fa-solid fa-circle-info mr-1 text-accent dark:text-accent-dark"></i>提示：輸入中文、原名或英文皆可即時對照。</p>
                     <p><i class="fa-solid fa-language mr-1 text-accent dark:text-accent-dark"></i>基本依據香港馬會譯名。</p>
                     <p><i class="fa-solid fa-shuffle mr-1 text-accent dark:text-accent-dark"></i>無檢索狀態下，一次隨機顯示三十條。</p>
                 </div>
-                <span id="result-count" class="font-sans font-semibold text-accent dark:text-accent-dark whitespace-nowrap self-end sm:self-auto">載入中...</span>
+                <div class="self-end sm:self-auto flex flex-col items-end">
+                    <span id="dedup-notice" class="hidden font-sans text-amber-600 dark:text-amber-400 text-[10px] mb-0.5 animate-pulse"></span>
+                    <span id="result-count" class="font-sans font-semibold text-accent dark:text-accent-dark whitespace-nowrap">載入中...</span>
+                </div>
             </div>
         </div>
 
@@ -111,7 +114,7 @@
         let horsesData = [];
         let currentFilter = 'ALL';
         let searchQuery = '';
-        const DEFAULT_DISPLAY_LIMIT = 30; // 將預設隨機顯示的數量上限改為 30
+        const DEFAULT_DISPLAY_LIMIT = 30;
 
         window.onload = async function() {
             const themeIcon = document.getElementById('theme-icon');
@@ -125,20 +128,46 @@
         };
 
         async function loadHorsesData() {
+            let rawData = [];
             try {
                 const response = await fetch(`horses.json?_t=${Date.now()}`);
                 if (response.ok) {
-                    horsesData = await response.json();
+                    rawData = await response.json();
                 } else {
                     console.error("無法讀取 horses.json");
                 }
             } catch (e) {
                 console.warn("載入資料失敗，顯示備用測試資料：", e);
-                horsesData = [
-                    { origin: "JP", mandarin: "春秋分", original: "イクイノックス", en: "Equinox" },
-                    { origin: "EN", mandarin: "范高爾", original: "Frankel", en: "Frankel" }
+                rawData = [
+                    { origin: "JP", mandarin: "春秋分", original: "イクイノックス", en: "Equinox", birth: "2019" },
+                    { origin: "EN", mandarin: "范高爾", original: "Frankel", en: "Frankel", birth: "2008" }
                 ];
             }
+
+            // 【防呆機制】：自動過濾重複輸入的賽駒 (依據 mandarin 與 original 同時判定)
+            const uniqueMap = new Map();
+            let duplicateCount = 0;
+
+            rawData.forEach(item => {
+                // 建立一個唯一識別字串（忽略前後空白）
+                const uniqueKey = `${(item.mandarin||'').trim()}_${(item.original||'').trim()}`;
+                if (uniqueKey !== "_" && uniqueMap.has(uniqueKey)) {
+                    duplicateCount++;
+                } else {
+                    uniqueMap.set(uniqueKey, item);
+                }
+            });
+
+            horsesData = Array.from(uniqueMap.values());
+
+            // 如果有發現重複並剔除，在網頁右下角提示站長
+            if (duplicateCount > 0) {
+                const dedupNotice = document.getElementById('dedup-notice');
+                dedupNotice.textContent = `⚠️ 已自動過濾 ${duplicateCount} 筆重複資料`;
+                dedupNotice.classList.remove('hidden');
+                setTimeout(() => dedupNotice.classList.add('hidden'), 5000);
+            }
+
             renderHorses();
         }
 
@@ -179,7 +208,8 @@
                 const matchSearch = !searchQuery || 
                     (h.mandarin && h.mandarin.toLowerCase().includes(searchQuery)) ||
                     (h.original && h.original.toLowerCase().includes(searchQuery)) ||
-                    (h.en && h.en.toLowerCase().includes(searchQuery));
+                    (h.en && h.en.toLowerCase().includes(searchQuery)) ||
+                    (h.birth && String(h.birth).toLowerCase().includes(searchQuery));
                 return matchCategory && matchSearch;
             });
 
@@ -214,14 +244,22 @@
                     : "bg-blue-100/80 text-blue-900 dark:bg-blue-950/60 dark:text-blue-300 border-blue-300/50";
                 const badgeLabel = isJP ? "JP 日文原名" : "EN 英文原名";
 
+                // 動態產生生日小字 Html (若沒有提供 birth 則不顯示)
+                const birthHtml = horse.birth 
+                    ? `<span class="text-[11px] font-sans font-normal text-stone-400 dark:text-stone-500 ml-1.5 shrink-0">b. ${horse.birth}</span>` 
+                    : '';
+
                 const card = document.createElement('div');
                 card.className = "bg-white/60 dark:bg-stone-900/50 border border-stone-200/70 dark:border-stone-800 rounded-xl p-4 flex flex-col justify-between hover:border-accent dark:hover:border-accent-dark transition-all duration-200 shadow-sm hover:shadow";
                 
                 card.innerHTML = `
                     <div>
-                        <div class="flex justify-between items-start gap-2 mb-2 border-b border-stone-200/50 dark:border-stone-800/80 pb-2">
-                            <span class="font-serif text-lg font-bold text-stone-800 dark:text-stone-100 tracking-wide">${horse.mandarin || ''}</span>
-                            <span class="text-[10px] font-semibold px-2 py-0.5 rounded border ${tagColor} shrink-0">${badgeLabel}</span>
+                        <div class="flex justify-between items-baseline gap-1.5 mb-2 border-b border-stone-200/50 dark:border-stone-800/80 pb-2">
+                            <div class="flex items-baseline overflow-hidden">
+                                <span class="font-serif text-lg font-bold text-stone-800 dark:text-stone-100 tracking-wide truncate">${horse.mandarin || ''}</span>
+                                ${birthHtml}
+                            </div>
+                            <span class="text-[10px] font-semibold px-2 py-0.5 rounded border ${tagColor} shrink-0 self-center">${badgeLabel}</span>
                         </div>
                         <div class="space-y-1 font-mono text-xs pt-1">
                             <div class="text-accent dark:text-accent-dark font-semibold text-sm leading-snug">${horse.original || ''}</div>
