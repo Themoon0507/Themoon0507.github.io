@@ -1,6 +1,342 @@
 [
   {
     "origin": "JP",
+    "mandarin": "天空神",
+    "original": "オニャンコポン",
+    "en": "Onyankopon",
+    "birth": "2019.2.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "曙光將來",
+    "original": "オーロラエックス",
+    "en": "Aurora X",
+    "birth": "2021.3.2"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "女君執鋒",
+    "original": "ランスオブクイーン",
+    "en": "Lance of Queen",
+    "birth": "2021.3.20"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "艷紫芳馨",
+    "original": "ラヴァンダ",
+    "en": "Lavanda",
+    "birth": "2021.3.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "林森處",
+    "original": "ヴェルテンベルク",
+    "en": "Wurttemberg",
+    "birth": "2020.5.2"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "碧榕兒",
+    "original": "ガジュノリ",
+    "en": "Gaju Nori",
+    "birth": "2021.3.7"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "奈村安好",
+    "original": "ナムラエイハブ",
+    "en": "Namura Ahab",
+    "birth": "2021.2.17"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "歡快舞步",
+    "original": "カラマティアノス",
+    "en": "Kalamatianos",
+    "birth": "2022.2.25"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "粉艷杜鵑",
+    "original": "クリスマスパレード",
+    "en": "Christmas Parade",
+    "birth": "2021.3.29"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "東赤兔",
+    "original": "セキトバイースト",
+    "en": "Sekitoba East",
+    "birth": "2021.1.30"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "心傾慕",
+    "original": "ミアネーロ",
+    "en": "Mi Anhelo",
+    "birth": "2021.2.16"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "對比平衡",
+    "original": "コントラポスト",
+    "en": "Contrapposto",
+    "birth": "2020.4.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "朝霞大王",
+    "original": "アサカラキング",
+    "en": "Asakara King",
+    "birth": "2020.3.4"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "日盛僑埠",
+    "original": "サンストックトン",
+    "en": "Sun Stockton",
+    "birth": "2019.3.12"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "摩天威獅",
+    "original": "マテンロウレオ",
+    "en": "Matenro Leo",
+    "birth": "2019.4.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "投擊俱佳",
+    "original": "ショウヘイ",
+    "en": "Shohei",
+    "birth": "2022.3.15"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "大恐龍",
+    "original": "エコロディノス",
+    "en": "Ecoro Dinos",
+    "birth": "2022.2.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "潛心鍛鍊",
+    "original": "エコロヴァルツ",
+    "en": "Ecoro Waltz",
+    "birth": "2021.2.14"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "喜運英豪",
+    "original": "ボルドグフェーシュ",
+    "en": "Boldog Hos",
+    "birth": "2019.3.23"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "大衛巴魯",
+    "original": "デビットバローズ",
+    "en": "David Barows",
+    "birth": "2019.5.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "生活格調",
+    "original": "レーベンスティール",
+    "en": "Lebensstil",
+    "birth": "2020.3.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "草地法師",
+    "original": "ファウストラーゼン",
+    "en": "Faust Rasen",
+    "birth": "2022.3.23"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "高野俊士",
+    "original": "タガノデュード",
+    "en": "Tagano Dude",
+    "birth": "2021.4.18"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "橡木城",
+    "original": "ステレンボッシュ",
+    "en": "Stellenbosch",
+    "birth": "2021.2.12"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "歌利巨人",
+    "original": "Goliath",
+    "en": "Goliath",
+    "birth": "2020.2.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "響號",
+    "original": "ブローザホーン",
+    "en": "Blow the Horn",
+    "birth": "2019.5.19"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "跨國世遺",
+    "original": "シュトルーヴェ",
+    "en": "Struve",
+    "birth": "2019.4.21"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "野田猛鯨",
+    "original": "ダノンベルーガ",
+    "en": "Danon Beluga",
+    "birth": "2019.2.7"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "雪嶺熱點",
+    "original": "チェルヴィニア",
+    "en": "Cervinia",
+    "birth": "2021.2.3"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "堅韌力",
+    "original": "ドゥレッツァ",
+    "en": "Durezza",
+    "birth": "2020.4.24"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "初日高升",
+    "original": "ソールオリエンス",
+    "en": "Sol Oriens",
+    "birth": "2020.4.4"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "月正滿天",
+    "original": "Fantastic Moon",
+    "en": "Fantastic Moon",
+    "birth": "2020.3.21"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "星映天下",
+    "original": "スターズオンアース",
+    "en": "Stars on Earth",
+    "birth": "2019.2.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "大鳴大放",
+    "original": "ドゥラメンテ",
+    "en": "Duramente",
+    "birth": "2012.3.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "蒙面舞會",
+    "original": "マスカレードボール",
+    "en": "Masquerade Ball",
+    "birth": "2022.3.2"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "寬道路",
+    "original": "ブレイディヴェーグ",
+    "en": "Brede Weg",
+    "birth": "2020.4.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "魔神星雲",
+    "original": "セイウンハーデス",
+    "en": "Seiun Hades",
+    "birth": "2019.4.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "優鶴湖",
+    "original": "ヨーホーレイク",
+    "en": "Yoho Lake",
+    "birth": "2018.3.19"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "好脆",
+    "original": "ホウオウビスケッツ",
+    "en": "Ho O Biscuits",
+    "birth": "2020.6.5"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "飄揚青帆",
+    "original": "ヴェラアズール",
+    "en": "Vela Azul",
+    "birth": "2017.1.19"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "鮮紅葉",
+    "original": "Iresine",
+    "en": "Iresine",
+    "birth": "2017.4.15"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "御林園",
+    "original": "スタッドリー",
+    "en": "Studley",
+    "birth": "2018.4.28"
+  },
+  {
+    "origin": "",
+    "mandarin": "王道劍心",
+    "original": "トラストケンシン",
+    "en": "Trust Kenshin",
+    "birth": ""
+  },
+  {
+    "origin": "JP",
+    "mandarin": "栗色寶馬",
+    "original": "チェスナットコート",
+    "en": "Chestnut Coat",
+    "birth": "2014.5.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "天姬絕招",
+    "original": "クリノメガミエース",
+    "en": "Kurino Megami Ace",
+    "birth": "2019.2.26"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "功成名立",
+    "original": "ウインエアフォルク",
+    "en": "Win Erfolg",
+    "birth": "2017.5.23"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "打動人心",
+    "original": "インプレス",
+    "en": "Impress",
+    "birth": "2019.3.24"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "湘南果決",
+    "original": "ショウナンバシット",
+    "en": "Shonan Bashitto",
+    "birth": "2020.2.14"
+  },
+  {
+    "origin": "JP",
     "mandarin": "迷人景致",
     "original": "ブエナビスタ",
     "en": "Buena Vista",
