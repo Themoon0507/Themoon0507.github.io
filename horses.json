@@ -1,6 +1,76 @@
 [  
   {
     "origin": "JP",
+    "mandarin": "澄水王",
+    "original": "ロードアクア",
+    "en": "Lord Aqua",
+    "birth": "2016.4.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "戀愛回應",
+    "original": "ラヴィングアンサー",
+    "en": "Loving Answer",
+    "birth": "2014.4.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "齊叫好",
+    "original": "メイケイエール",
+    "en": "Meikei Yell",
+    "birth": "2018.2.23"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "覓奇生輝",
+    "original": "ミッキーブリランテ",
+    "en": "Mikki Brillante",
+    "birth": "2016.2.9"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "魔族閃焰",
+    "original": "モズスーパーフレア",
+    "en": "Mozu Superflare",
+    "birth": "2015.4.1"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "妙發靈機",
+    "original": "ピクシーナイト",
+    "en": "Pixie Knight",
+    "birth": "2018.5.14"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "喜雅王",
+    "original": "シヴァージ",
+    "en": "Shivaji",
+    "birth": "2015.3.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "湘南春華",
+    "original": "ショウナンバビアナ",
+    "en": "Shonan Babiana",
+    "birth": "2016.5.5"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "大成遠見",
+    "original": "タイセイビジョン",
+    "en": "Taisei Vision",
+    "birth": "2017.2.26"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "好加好",
+    "original": "ヨカヨカ",
+    "en": "Yoka Yoka",
+    "birth": "2018.5.13"
+  },
+  {
+    "origin": "JP",
     "mandarin": "有志竟成",
     "original": "アウィルアウェイ",
     "en": "A Will a Way",
