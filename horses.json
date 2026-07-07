@@ -1,5 +1,61 @@
 [  
   {
+    "origin": "JP",
+    "mandarin": "華格納",
+    "original": "ワグネリアン",
+    "en": "Wagnerian",
+    "birth": "2015.2.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "天域皇宮",
+    "original": "エアウィンザー",
+    "en": "Air Windsor",
+    "birth": "2014.2.15"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "防爆裝束",
+    "original": "ブラストワンピース",
+    "en": "Blast Onepiece",
+    "birth": "2015.4.2"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "萬分感謝",
+    "original": "ムイトオブリガード",
+    "en": "Muito Obrigado",
+    "birth": "2014.4.13"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "賽黃晶",
+    "original": "ダンビュライト",
+    "en": "Danburite",
+    "birth": "2014.3.3"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "金紀元",
+    "original": "エポカドーロ",
+    "en": "Epoca d'Oro",
+    "birth": "2015.2.15"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "波斯劍客",
+    "original": "ペルシアンナイト",
+    "en": "Persian Knight",
+    "birth": "2014.3.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "愚者眼界",
+    "original": "ステイフーリッシュ",
+    "en": "Stay Foolish",
+    "birth": "2015.2.22"
+  },
+  {
     "origin": "EN",
     "mandarin": "晶瑩汪洋",
     "original": "Crystal Ocean",
