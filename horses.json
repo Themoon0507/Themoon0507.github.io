@@ -1,6 +1,118 @@
 [  
   {
     "origin": "JP",
+    "mandarin": "美景車站",
+    "original": "ベルギューン",
+    "en": "Bergun",
+    "birth": "2022.3.25"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "洛杉磯",
+    "original": "ロサンゼルス",
+    "en": "Los Angeles",
+    "birth": "2021.3.3"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "莊嚴演繹",
+    "original": "ディニトーソ",
+    "en": "Dignitoso",
+    "birth": "2022.3.2"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "石頭城",
+    "original": "ギーロカスタル",
+    "en": "Gjirokaster",
+    "birth": "2020.4.25"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "暢遊英都",
+    "original": "ハッピーロンドン",
+    "en": "Happy London",
+    "birth": "2020.2.16"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "早熱風",
+    "original": "イリフィ",
+    "en": "Irifi",
+    "birth": "2022.3.2"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "亮雛菊",
+    "original": "ルクスデイジー",
+    "en": "Lux Daisy",
+    "birth": "2022.4.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "自家想法",
+    "original": "エムズマインド",
+    "en": "M's Mind",
+    "birth": "2020.4.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "紐奧良",
+    "original": "ニューオーリンズ",
+    "en": "New Orleans",
+    "birth": "2022.3.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "登霄翔龍",
+    "original": "ノボリショウリュウ",
+    "en": "Nobori Shoryu",
+    "birth": "2021.3.19"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "星有可為",
+    "original": "プロミシングスター",
+    "en": "Promising Star",
+    "birth": "2021.5.6"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "霹靂雷公",
+    "original": "ライジン",
+    "en": "Raijin",
+    "birth": "2020.3.17"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "湘南行雲",
+    "original": "ショウナンハクウン",
+    "en": "Shonan Hakuun",
+    "birth": "2020.4.24"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "低音轟雷",
+    "original": "サンダーバース",
+    "en": "Thunder Bass",
+    "birth": "2021.3.29"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "閃亮野牛",
+    "original": "ウルスクローム",
+    "en": "Urus Chrome",
+    "birth": "2022.4.12"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "真摯心",
+    "original": "ヴェロクオーレ",
+    "en": "Vero Cuore",
+    "birth": "2021.4.18"
+  },
+  {
+    "origin": "JP",
     "mandarin": "澄水王",
     "original": "ロードアクア",
     "en": "Lord Aqua",
