@@ -1,6 +1,62 @@
 [  
   {
     "origin": "JP",
+    "mandarin": "黃金伶人",
+    "original": "ゴールドアクター",
+    "en": "Gold Actor",
+    "birth": "2011.5.18"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "祕魯大城",
+    "original": "Iquitos",
+    "en": "Iquitos",
+    "birth": "2012.5.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "東瀛羅勒",
+    "original": "トーセンバジル",
+    "en": "Tosen Basil",
+    "birth": "2012.3.1"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "鹿女俠",
+    "original": "ビッシュ",
+    "en": "Biche",
+    "birth": "2013.1.16"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "阿爾拔",
+    "original": "アルバート",
+    "en": "Albert",
+    "birth": "2011.2.7"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "火槍奇兵",
+    "original": "ムスカテール",
+    "en": "Mousquetaire",
+    "birth": "2008.4.18"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "馬國之巔",
+    "original": "マルターズアポジー",
+    "en": "Maltese Apogee",
+    "birth": "2012.2.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "森遜之威",
+    "original": "サムソンズプライド",
+    "en": "Samson's Pride",
+    "birth": "2010.3.26"
+  },
+  {
+    "origin": "JP",
     "mandarin": "麗冠花環",
     "original": "レイパパレ",
     "en": "Lei Papale",
