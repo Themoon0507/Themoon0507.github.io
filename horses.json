@@ -1,6 +1,83 @@
 [  
   {
     "origin": "JP",
+    "mandarin": "強擊",
+    "original": "ヴィブロス",
+    "en": "Vivlos",
+    "birth": "2013.4.9"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "川河尊駒",
+    "original": "Southern Legend",
+    "en": "Southern Legend",
+    "birth": "2012.10.26"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "海市蜃樓",
+    "original": "Dream Castle",
+    "en": "Dream Castle",
+    "birth": "2014.3.8"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "曼波飛駒",
+    "original": "Majestic Mambo",
+    "en": "Majestic Mambo",
+    "birth": "2014.9.11"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "閃光爵爺",
+    "original": "Lord Glitters",
+    "en": "Lord Glitters",
+    "birth": "2013.4.20"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "敢飛",
+    "original": "I Can Fly",
+    "en": "I Can Fly",
+    "birth": "2015.3.3"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "名山獵馬",
+    "original": "Mountain Hunter",
+    "en": "Mountain Hunter",
+    "birth": "2014.5.3"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "世子龍",
+    "original": "Yulong Prince",
+    "en": "Yulong Prince",
+    "birth": "2014.10.13"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "百回夢",
+    "original": "Century Dream",
+    "en": "Century Dream",
+    "birth": "2014.2.3"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "籠中馬",
+    "original": "Without Parole",
+    "en": "Without Parole",
+    "birth": "2015.3.20"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "活頓林地",
+    "original": "Wootton",
+    "en": "Wootton",
+    "birth": "2015.2.6"
+  },
+  {
+    "origin": "JP",
     "mandarin": "華格納",
     "original": "ワグネリアン",
     "en": "Wagnerian",
