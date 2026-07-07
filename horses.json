@@ -1,6 +1,174 @@
 [
   {
     "origin": "EN",
+    "mandarin": "上情下達",
+    "original": "Channel",
+    "en": "Channel",
+    "birth": "2016.4.17"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "當其時",
+    "original": "Commes",
+    "en": "Commes",
+    "birth": "2016.6.15"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "偉大光榮",
+    "original": "Grand Glory",
+    "en": "Grand Glory",
+    "birth": "2016.4.19"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "繁星閃照",
+    "original": "Etoile",
+    "en": "Etoile",
+    "birth": "2016.6.22"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "泰里達灣",
+    "original": "Cala Tarida",
+    "en": "Cala Tarida",
+    "birth": "2016.4.3"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "勝益分",
+    "original": "Siyarafina",
+    "en": "Siyarafina",
+    "birth": "2016.4.24"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "驚嘆",
+    "original": "Wonderment",
+    "en": "Wonderment",
+    "birth": "2016.3.26"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "梧桐樹",
+    "original": "Platane",
+    "en": "Platane",
+    "birth": "2016.4.22"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "烏黑亮麗",
+    "original": "Ebony",
+    "en": "Ebony",
+    "birth": "2016.3.1"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "賦權",
+    "original": "Entitle",
+    "en": "Entitle",
+    "birth": "2016.2.18"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "光照大漠",
+    "original": "Noor Sahara",
+    "en": "Noor Sahara",
+    "birth": "2016.3.29"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "首要",
+    "original": "Paramount",
+    "en": "Paramount",
+    "birth": "2016.2.5"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "敞篷馬車",
+    "original": "Cartiem",
+    "en": "Cartiem",
+    "birth": "2016.1.30"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "紐莎",
+    "original": "Nausha",
+    "en": "Nausha",
+    "birth": "2016.2.24"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "裝飾櫻桃",
+    "original": "Amarena ",
+    "en": "Amarena ",
+    "birth": "2016.3.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "早晨露水",
+    "original": "Morning Dew",
+    "en": "Morning Dew",
+    "birth": "2016.4.1"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "冠軍車手",
+    "original": "インディチャンプ",
+    "en": "Indy Champ",
+    "birth": "2015.2.21"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "太空隕石",
+    "original": "アエロリット",
+    "en": "Aerolithe",
+    "birth": "2014.5.17"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "意式美食",
+    "original": "グァンチャーレ",
+    "en": "Guanciale",
+    "birth": "2012.2.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "白日彗星",
+    "original": "サングレーザー",
+    "en": "Sungrazer",
+    "birth": "2014.1.13"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "魔族雅谷",
+    "original": "モズアスコット",
+    "en": "Mozu Ascot",
+    "birth": "2014.3.31"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "啟愛航海",
+    "original": "ケイアイノーテック",
+    "en": "Keiai Nautique",
+    "birth": "2015.4.7"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "絕嶺之峽",
+    "original": "ステルヴィオ",
+    "en": "Stelvio",
+    "birth": "2015.1.15"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "火之呼喚",
+    "original": "ロジクライ",
+    "en": "Logi Cry",
+    "birth": "2013.2.22"
+  },
+  {
+    "origin": "EN",
     "mandarin": "設計名師",
     "original": "Sottsass",
     "en": "Sottsass",
