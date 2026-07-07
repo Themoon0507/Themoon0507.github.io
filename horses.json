@@ -1,6 +1,83 @@
 [  
   {
     "origin": "JP",
+    "mandarin": "有志竟成",
+    "original": "アウィルアウェイ",
+    "en": "A Will a Way",
+    "birth": "2016.2.4"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "不凡",
+    "original": "ビアンフェ",
+    "en": "Bien Fait",
+    "birth": "2017.4.29"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "旅程愉快",
+    "original": "ボンボヤージ",
+    "en": "Buon Voyage",
+    "birth": "2017.4.25"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "維納斯",
+    "original": "クーファウェヌス",
+    "en": "Coofa Venus",
+    "birth": "2015.4.3"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "大名富士",
+    "original": "ダイメイフジ",
+    "en": "Daimei Fuji",
+    "birth": "2014.3.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "野田重擊",
+    "original": "ダノンスマッシュ",
+    "en": "Danon Smash",
+    "birth": "2015.3.6"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "芳華十八",
+    "original": "エイティーンガール",
+    "en": "Eighteen Girl",
+    "birth": "2016.4.14"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "初吻",
+    "original": "ファストフォース",
+    "en": "First Force",
+    "birth": "2016.5.9"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "險峰懸壁",
+    "original": "ジャンダルム",
+    "en": "Gendarme",
+    "birth": "2015.4.25"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "合成國王",
+    "original": "カイザーメランジェ",
+    "en": "Kaiser Melange",
+    "birth": "2015.4.29"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "超神建築",
+    "original": "クリノガウディー",
+    "en": "Kurino Gaudi",
+    "birth": "2016.3.17"
+  },
+  {
+    "origin": "JP",
     "mandarin": "野田金駒",
     "original": "ダノンプラチナ",
     "en": "Danon Platina",
