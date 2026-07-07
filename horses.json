@@ -1,6 +1,83 @@
 [  
   {
     "origin": "JP",
+    "mandarin": "薑味烈酒",
+    "original": "ルージュバック",
+    "en": "Rouge Buck",
+    "birth": "2012.4.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "以史為鑑",
+    "original": "ヒストリカル",
+    "en": "Historical",
+    "birth": "2009.3.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "心情暢快",
+    "original": "カムフィー",
+    "en": "Comfy",
+    "birth": "2009.3.26"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "頌讚導航",
+    "original": "アドマイヤハダル",
+    "en": "Admire Hadar",
+    "birth": "2018.4.18"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "非洲寶金",
+    "original": "アフリカンゴールド",
+    "en": "African Gold",
+    "birth": "2015.3.26"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "奮飛達",
+    "original": "アリーヴォ",
+    "en": "Arrivo",
+    "birth": "2018.5.17"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "吉典娜",
+    "original": "ジェラルディーナ",
+    "en": "Geraldina",
+    "birth": "2018.5.12"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "滂薄無比",
+    "original": "ヒシイグアス",
+    "en": "Hishi Iguazu",
+    "birth": "2016.1.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "妥保存",
+    "original": "ヒュミドール",
+    "en": "Humidor",
+    "birth": "2016.3.26"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "金積驥",
+    "original": "ジャックドール",
+    "en": "Jack d'Or",
+    "birth": "2018.4.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "鵠志王",
+    "original": "キングオブコージ",
+    "en": "King of Koji",
+    "birth": "2016.3.26"
+  },
+  {
+    "origin": "JP",
     "mandarin": "美景車站",
     "original": "ベルギューン",
     "en": "Bergun",
