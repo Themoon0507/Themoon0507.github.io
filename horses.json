@@ -1,5 +1,75 @@
 [  
   {
+    "origin": "JP",
+    "mandarin": "野田金駒",
+    "original": "ダノンプラチナ",
+    "en": "Danon Platina",
+    "birth": "2012.3.23"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "新紀錄",
+    "original": "ヌーヴォレコルト",
+    "en": "Nuovo Record",
+    "birth": "2012.2.25"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "鮮明新曲",
+    "original": "ダイナマイク",
+    "en": "Dynamic",
+    "birth": "2024.3.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "莉雅影后",
+    "original": "オスカーレイア",
+    "en": "Oscar Leia",
+    "birth": "2024.2.12"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "三葉漿草",
+    "original": "インカルナータ",
+    "en": "Incarnata",
+    "birth": "2024.4.13"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "純活力",
+    "original": "ジュンヴァグネル",
+    "en": "Jun Vagner",
+    "birth": "2024.2.1"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "威帝記憶",
+    "original": "メモリアデルレ",
+    "en": "Memoria del Re",
+    "birth": "2024.3.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "各就各位",
+    "original": "オンユアマークス",
+    "en": "On Your Marks",
+    "birth": "2024.3.30"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "敦盛舞劇",
+    "original": "ジーティーアツモリ",
+    "en": "G T Atsumori",
+    "birth": "2024.3.20"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "初晨曦",
+    "original": "プリマアルバ",
+    "en": "Prima Alba",
+    "birth": "2024.2.29"
+  },
+  {
     "origin": "EN",
     "mandarin": "深不可測",
     "original": "Elliptique",
