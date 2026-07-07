@@ -1,6 +1,62 @@
 [   
   {
     "origin": "JP",
+    "mandarin": "探求到底",
+    "original": "ロードクエスト",
+    "en": "Lord Quest",
+    "birth": "2013.3.6"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "青花吐艷",
+    "original": "アジュールローズ",
+    "en": "Azur Rose",
+    "birth": "2013.5.19"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "征服之戰",
+    "original": "ヴァンキッシュラン",
+    "en": "Vanquish Run",
+    "birth": "2013.3.18"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "愛麗強勢",
+    "original": "アグネスフォルテ",
+    "en": "Agnes Forte",
+    "birth": "2013.5.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "永生常存",
+    "original": "イモータル",
+    "en": "Immortal",
+    "birth": "2013.1.29"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "花蜜",
+    "original": "マイネルハニー",
+    "en": "Meiner Honey",
+    "birth": "2013.5.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "洞悉天機",
+    "original": "プロフェット",
+    "en": "Prophet",
+    "birth": "2013.2.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "猛攻",
+    "original": "ブレイブスマッシュ",
+    "en": "Brave Smash",
+    "birth": "2013.3.22"
+  },
+  {
+    "origin": "JP",
     "mandarin": "里見光鑽",
     "original": "サトノダイヤモンド",
     "en": "Satono Diamond",
@@ -50,10 +106,17 @@
   },
   {
     "origin": "JP",
-    "mandarin": "赤老大",
+    "mandarin": "浪子回頭",
     "original": "プロディガルサン",
     "en": "Prodigal Son",
     "birth": "2013.2.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "赤老大",
+    "original": "レッドエルディスト",
+    "en": "Red Eldest",
+    "birth": "2013.2.19"
   },
   {
     "origin": "JP",
