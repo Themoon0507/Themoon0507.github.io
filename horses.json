@@ -1,4 +1,60 @@
-[ 
+[   
+  {
+    "origin": "JP",
+    "mandarin": "里見光鑽",
+    "original": "サトノダイヤモンド",
+    "en": "Satono Diamond",
+    "birth": "2013.1.30"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "氣概凜然",
+    "original": "ディーマジェスティ",
+    "en": "Dee Majesty",
+    "birth": "2013.3.24"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "天域龍馬",
+    "original": "エアスピネル",
+    "en": "Air Spinel",
+    "birth": "2013.2.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "醋丈夫",
+    "original": "リオンディーズ",
+    "en": "Leontes",
+    "birth": "2013.1.29"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "醒目奧丁",
+    "original": "スマートオーディン",
+    "en": "Smart Odin",
+    "birth": "2013.2.20"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "洛森山",
+    "original": "マウントロブソン",
+    "en": "Mount Robson",
+    "birth": "2013.1.30"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "七色線",
+    "original": "レインボーライン",
+    "en": "Rainbow Line",
+    "birth": "2013.4.1"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "赤老大",
+    "original": "プロディガルサン",
+    "en": "Prodigal Son",
+    "birth": "2013.2.22"
+  },
   {
     "origin": "JP",
     "mandarin": "森林探秘",
