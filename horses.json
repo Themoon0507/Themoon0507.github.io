@@ -1,4 +1,46 @@
-[  
+[ 
+  {
+    "origin": "JP",
+    "mandarin": "森林探秘",
+    "original": "ジャングルクルーズ",
+    "en": "Jungle Cruise",
+    "birth": "2009.3.6"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "萬籟爭鳴",
+    "original": "サウンズオブアース",
+    "en": "Sounds of Earth",
+    "birth": "2011.4.12"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "覓奇妃",
+    "original": "ミッキークイーン",
+    "en": "Mikki Queen",
+    "birth": "2012.2.8"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "夜名花",
+    "original": "Nightflower",
+    "en": "Nightflower",
+    "birth": "2012.2.17"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "漫遊花都",
+    "original": "Trip To Paris",
+    "en": "Trip To Paris",
+    "birth": "2011.2.8"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "伊東城",
+    "original": "Ito",
+    "en": "Ito",
+    "birth": "2011.4.17"
+  },
   {
     "origin": "JP",
     "mandarin": "奈村勝將",
