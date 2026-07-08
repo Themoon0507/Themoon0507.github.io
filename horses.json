@@ -1,6 +1,76 @@
 [
   {
     "origin": "JP",
+    "mandarin": "掛鎖",
+    "original": "カデナ",
+    "en": "Cadenas",
+    "birth": "2014.3.30"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "魔族紳士",
+    "original": "モズベッロ",
+    "en": "Mozu Bello",
+    "birth": "2016.4.7"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "東瀛天照",
+    "original": "トーセンスーリヤ",
+    "en": "Tosen Surya",
+    "birth": "2015.4.4"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "世界首映",
+    "original": "ワールドプレミア",
+    "en": "World Premiere",
+    "birth": "2016.2.1"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "山嶺寶穴",
+    "original": "サンレイポケット",
+    "en": "Sanrei Pocket",
+    "birth": "2015.5.2"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "放聲歡呼",
+    "original": "グランアレグリア",
+    "en": "Gran Alegria",
+    "birth": "2016.1.24"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "實搏大帝",
+    "original": "カイザーミノル",
+    "en": "Kaiser Minoru",
+    "birth": "2016.2.29"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "定稿",
+    "original": "ラストドラフト",
+    "en": "Last Draft",
+    "birth": "2016.3.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "機伶金花",
+    "original": "カレンブーケドール",
+    "en": "Curren Bouquetd'or",
+    "birth": "2016.4.23"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "笑一笑",
+    "original": "ユーキャンスマイル",
+    "en": "You Can Smile",
+    "birth": "2015.5.30"
+  },
+  {
+    "origin": "JP",
     "mandarin": "例不虛發",
     "original": "ディアシューター",
     "en": "Dear Shooter",
