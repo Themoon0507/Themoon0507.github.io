@@ -1,6 +1,104 @@
 [
   {
     "origin": "JP",
+    "mandarin": "最頂點",
+    "original": "クルミナーレ",
+    "en": "Culminale",
+    "birth": "2021.4.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "金鯉滿塘",
+    "original": "ピエナオルフェ",
+    "en": "Piena Orfe",
+    "birth": "2021.2.17"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "勝菊心願",
+    "original": "ウインデイジー",
+    "en": "Win Daisy",
+    "birth": "2021.3.24"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "駿飛升",
+    "original": "ジャスティンライズ",
+    "en": "Justin Rise",
+    "birth": "2021.1.26"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "星后冠",
+    "original": "ステラクラウン",
+    "en": "Stella Crown",
+    "birth": "2021.3.15"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "男山要衝",
+    "original": "ユイノオトコヤマ",
+    "en": "Yuino Otokoyama",
+    "birth": "2020.4.23"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "深紫晶",
+    "original": "アメジストブラック",
+    "en": "Amethyst Black",
+    "birth": "2019.3.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "群石齊飛",
+    "original": "ストーンズ",
+    "en": "Stones",
+    "birth": "2021.2.9"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "奇蹟劇目",
+    "original": "ミラキュラスドラマ",
+    "en": "Miraculous Drama",
+    "birth": "2021.4.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "雪狂風",
+    "original": "スノーブリザード",
+    "en": "Snow Blizzard",
+    "birth": "2021.3.17"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "湘南認真",
+    "original": "ショウナンガチ",
+    "en": "Shonan Gachi",
+    "birth": "2021.1.30"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "星空觀測",
+    "original": "スカイサーベイ",
+    "en": "Sky Survey",
+    "birth": "2021.4.13"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "覓奇好球",
+    "original": "ミッキーストライク",
+    "en": "Mikki Strike",
+    "birth": "2021.2.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "浮生",
+    "original": "ジンセイ",
+    "en": "Jinsei",
+    "birth": "2021.3.22"
+  },
+  {
+    "origin": "JP",
     "mandarin": "澳洲之巔",
     "original": "コジオスコ",
     "en": "Kosciuszko",
