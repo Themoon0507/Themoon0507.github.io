@@ -1,6 +1,90 @@
 [
   {
     "origin": "JP",
+    "mandarin": "堅決少女",
+    "original": "フォルティーナ",
+    "en": "Fortina",
+    "birth": "2020.3.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "醒目美神",
+    "original": "スマートカリス",
+    "en": "Smart Charis",
+    "birth": "2020.5.5"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "大成勇士",
+    "original": "タイセイウォリアー",
+    "en": "Taisei Warrior",
+    "birth": "2020.2.4"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "精神境界",
+    "original": "スピリットワールド",
+    "en": "Spirit World",
+    "birth": "2019.4.24"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "深遠博大",
+    "original": "シンエン",
+    "en": "Shinen",
+    "birth": "2019.2.1"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "感謝再臨",
+    "original": "マイド",
+    "en": "Maido",
+    "birth": "2020.5.9"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "勇天神",
+    "original": "ヘルモーズ",
+    "en": "Hermodr",
+    "birth": "2021.4.1"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "野田變通",
+    "original": "ダノンスウィッチ",
+    "en": "Danon Switch",
+    "birth": "2021.2.23"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "大獎必勝",
+    "original": "ウインアウォード",
+    "en": "Win Award",
+    "birth": "2019.4.21"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "功勳爵爺",
+    "original": "ロードオルデン",
+    "en": "Lord Orden",
+    "birth": "2019.4.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "長河順流",
+    "original": "ペプチドハドソン",
+    "en": "Peptide Hudson",
+    "birth": "2020.2.16"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "飛越背幕",
+    "original": "バックスクリーン",
+    "en": "Back Screen",
+    "birth": "2019.1.24"
+  },
+  {
+    "origin": "JP",
     "mandarin": "五行聖山",
     "original": "マーブルマウンテン",
     "en": "Marble Mountain",
