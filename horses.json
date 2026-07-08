@@ -1,6 +1,111 @@
 [
   {
     "origin": "JP",
+    "mandarin": "行進曲",
+    "original": "ケイデンスコール",
+    "en": "Cadence Call",
+    "birth": "2016.2.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "哥德教堂",
+    "original": "カテドラル",
+    "en": "Catedral",
+    "birth": "2016.2.9"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "野田小子",
+    "original": "ダノンザキッド",
+    "en": "Danon the Kid",
+    "birth": "2018.1.29"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "有情莊園",
+    "original": "ダーリントンホール",
+    "en": "Darlington Hall",
+    "birth": "2017.3.14"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "攻必勝",
+    "original": "グレナディアガーズ",
+    "en": "Grenadier Guards",
+    "birth": "2018.2.4"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "好森林",
+    "original": "ホウオウアマゾン",
+    "en": "Ho O Amazon",
+    "birth": "2018.2.12"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "栗本大賞",
+    "original": "クリノプレミアム",
+    "en": "Kurino Premium",
+    "birth": "2017.3.23"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "樂桃源",
+    "original": "ロータスランド",
+    "en": "Lotus Land",
+    "birth": "2017.1.31"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "彩旗",
+    "original": "レインボーフラッグ",
+    "en": "Rainbow Flag",
+    "birth": "2013.5.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "疾迅加速",
+    "original": "リプレーザ",
+    "en": "Ripresa",
+    "birth": "2018.3.7"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "戰舞者",
+    "original": "サリオス",
+    "en": "Salios",
+    "birth": "2017.1.23"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "里見巫師",
+    "original": "サトノウィザード",
+    "en": "Satono Wizard",
+    "birth": "2016.3.30"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "速度大師",
+    "original": "シュネルマイスター",
+    "en": "Schnell Meister",
+    "birth": "2018.3.23"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "輝姬美韻",
+    "original": "サウンドキアラ",
+    "en": "Sound Chiara",
+    "birth": "2015.3.31"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "海神美韻",
+    "original": "サウンドカナロア",
+    "en": "Sound Kanaloa",
+    "birth": "2016.5.1"
+  },
+  {
+    "origin": "JP",
     "mandarin": "空氣因子",
     "original": "エアジーン",
     "en": "Air Gene",
