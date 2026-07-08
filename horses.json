@@ -1,6 +1,125 @@
 [
   {
     "origin": "JP",
+    "mandarin": "佳日",
+    "original": "グランディア",
+    "en": "Gran Dia",
+    "birth": "2019.3.13"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "名將衝冠",
+    "original": "メイショウゲキリン",
+    "en": "Meisho Gekirin",
+    "birth": "2019.3.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "魔族端良",
+    "original": "モズタンジロウ",
+    "en": "Mozu Tanjiro",
+    "birth": "2019.2.21"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "日和爭光",
+    "original": "ニホンピロクレール",
+    "en": "Nihonpiro Clair",
+    "birth": "2019.1.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "真榮耀",
+    "original": "リアルグローリー",
+    "en": "Real Glory",
+    "birth": "2019.4.30"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "奇麗美韻",
+    "original": "サウンドクレア",
+    "en": "Sound Clare",
+    "birth": "2019.5.13"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "盈寶奇嶽",
+    "original": "ウシュバテソーロ",
+    "en": "Ushba Tesoro",
+    "birth": "2017.3.4"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "探查男兒",
+    "original": "Senor Buscador",
+    "en": "Senor Buscador",
+    "birth": "2018.5.6"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "新門區",
+    "original": "Newgate",
+    "en": "Newgate",
+    "birth": "2020.3.11"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "軍紀",
+    "original": "Military Law",
+    "en": "Military Law",
+    "birth": "2015.4.4"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "月桂河",
+    "original": "Laurel River",
+    "en": "Laurel River",
+    "birth": "2018.2.9"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "偉績王",
+    "original": "Kabirkhan",
+    "en": "Kabirkhan",
+    "birth": "2020.2.3"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "盡得真傳",
+    "original": "ドゥラエレーデ",
+    "en": "Dura Erede",
+    "birth": "2020.1.29"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "取勝秘技",
+    "original": "デルマソトガケ",
+    "en": "Derma Sotogake",
+    "birth": "2020.4.28"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "實現訴求",
+    "original": "Defunded",
+    "en": "Defunded",
+    "birth": "2018.4.11"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "強驃",
+    "original": "Crupi",
+    "en": "Crupi",
+    "birth": "2020.3.12"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "殿堂歌王",
+    "original": "Clapton",
+    "en": "Clapton",
+    "birth": "2019.4.14"
+  },
+  {
+    "origin": "JP",
     "mandarin": "行進曲",
     "original": "ケイデンスコール",
     "en": "Cadence Call",
