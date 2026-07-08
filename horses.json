@@ -1,5 +1,75 @@
 [
   {
+    "origin": "JP",
+    "mandarin": "歡欣起舞",
+    "original": "ジョリーダンス",
+    "en": "Jolly Dance",
+    "birth": "2001.4.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "不眠之夜",
+    "original": "スリープレスナイト",
+    "en": "Sleepless Night",
+    "birth": "2004.2.7"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "東商勇者",
+    "original": "トウショウカレッジ",
+    "en": "Tosho Courage",
+    "birth": "2002.6.8"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "達通",
+    "original": "Daytona",
+    "en": "Daytona",
+    "birth": "2004.4.21"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "簡易通",
+    "original": "Idiot Proof",
+    "en": "Idiot Proof",
+    "birth": "2004.2.2"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "大總結",
+    "original": "In Summation",
+    "en": "In Summation",
+    "birth": "2003.3.26"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "午夜鳴琴",
+    "original": "Midnight Lute",
+    "en": "Midnight Lute",
+    "birth": "2003.5.13"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "反抗",
+    "original": "Rebellion",
+    "en": "Rebellion",
+    "birth": "2003.3.19"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "迪拜禮節",
+    "original": "Salaam Dubai",
+    "en": "Salaam Dubai",
+    "birth": "2001.10.21"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "來勝客",
+    "original": "Les Arcs",
+    "en": "Les Arcs",
+    "birth": "2000.4.24"
+  },
+  {
     "origin": "EN",
     "mandarin": "盧森堡",
     "original": "Luxembourg",
