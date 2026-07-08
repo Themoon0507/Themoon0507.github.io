@@ -1,6 +1,83 @@
 [
   {
     "origin": "EN",
+    "mandarin": "盧森堡",
+    "original": "Luxembourg",
+    "en": "Luxembourg",
+    "birth": "2019.3.24"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "量時度力",
+    "original": "Measured Time",
+    "en": "Measured Time",
+    "birth": "2020.2.4"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "實實在在",
+    "original": "Real World",
+    "en": "Real World",
+    "birth": "2017.3.14"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "聖多尼度",
+    "original": "San Donato",
+    "en": "San Donato",
+    "birth": "2016.2.25"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "匯兩川",
+    "original": "ナミュール",
+    "en": "Namur",
+    "birth": "2019.3.2"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "摩天雲霄",
+    "original": "マテンロウスカイ",
+    "en": "Matenro Sky",
+    "birth": "2019.2.5"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "諾斯勳爵",
+    "original": "Lord North",
+    "en": "Lord North",
+    "birth": "2016.2.9"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "送達駒",
+    "original": "Facteur Cheval",
+    "en": "Facteur Cheval",
+    "birth": "2019.3.22"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "貓點心",
+    "original": "Catnip",
+    "en": "Catnip",
+    "birth": "2019.4.19"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "奇力駒",
+    "original": "Calif",
+    "en": "Calif",
+    "birth": "2019.4.19"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "大開羅",
+    "original": "Cairo",
+    "en": "Cairo",
+    "birth": "2020.4.16"
+  },
+  {
+    "origin": "EN",
     "mandarin": "真強",
     "original": "Junko",
     "en": "Junko",
