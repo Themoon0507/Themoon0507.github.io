@@ -1,6 +1,209 @@
 [
   {
     "origin": "JP",
+    "mandarin": "超聲極速",
+    "original": "ウルトラソニック",
+    "en": "Ultra Sonic",
+    "birth": "2018.2.16"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "神來",
+    "original": "デルマカンノン",
+    "en": "Derma Kannon",
+    "birth": "2018.3.16"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "名將風箏",
+    "original": "メイショウカイト",
+    "en": "Meisho Kite",
+    "birth": "2018.5.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "東寶颯爽",
+    "original": "トーホウフランゴ",
+    "en": "Toho Fringant",
+    "birth": "2020.3.23"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "千億星輝",
+    "original": "テラステラ",
+    "en": "Tera Stellar",
+    "birth": "2020.2.24"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "功兒海濱",
+    "original": "イサチルシーサイド",
+    "en": "Isa Chil Seaside",
+    "birth": "2021.3.21"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "魔族星明",
+    "original": "モズアンタレス",
+    "en": "Mozu Antares",
+    "birth": "2020.2.9"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "鎖定頭籌",
+    "original": "エイムフォーエース",
+    "en": "Aim For Ace",
+    "birth": "2021.5.12"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "完全勁",
+    "original": "シンプリーオーサム",
+    "en": "Simply Awesome",
+    "birth": "2029.3.15"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "金佩刀",
+    "original": "ゴールドサーベル",
+    "en": "Gold Sabel",
+    "birth": "2021.2.17"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "一路花放",
+    "original": "カイカノキセキ",
+    "en": "Kaikano Kiseki",
+    "birth": "2019.2.15"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "靈駿巴魯",
+    "original": "リチャードバローズ",
+    "en": "Richard Barows",
+    "birth": "2021.4.30"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "全鋼軀",
+    "original": "フルメタルボディー",
+    "en": "Full Metal Body",
+    "birth": "2020.4.3"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "名將彩菊",
+    "original": "メイショウコギク",
+    "en": "Meisho Kogiku",
+    "birth": "2020.2.13"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "完全完美",
+    "original": "ホールネス",
+    "en": "Wholeness",
+    "birth": "2020.4.30"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "正統赤驥",
+    "original": "ルージュリナージュ",
+    "en": "Rouge Lignage",
+    "birth": "2019.4.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "海螺美貝",
+    "original": "コンクシェル",
+    "en": "Conch Shell",
+    "birth": "2020.4.25"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "呼風女神",
+    "original": "モリアーナ",
+    "en": "Moryana",
+    "birth": "2020.3.2"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "活得安然",
+    "original": "ピースオブザライフ",
+    "en": "Peace Of The Life",
+    "birth": "2020.4.30"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "曲動心神",
+    "original": "シンリョクカ",
+    "en": "Shinryokuka",
+    "birth": "2020.1.24"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "芳名瑪麗",
+    "original": "キミノナハマリア",
+    "en": "Kiminonawa Maria",
+    "birth": "2020.4.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "紅顏好命",
+    "original": "エリカヴィータ",
+    "en": "Erika Vita",
+    "birth": "2019.2.3"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "艷玫華彩",
+    "original": "スタニングローズ",
+    "en": "Stunning Rose",
+    "birth": "2019.1.18"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "爍亮麗",
+    "original": "シンティレーション",
+    "en": "Scintillation",
+    "birth": "2019.1.15"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "金輝佳作",
+    "original": "サリエラ",
+    "en": "Saliera",
+    "birth": "2019.1.28"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "豎琴巧姬",
+    "original": "ハーパー",
+    "en": "Harper",
+    "birth": "2020.1.18"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "金全食",
+    "original": "ゴールドエクリプス",
+    "en": "Gold Eclipse",
+    "birth": "2019.4.14"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "拉威爾",
+    "original": "ラヴェル",
+    "en": "Ravel",
+    "birth": "2020.2.14"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "美岸景色",
+    "original": "コスタボニータ",
+    "en": "Costa Bonita",
+    "birth": "2019.4.29"
+  },
+  {
+    "origin": "JP",
     "mandarin": "圈速星",
     "original": "ラップスター",
     "en": "Lap Star",
