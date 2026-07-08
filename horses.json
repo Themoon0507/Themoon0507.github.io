@@ -1,6 +1,153 @@
 [
   {
     "origin": "JP",
+    "mandarin": "圈速星",
+    "original": "ラップスター",
+    "en": "Lap Star",
+    "birth": "2020.2.5"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "顯要之位",
+    "original": "ボールドゾーン",
+    "en": "Bold Zone",
+    "birth": "2020.2.12"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "名將隊長",
+    "original": "メイショウコガシラ",
+    "en": "Meisho Kogashira",
+    "birth": "2020.3.15"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "旭日高昂",
+    "original": "サンライズグルーヴ",
+    "en": "Sunrise Groove",
+    "birth": "2020.3.20"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "巡洋艦",
+    "original": "レアンダー",
+    "en": "Leander",
+    "birth": "2021.3.31"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "名將信濃",
+    "original": "メイショウシナノ",
+    "en": "Meisho Shinano",
+    "birth": "2020.5.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "紳士禮服",
+    "original": "オメガタキシード",
+    "en": "Omega Tuxedo",
+    "birth": "2020.5.14"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "著名酒城",
+    "original": "リューデスハイム",
+    "en": "Rudesheim",
+    "birth": "2021.3.20"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "大理石",
+    "original": "マーブルロック",
+    "en": "Marble Rock",
+    "birth": "2020.4.3"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "旭日雅致",
+    "original": "サンライズグラシア",
+    "en": "Sunrise Gracia",
+    "birth": "2022.4.29"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "湘南光明",
+    "original": "ショウナンバルドル",
+    "en": "Shonan Baldr",
+    "birth": "2022.2.21"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "純雷霆",
+    "original": "ジュンライデン",
+    "en": "Jun Raiden",
+    "birth": "2022.2.23"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "好氣魄",
+    "original": "マハートマーベル",
+    "en": "Mahatma Bel",
+    "birth": "2022.4.23"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "機伶冠星",
+    "original": "カレンラップスター",
+    "en": "Curren Wrap Star",
+    "birth": "2022.2.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "星際寶地",
+    "original": "コスモイシュタル",
+    "en": "Cosmo Ishtar",
+    "birth": "2022.6.1"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "王位明廊",
+    "original": "ロードガレリア",
+    "en": "Lord Galleria",
+    "birth": "2022.2.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "世外仙都",
+    "original": "サイモンザナドゥ",
+    "en": "Saimon Xanadu",
+    "birth": "2020.3.7"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "中和有心",
+    "original": "チュウワハート",
+    "en": "Chuwa Heart",
+    "birth": "2020.4.7"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "大名七號",
+    "original": "ダイメイセブン",
+    "en": "Daimei Seven",
+    "birth": "2020.4.30"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "輕盈颱風",
+    "original": "ヘニータイフーン",
+    "en": "Henny Typhoon",
+    "birth": "2020.2.14"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "芝士美點",
+    "original": "クレメダンジュ",
+    "en": "Cremet D'Anjou",
+    "birth": "2020.3.24"
+  },
+  {
+    "origin": "JP",
     "mandarin": "堅決少女",
     "original": "フォルティーナ",
     "en": "Fortina",
