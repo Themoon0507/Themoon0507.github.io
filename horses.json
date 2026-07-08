@@ -1,6 +1,104 @@
 [
   {
     "origin": "JP",
+    "mandarin": "空氣因子",
+    "original": "エアジーン",
+    "en": "Air Gene",
+    "birth": "2016.1.30"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "赤鳥之女",
+    "original": "アカイトリノムスメ",
+    "en": "Akaitorino Musume",
+    "birth": "2018.4.16"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "借花敬母",
+    "original": "クラヴェル",
+    "en": "Clavel",
+    "birth": "2017.2.15"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "添翼",
+    "original": "デゼル",
+    "en": "Des Ailes",
+    "birth": "2017.2.18"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "大奇蹟",
+    "original": "イズジョーノキセキ",
+    "en": "Izu Jo no Kiseki",
+    "birth": "2017.2.16"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "女海神",
+    "original": "コトブキテティス",
+    "en": "Kotobuki Thetis",
+    "birth": "2017.4.16"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "胭脂月色",
+    "original": "リュヌルージュ",
+    "en": "Lune Rouge",
+    "birth": "2015.3.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "妙曲清歌",
+    "original": "ムジカ",
+    "en": "Musica",
+    "birth": "2017.4.2"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "花徑走走",
+    "original": "ランブリングアレー",
+    "en": "Rambling Alley",
+    "birth": "2016.3.24"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "戀戀薔薇",
+    "original": "ロザムール",
+    "en": "Rose Amour",
+    "birth": "2016.3.31"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "勁草滿山",
+    "original": "シャムロックヒル",
+    "en": "Shamrock Hill",
+    "birth": "2017.4.23"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "鮮甜軟果",
+    "original": "ソフトフルート",
+    "en": "Soft Fruit",
+    "birth": "2017.3.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "三重協奏",
+    "original": "テルツェット",
+    "en": "Terzetto",
+    "birth": "2017.4.20"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "滿謝意",
+    "original": "ウインキートス",
+    "en": "Win Kiitos",
+    "birth": "2017.5.4"
+  },
+  {
+    "origin": "JP",
     "mandarin": "掛鎖",
     "original": "カデナ",
     "en": "Cadenas",
