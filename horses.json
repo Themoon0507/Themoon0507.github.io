@@ -1,6 +1,90 @@
 [
   {
     "origin": "JP",
+    "mandarin": "五行聖山",
+    "original": "マーブルマウンテン",
+    "en": "Marble Mountain",
+    "birth": "2021.2.4"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "快踏熱舞",
+    "original": "サパテアール",
+    "en": "Zapatear",
+    "birth": "2019.5.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "造王侯爺",
+    "original": "クーアフュルスト",
+    "en": "Kurfurst",
+    "birth": "2021.5.15"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "強大氣流",
+    "original": "トゥルブレンシア",
+    "en": "Turbulencia",
+    "birth": "2017.3.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "學有所成",
+    "original": "カズロレアート",
+    "en": "Kazu Laureato",
+    "birth": "2018.3.17"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "居於天上",
+    "original": "スカイドゥエラー",
+    "en": "Sky Dweller",
+    "birth": "2018.3.28"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "石巨人",
+    "original": "フルングニル",
+    "en": "Hrungnir",
+    "birth": "2020.4.24"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "勝夢想",
+    "original": "オーバーザドリーム",
+    "en": "Over The Dream",
+    "birth": "2020.4.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "兩重笑點",
+    "original": "ダブルジョーク",
+    "en": "Double Joke",
+    "birth": "2020.3.1"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "豔赤驥",
+    "original": "ルージュシュエット",
+    "en": "Rouge Chouette",
+    "birth": "2021.3.5"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "耐心兒",
+    "original": "パシアンジャン",
+    "en": "Patient Sien",
+    "birth": "2021.4.13"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "藍靛真彩",
+    "original": "コルデアニル",
+    "en": "Cor De Anil",
+    "birth": "2020.3.19"
+  },
+  {
+    "origin": "JP",
     "mandarin": "最頂點",
     "original": "クルミナーレ",
     "en": "Culminale",
