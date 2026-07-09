@@ -1,5 +1,96 @@
 [
   {
+    "origin": "JP",
+    "mandarin": "成田世紀",
+    "original": "ナリタセンチュリー",
+    "en": "Narita Century",
+    "birth": "1999.3.20"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "萬能泰斗",
+    "original": "マグナーテン",
+    "en": "Magnaten",
+    "birth": "1996.4.18"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "密州怨曲",
+    "original": "デルタブルース",
+    "en": "Delta Blues",
+    "birth": "2001.5.3"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "駱驊",
+    "original": "エルノヴァ",
+    "en": "Er Nova",
+    "birth": "1999.2.17"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "荒漠英雄",
+    "original": "ゼンノロブロイ",
+    "en": "Zenno Rob Roy",
+    "birth": "2000.3.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "菱鑽奇寶",
+    "original": "ヒシミラクル",
+    "en": "Hishi Miracle",
+    "birth": "1999.3.31"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "高級玩意",
+    "original": "ハイアーゲーム",
+    "en": "Higher Game",
+    "birth": "2001.2.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "駿公子",
+    "original": "トーセンダンディ",
+    "en": "Tosen Dandy",
+    "birth": "1998.4.9"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "浪淘沙",
+    "original": "ホオキパウェーブ",
+    "en": "Hookipa Wave",
+    "birth": "2001.3.16"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "金月亮",
+    "original": "Lune d'Or",
+    "en": "Lune d'Or",
+    "birth": "2001.4.22"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "鳳凰烈焰",
+    "original": "Phoenix Reach",
+    "en": "Phoenix Reach",
+    "birth": "2000.3.5"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "威信",
+    "original": "Warrsan",
+    "en": "Warrsan",
+    "birth": "1998.2.28"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "鮑華斯高",
+    "original": "Powerscourt",
+    "en": "Powerscourt",
+    "birth": "2000.4.1"
+  },
+  {
     "origin": "EN",
     "mandarin": "丹麥旗",
     "original": "Dano-Mast",
