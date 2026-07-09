@@ -1,6 +1,286 @@
 [
   {
     "origin": "JP",
+    "mandarin": "東海帝皇",
+    "original": "トウカイテイオー",
+    "en": "Tokai Teio",
+    "birth": "1988.4.20"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "丸善斯基",
+    "original": "マルゼンスキー",
+    "en": "Maruzensky",
+    "birth": "1974.5.19"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "富士奇石",
+    "original": "フジキセキ",
+    "en": "Fuji Kiseki",
+    "birth": "1992.4.15"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "小栗帽",
+    "original": "オグリキャップ",
+    "en": "Oguri Cap",
+    "birth": "1985.3.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "大和赤驥",
+    "original": "ダイワスカーレット",
+    "en": "Daiwa Scarlet",
+    "birth": "2004.5.13"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "大樹快車",
+    "original": "タイキシャトル",
+    "en": "Taiki Shuttle",
+    "birth": "1994.3.23"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "草上飛",
+    "original": "グラスワンダー",
+    "en": "Grass Wonder",
+    "birth": "1995.2.18"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "菱亞馬遜",
+    "original": "ヒシアマゾン",
+    "en": "Hishi Amazon",
+    "birth": "1991.3.26"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "目白麥昆",
+    "original": "メジロマックイーン",
+    "en": "Mejiro McQueen",
+    "birth": "1987.4.3"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "神鷹",
+    "original": "エルコンドルパサー",
+    "en": "El Condor Pasa",
+    "birth": "1995.3.17"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "成田白仁",
+    "original": "ナリタブライアン",
+    "en": "Narita Brian",
+    "birth": "1991.5.3"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "氣槽",
+    "original": "エアグルーヴ",
+    "en": "Air Groove",
+    "birth": "1993.4.6"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "魯鐸象徵",
+    "original": "シンボリルドルフ",
+    "en": "Symboli Rudolf",
+    "birth": "1981.3.13"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "愛麗數碼",
+    "original": "アグネスデジタル",
+    "en": "Agnes Digital",
+    "birth": "1997.5.15"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "青雲天空",
+    "original": "セイウンスカイ",
+    "en": "Seiun Sky",
+    "birth": "1995.4.26"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "玉藻十字",
+    "original": "タマモクロス",
+    "en": "Tamamo Cross",
+    "birth": "1984.5.23"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "美妙姿勢",
+    "original": "ファインモーション",
+    "en": "Fine Motion",
+    "birth": "1999.1.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "琵琶晨光",
+    "original": "ビワハヤヒデ",
+    "en": "Biwa Hayahide",
+    "birth": "1990.3.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "重砲",
+    "original": "マヤノトップガン",
+    "en": "Mayano Top Gun",
+    "birth": "1992.3.24"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "曼城茶座",
+    "original": "マンハッタンカフェ",
+    "en": "Manhattan Cafe",
+    "birth": "1998.3.5"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "美浦波旁",
+    "original": "ミホノブルボン",
+    "en": "Mihono Bourbon",
+    "birth": "1989.4.25"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "目白賴恩",
+    "original": "メジロライアン",
+    "en": "Mejiro Ryan",
+    "birth": "1987.4.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "菱曙",
+    "original": "ヒシアケボノ",
+    "en": "Hishi Akebono",
+    "birth": "1992.2.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "雪之美人",
+    "original": "ユキノビジン",
+    "en": "Yukino Bijin",
+    "birth": "1990.3.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "艾尼風神",
+    "original": "アイネスフウジン",
+    "en": "Ines Fujin",
+    "birth": "1987.4.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "愛麗速子",
+    "original": "アグネスタキオン",
+    "en": "Agnes Tachyon",
+    "birth": "1998.4.13"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "愛慕織姬",
+    "original": "アドマイヤベガ",
+    "en": "Admire Vega",
+    "birth": "1996.3.12"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "稻荷一",
+    "original": "イナリワン",
+    "en": "Inari One",
+    "birth": "1984.5.7"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "勝利獎券",
+    "original": "ウイニングチケット",
+    "en": "Winning Ticket",
+    "birth": "1990.3.21"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "真機伶",
+    "original": "カレンチャン",
+    "en": "Curren Chan",
+    "birth": "2007.3.31"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "川上公主",
+    "original": "カワカミプリンセス",
+    "en": "Kawakami Princess",
+    "birth": "2003.6.5"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "黃金城市",
+    "original": "ゴールドシチー",
+    "en": "Gold City",
+    "birth": "1984.4.16"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "櫻花進王",
+    "original": "サクラバクシンオー",
+    "en": "Sakura Bakushin O",
+    "birth": "1989.4.14"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "採珠",
+    "original": "シーキングザパール",
+    "en": "Seeking the Pearl",
+    "birth": "1994.4.16"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "新光風",
+    "original": "シンコウウインディ",
+    "en": "Shinko Windy",
+    "birth": "1993.4.14"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "東商變革",
+    "original": "スイープトウショウ",
+    "en": "Sweep Tosho",
+    "birth": "2001.5.9"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "超級溪流",
+    "original": "スーパークリーク",
+    "en": "Super Creek",
+    "birth": "1985.5.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "醒目飛鷹",
+    "original": "スマートファルコン",
+    "en": "Smart Falcon",
+    "birth": "2005.4.4"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "中山慶典",
+    "original": "ナカヤマフェスタ",
+    "en": "Nakayama Festa",
+    "birth": "2006.4.5"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "成田大進",
+    "original": "ナリタタイシン",
+    "en": "Narita Taishin",
+    "birth": "1990.6.10"
+  },
+  {
+    "origin": "JP",
     "mandarin": "成田世紀",
     "original": "ナリタセンチュリー",
     "en": "Narita Century",
