@@ -1,6 +1,118 @@
 [
   {
     "origin": "JP",
+    "mandarin": "西野花",
+    "original": "ニシノフラワー",
+    "en": "Nishino Flower",
+    "birth": "1989.4.19"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "青竹回憶",
+    "original": "バンブーメモリー",
+    "en": "Bamboo Memory",
+    "birth": "1985.5.14"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "微光飛駒",
+    "original": "ビコーペガサス",
+    "en": "Biko Pegasus",
+    "birth": "1991.2.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "美麗周日",
+    "original": "マーベラスサンデー",
+    "en": "Marvelous Sunday",
+    "birth": "1992.5.31"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "待兼福來",
+    "original": "マチカネフクキタル",
+    "en": "Matikanefukukitaru",
+    "birth": "1994.5.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "千明代表",
+    "original": "ミスターシービー",
+    "en": "Mr. C. B.",
+    "birth": "1980.4.7"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "目白多伯",
+    "original": "メジロドーベル",
+    "en": "Mejiro Dober",
+    "birth": "1994.5.6"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "優秀素質",
+    "original": "ナイスネイチャ",
+    "en": "Nice Nature",
+    "birth": "1988.4.16"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "聖王光環",
+    "original": "キングヘイロー",
+    "en": "King Halo",
+    "birth": "1995.4.28"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "詩歌劇",
+    "original": "マチカネタンホイザ",
+    "en": "Matikanetannhauser",
+    "birth": "1989.5.7"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "狄杜斯",
+    "original": "イクノディクタス",
+    "en": "Ikuno Dictus",
+    "birth": "1987.4.16"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "目白善信",
+    "original": "メジロパーマー",
+    "en": "Mejiro Palmer",
+    "birth": "1987.3.21"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "大德太陽",
+    "original": "ダイタクヘリオス",
+    "en": "Daitaku Helios",
+    "birth": "1987.4.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "雙渦輪",
+    "original": "ツインターボ",
+    "en": "Twin Turbo",
+    "birth": "1988.4.13"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "櫻花千代",
+    "original": "サクラチヨノオー",
+    "en": "Sakura Chiyono O",
+    "birth": "1985.2.19"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "天狼象徵",
+    "original": "シリウスシンボリ",
+    "en": "Sirius Symboli",
+    "birth": "1982.3.26"
+  },
+  {
+    "origin": "JP",
     "mandarin": "東海帝皇",
     "original": "トウカイテイオー",
     "en": "Tokai Teio",
