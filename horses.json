@@ -1,5 +1,201 @@
 [
   {
+    "origin": "EN",
+    "mandarin": "傲雪猛龍",
+    "original": "Asmira",
+    "en": "Asmira",
+    "birth": "2022.5.11"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "暗幻影",
+    "original": "Black Phantom",
+    "en": "Black Phantom",
+    "birth": "2021.3.27"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "古龍芬芳",
+    "original": "Eau De Cologne",
+    "en": "Eau De Cologne",
+    "birth": "2020.3.14"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "驕飛噴火",
+    "original": "Koffi Vulcano",
+    "en": "Koffi Vulcano",
+    "birth": "2020.4.15"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "麗花環",
+    "original": "Lorella",
+    "en": "Lorella",
+    "birth": "2022.3.17"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "林中妙麗",
+    "original": "Manon Des Bois",
+    "en": "Manon Des Bois",
+    "birth": "2020.1.16"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "畫裡嬌",
+    "original": "Margherita Luti",
+    "en": "Margherita Luti",
+    "birth": "2021.2.8"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "滿榮駒",
+    "original": "Murray",
+    "en": "Murray",
+    "birth": "2020.4.6"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "橡木艾菲",
+    "original": "Oak Ivy",
+    "en": "Oak Ivy",
+    "birth": "2020.4.14"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "好極馬",
+    "original": "Oak Lahoma",
+    "en": "Oak Lahoma",
+    "birth": "2021.4.11"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "華麗冠冕",
+    "original": "Tiara Hilleshage",
+    "en": "Tiara Hilleshage",
+    "birth": "2020.3.30"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "西敏銳鷹",
+    "original": "Westminster Eagle",
+    "en": "Westminster Eagle",
+    "birth": "2022.4.28"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "先知麗質",
+    "original": "Zakaria",
+    "en": "Zakaria",
+    "birth": "2021.5.22"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "伊甸樂園",
+    "original": "Garden Of Eden",
+    "en": "Garden Of Eden",
+    "birth": "2022.2.25"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "蜜蜂飛",
+    "original": "Honeybee",
+    "en": "Honeybee",
+    "birth": "2022.2.19"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "綺浪花",
+    "original": "Innora",
+    "en": "Innora",
+    "birth": "2022.2.26"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "菲國海城",
+    "original": "Kiamba",
+    "en": "Kiamba",
+    "birth": "2022.4.28"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "詩才貴婦",
+    "original": "Lady Charlotte",
+    "en": "Lady Charlotte",
+    "birth": "2022.2.9"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "淺笑星華",
+    "original": "Lips Vega",
+    "en": "Lips Vega",
+    "birth": "2022.1.25"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "海風輕送",
+    "original": "Meeresbrise",
+    "en": "Meeresbrise",
+    "birth": "2022.2.3"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "鐘樓村情",
+    "original": "Nicoreni",
+    "en": "Nicoreni",
+    "birth": "2022.4.14"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "年華",
+    "original": "Nyra",
+    "en": "Nyra",
+    "birth": "2022.3.24"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "野狐",
+    "original": "Raposa",
+    "en": "Raposa",
+    "birth": "2022.4.3"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "仙嬌蹄",
+    "original": "Santagada",
+    "en": "Santagada",
+    "birth": "2022.2.12"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "活潑型",
+    "original": "Spirited Style",
+    "en": "Spirited Style",
+    "birth": "2022.3.25"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "星光密語",
+    "original": "Starlight Lips",
+    "en": "Starlight Lips",
+    "birth": "2022.2.10"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "星格調",
+    "original": "Stugardia",
+    "en": "Stugardia",
+    "birth": "2022.2.3"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "文城風景",
+    "original": "Winnyzja",
+    "en": "Winnyzja",
+    "birth": "2022.4.12"
+  },
+  {
     "origin": "JP",
     "mandarin": "大賞識",
     "original": "アドマイヤマックス",
