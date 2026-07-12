@@ -1,6 +1,272 @@
 [
   {
     "origin": "JP",
+    "mandarin": "野田淑女",
+    "original": "ダノンフェアレディ",
+    "en": "Danon Fair Lady",
+    "birth": "2022.1.19"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "獨善丹心",
+    "original": "ルージュソリテール",
+    "en": "Rouge Solitaire",
+    "birth": "2022.3.24"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "尊鮮麗",
+    "original": "ジョスラン",
+    "en": "Jocelyn",
+    "birth": "2022.3.25"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "戲劇秘本",
+    "original": "レーゼドラマ",
+    "en": "Lesedrama",
+    "birth": "2022.5.12"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "齒輪永動",
+    "original": "ブラウンラチェット",
+    "en": "Brown Ratchet",
+    "birth": "2022.4.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "機靈發問",
+    "original": "ケリフレッドアスク",
+    "en": "Kelly Fled Ask",
+    "birth": "2022.4.3"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "栗本天命",
+    "original": "クリノメイ",
+    "en": "Kurino Mei",
+    "birth": "2022.5.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "鐵了心",
+    "original": "テレサ",
+    "en": "Theresa",
+    "birth": "2022.1.25"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "心頭寶",
+    "original": "マピュース",
+    "en": "Ma Puce",
+    "birth": "2022.3.26"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "紅顏特急",
+    "original": "エリカエクスプレス",
+    "en": "Erika Express",
+    "birth": "2022.3.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "心願",
+    "original": "ヴーレヴー",
+    "en": "Voulezvous",
+    "birth": "2022.2.9"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "倩女氣派",
+    "original": "セナスタイル",
+    "en": "Sena Style",
+    "birth": "2022.3.7"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "小菊",
+    "original": "ビップデイジー",
+    "en": "Vip Daisy",
+    "birth": "2022.2.15"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "大盛行",
+    "original": "インヴォーグ",
+    "en": "In Vogue",
+    "birth": "2022.3.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "起誓跑",
+    "original": "ランフォーヴァウ",
+    "en": "Run for Vow",
+    "birth": "2022.3.20"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "上蒼賜福",
+    "original": "カムニャック",
+    "en": "Kamunyak",
+    "birth": "2022.4.14"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "仙境艷后",
+    "original": "パラディレーヌ",
+    "en": "Paradis Reine",
+    "birth": "2022.3.6"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "翼之聲",
+    "original": "エールヴォア",
+    "en": "Aile Voix",
+    "birth": "2016.3.12"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "神水",
+    "original": "アクアミラビリス",
+    "en": "Aqua Mirabilis",
+    "birth": "2016.4.4"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "沙灘森巴",
+    "original": "ビーチサンバ",
+    "en": "Beach Samba",
+    "birth": "2016.4.4"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "創世駒",
+    "original": "クロノジェネシス",
+    "en": "Chrono Genesis",
+    "birth": "2016.3.6"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "反身舞步",
+    "original": "コントラチェック",
+    "en": "Contra Check",
+    "birth": "2016.4.1"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "野田幻想",
+    "original": "ダノンファンタジー",
+    "en": "Danon Fantasy",
+    "birth": "2016.1.30"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "波爾卡舞",
+    "original": "フェアリーポルカ",
+    "en": "Fairy Polka",
+    "birth": "2016.2.25"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "純潔女兒",
+    "original": "フィリアプーラ",
+    "en": "Figlia Pura",
+    "birth": "2016.4.3"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "步生花",
+    "original": "グラディーヴァ",
+    "en": "Gradiva",
+    "birth": "2016.3.14"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "愛的感覺",
+    "original": "アイリスフィール",
+    "en": "Iris Feel",
+    "birth": "2016.4.17"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "狙敵",
+    "original": "ジョディー",
+    "en": "Jodie",
+    "birth": "2016.2.7"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "郵票餐廳",
+    "original": "ルタンブル",
+    "en": "Le Timbre",
+    "birth": "2016.2.24"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "唯獨愛你",
+    "original": "ラヴズオンリーユー",
+    "en": "Loves Only You",
+    "birth": "2016.3.26"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "名將文明",
+    "original": "メイショウアステカ",
+    "en": "Meisho Azteca",
+    "birth": "2016.4.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "名將菖蒲",
+    "original": "メイショウショウブ",
+    "en": "Meisho Shobu",
+    "birth": "2016.3.6"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "矢志奪標",
+    "original": "ノーワン",
+    "en": "No One",
+    "birth": "2016.4.2"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "玉容光耀",
+    "original": "シェーングランツ",
+    "en": "Schon Glanz",
+    "birth": "2016.1.29"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "影子歌姬",
+    "original": "シャドウディーヴァ",
+    "en": "Shadow Diva",
+    "birth": "2016.2.29"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "粉紅巨鑽",
+    "original": "シゲルピンクダイヤ",
+    "en": "Shigeru Pink Dia",
+    "birth": "2016.2.12"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "勝券天女",
+    "original": "ウィクトーリア",
+    "en": "Victoria",
+    "birth": "2016.3.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "勝之帝后",
+    "original": "ウインゼノビア",
+    "en": "Win Zenobia",
+    "birth": "2016.3.15"
+  },
+  {
+    "origin": "JP",
     "mandarin": "唯有讚譽",
     "original": "アドマイヤジャスタ",
     "en": "Admire Justa",
