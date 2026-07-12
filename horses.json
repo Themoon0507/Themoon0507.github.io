@@ -1,5 +1,285 @@
 [
   {
+    "origin": "JP",
+    "mandarin": "唯有讚譽",
+    "original": "アドマイヤジャスタ",
+    "en": "Admire Justa",
+    "birth": "2016.3.19"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "牛熊鍍金",
+    "original": "ブルベアオーロ",
+    "en": "Bullbear Oro",
+    "birth": "2016.2.25"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "慈父心",
+    "original": "ダディーズマインド",
+    "en": "Daddy’s Mind",
+    "birth": "2016.3.2"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "成正心境",
+    "original": "ジョウショームード",
+    "en": "Josho Mood",
+    "birth": "2016.3.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "三宅府第",
+    "original": "ミヤケ",
+    "en": "Miyake",
+    "birth": "2016.3.4"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "蒙迪阿發",
+    "original": "モンテアーサー",
+    "en": "Monte Arthur",
+    "birth": "2016.2.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "名父巴魯",
+    "original": "ロジャーバローズ",
+    "en": "Roger Barows",
+    "birth": "2016.1.24"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "大戲法",
+    "original": "ヤマニンマヒア",
+    "en": "Yamanin Magia",
+    "birth": "2016.2.21"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "榮進甲兵",
+    "original": "エイシンルカーノ",
+    "en": "A Shin Lucano",
+    "birth": "2014.4.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "牛熊松露",
+    "original": "ブルベアトリュフ",
+    "en": "Bullbear Truffe",
+    "birth": "2015.3.6"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "滿懷自信",
+    "original": "コンフィデンス",
+    "en": "Confidence",
+    "birth": "2014.3.9"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "夢之軍",
+    "original": "ドリームソルジャー",
+    "en": "Dream Soldier",
+    "birth": "2014.3.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "意氣昂揚",
+    "original": "イレイション",
+    "en": "Elation",
+    "birth": "2012.4.28"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "碧綠星",
+    "original": "エメラルスター",
+    "en": "Emeral Star",
+    "birth": "2014.4.12"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "跨步向前",
+    "original": "ゴーフォワード",
+    "en": "Go Forward",
+    "birth": "2013.4.17"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "方旗騎兵",
+    "original": "ナイトバナレット",
+    "en": "Knight Banneret",
+    "birth": "2014.5.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "名將佳品",
+    "original": "メイショウオーパス",
+    "en": "Meisho Opus",
+    "birth": "2015.3.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "親愛兒子",
+    "original": "オーマイガイ",
+    "en": "Oh My Guy",
+    "birth": "2013.3.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "叱吒一時",
+    "original": "レッドレグナント",
+    "en": "Red Regnant",
+    "birth": "2015.2.3"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "音樂傑作",
+    "original": "ロシュフォール",
+    "en": "Rochefort",
+    "birth": "2015.3.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "聖雷蒙谷",
+    "original": "サンラモンバレー",
+    "en": "San Ramon Valley",
+    "birth": "2015.5.2"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "常輕勝",
+    "original": "テーオービクトリー",
+    "en": "T O Victory",
+    "birth": "2014.3.23"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "東海嬌艾",
+    "original": "トウカイシェーン",
+    "en": "Tokai Schon",
+    "birth": "2013.4.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "女堡主",
+    "original": "ウインシャトレーヌ",
+    "en": "Win Chatelaine",
+    "birth": "2014.5.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "乾杯勝",
+    "original": "ウインクルサルーテ",
+    "en": "Winkle Salute",
+    "birth": "2013.3.7"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "天子有詔",
+    "original": "アレット",
+    "en": "Arret",
+    "birth": "2011.5.1"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "紫菊搖曳",
+    "original": "アスタースウィング",
+    "en": "Aster Swing",
+    "birth": "2014.5.3"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "活蹦雀躍",
+    "original": "コパノキッキング",
+    "en": "Copano Kicking",
+    "birth": "2015.3.7"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "蛋黃花",
+    "original": "ジープルメリア",
+    "en": "G Plumeria",
+    "birth": "2013.5.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "快活音符",
+    "original": "カネトシビバーチェ",
+    "en": "Kanetoshi Vivace",
+    "birth": "2011.4.7"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "麻雀玩家",
+    "original": "クリノリーソクツモ",
+    "en": "Kurino Lisokutsumo",
+    "birth": "2012.3.28"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "名將隨筆",
+    "original": "メイショウツレヅレ",
+    "en": "Meisho Tsurezure",
+    "birth": "2009.3.31"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "夜行狐狸",
+    "original": "ナイトフォックス",
+    "en": "Night Fox",
+    "birth": "2012.1.29"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "堅忍神速",
+    "original": "ペイシャルアス",
+    "en": "Peisha Luas",
+    "birth": "2015.3.25"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "銀映夢",
+    "original": "シルバードリーム",
+    "en": "Silver Dream",
+    "birth": "2013.2.24"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "醒目瑞秋",
+    "original": "スマートレイチェル",
+    "en": "Smart Rachel",
+    "birth": "2014.1.25"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "高野狂人",
+    "original": "タガノヴィッター",
+    "en": "Tagano Vitter",
+    "birth": "2013.3.20"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "三萬美元",
+    "original": "サーティグランド",
+    "en": "Thirty Grand",
+    "birth": "2012.4.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "精緻印刷",
+    "original": "ヤマニンアンプリメ",
+    "en": "Yamanin Imprime",
+    "birth": "2014.4.5"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "鍾愛你",
+    "original": "ユアマイラブ",
+    "en": "You’re My Love",
+    "birth": "2013.2.24"
+  },
+  {
     "origin": "EN",
     "mandarin": "傲雪猛龍",
     "original": "Asmira",
