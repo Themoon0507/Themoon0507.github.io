@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>無盡的遠征</title>
     
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+TC:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -74,6 +75,15 @@
 
         .view-transition { transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out; }
         .view-hidden { display: none; opacity: 0; transform: translateY(10px); }
+        
+        /* 讓文字框裡插入的圖片也能美觀呈現在正文中 */
+        .prose img {
+            border-radius: 0.5rem;
+            margin: 1.5rem auto;
+            max-height: 500px;
+            object-fit: contain;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body class="bg-parchment-light text-parchment-text dark:bg-parchment-dark dark:text-parchment-darkText min-h-screen flex flex-col relative overflow-x-hidden selection:bg-amber-200 selection:text-amber-900">
@@ -301,8 +311,21 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">完整正文 (嚴格保留您輸入時的換行與空白格)</label>
-                    <textarea id="post-content" rows="14" required class="w-full bg-transparent border border-stone-300 dark:border-stone-700 rounded-lg p-4 focus:border-accent dark:focus:border-accent-dark outline-none font-serif leading-relaxed transition-colors resize-y" placeholder="揮灑你的遠征足跡..."></textarea>
+                    <div class="flex flex-wrap justify-between items-center mb-2 gap-2">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500">完整正文 (支援 Markdown 語法)</label>
+                        <!-- 排版與圖片上傳工具列 -->
+                        <div class="flex flex-wrap items-center gap-1.5 text-xs">
+                            <button type="button" onclick="insertFormatting('**', '**')" class="px-2 py-1 bg-stone-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-300 rounded hover:bg-accent hover:text-white dark:hover:bg-accent-dark transition-colors font-bold" title="粗體">B</button>
+                            <button type="button" onclick="insertFormatting('*', '*')" class="px-2 py-1 bg-stone-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-300 rounded hover:bg-accent hover:text-white dark:hover:bg-accent-dark transition-colors italic" title="斜體">I</button>
+                            <button type="button" onclick="insertFormatting('## ', '')" class="px-2 py-1 bg-stone-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-300 rounded hover:bg-accent hover:text-white dark:hover:bg-accent-dark transition-colors font-bold" title="大標題">H2</button>
+                            <button type="button" onclick="insertFormatting('### ', '')" class="px-2 py-1 bg-stone-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-300 rounded hover:bg-accent hover:text-white dark:hover:bg-accent-dark transition-colors font-semibold" title="小標題">H3</button>
+                            <label class="cursor-pointer px-2.5 py-1 bg-stone-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-300 rounded hover:bg-accent hover:text-white dark:hover:bg-accent-dark transition-colors flex items-center gap-1.5" title="選擇本地圖片直接寫入">
+                                <i class="fa-regular fa-image"></i> 🖼️ 插入本地圖片
+                                <input type="file" id="image-upload-input" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+                            </label>
+                        </div>
+                    </div>
+                    <textarea id="post-content" rows="14" required class="w-full bg-transparent border border-stone-300 dark:border-stone-700 rounded-lg p-4 focus:border-accent dark:focus:border-accent-dark outline-none font-serif leading-relaxed transition-colors resize-y" placeholder="揮灑你的遠征足跡... (支援 **粗體**、*斜體* 與 # 標題)"></textarea>
                 </div>
 
                 <div class="flex justify-end pt-4">
@@ -621,6 +644,13 @@
             const eraTag = post.era ? `<span class="border border-stone-300 dark:border-stone-700 px-2.5 py-1 rounded text-stone-500 dark:text-stone-400">${post.era}年代</span>` : '';
             const regionTag = post.region ? `<span class="border border-stone-300 dark:border-stone-700 px-2.5 py-1 rounded text-stone-500 dark:text-stone-400">${post.region}</span>` : '';
 
+            // 使用 marked 渲染 Markdown，保留換行
+            let renderedHtml = finalContent;
+            if (typeof marked !== 'undefined') {
+                marked.setOptions({ breaks: true });
+                renderedHtml = marked.parse(finalContent);
+            }
+
             contentArea.innerHTML = `
                 <div class="flex flex-wrap items-center gap-3 text-xs font-sans text-stone-500 dark:text-stone-400 mb-4">
                     <span class="bg-stone-200/60 dark:bg-stone-800 px-2.5 py-1 rounded text-accent dark:text-accent-dark font-semibold">${post.category}</span>
@@ -632,8 +662,8 @@
                     <span>${post.wordCount} 字</span>
                 </div>
                 <h2 class="text-2xl md:text-3xl font-bold font-serif mb-8 text-stone-800 dark:text-stone-100 leading-snug tracking-wide border-b border-stone-200 dark:border-stone-800 pb-6">${post.title}</h2>
-                <div class="content-body font-serif whitespace-pre-wrap text-stone-700 dark:text-stone-300 leading-relaxed tracking-wide ${selectedFontSizeClass}">
-${finalContent}
+                <div class="content-body prose prose-stone dark:prose-invert max-w-none font-serif text-stone-700 dark:text-stone-300 leading-relaxed tracking-wide ${selectedFontSizeClass}">
+${renderedHtml}
                 </div>
             `;
 
@@ -817,6 +847,59 @@ ${finalContent}
             navigateTo('home');
         }
 
+        // 新增：處理圖片上傳轉為 Base64 字串插入
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // 限制圖片大小避免 TXT 檔案過於龐大（建議 2MB 以下）
+            if (file.size > 2 * 1024 * 1024) {
+                showToast("⚠️ 警告：圖片超過 2MB，建議壓縮後再上傳以保證 GitHub 載入速度。");
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const base64String = event.target.result;
+                const imageMarkdown = `\n![${file.name}](${base64String})\n`;
+                
+                const textarea = document.getElementById('post-content');
+                const startPos = textarea.selectionStart;
+                const endPos = textarea.selectionEnd;
+                
+                textarea.value = textarea.value.substring(0, startPos) + 
+                                 imageMarkdown + 
+                                 textarea.value.substring(endPos, textarea.value.length);
+                
+                textarea.focus();
+                textarea.selectionStart = startPos + imageMarkdown.length;
+                textarea.selectionEnd = startPos + imageMarkdown.length;
+                
+                showToast("🖼️ 圖片已轉換為代碼插入文字框中！");
+                e.target.value = ''; // 清空 input 允許重複選同張圖
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // 新增：插入排版符號快捷鍵
+        function insertFormatting(prefix, suffix) {
+            const textarea = document.getElementById('post-content');
+            const startPos = textarea.selectionStart;
+            const endPos = textarea.selectionEnd;
+            const selectedText = textarea.value.substring(startPos, endPos);
+            
+            const newText = prefix + selectedText + suffix;
+            textarea.value = textarea.value.substring(0, startPos) + newText + textarea.value.substring(endPos, textarea.value.length);
+            
+            textarea.focus();
+            if (selectedText.length === 0) {
+                textarea.selectionStart = startPos + prefix.length;
+                textarea.selectionEnd = startPos + prefix.length;
+            } else {
+                textarea.selectionStart = startPos + newText.length;
+                textarea.selectionEnd = startPos + newText.length;
+            }
+        }
+
         function handlePublish(e) {
             e.preventDefault();
             const title = sanitizeText(document.getElementById('post-title').value);
@@ -825,7 +908,8 @@ ${finalContent}
             const region = sanitizeText(document.getElementById('post-region').value); // 新增：抓取地區標籤
             const date = document.getElementById('post-date').value;
             const summary = sanitizeText(document.getElementById('post-summary').value);
-            const content = sanitizeText(document.getElementById('post-content').value);
+            // 提醒：不要對完整正文執行 sanitizeText 避免把 base64 圖片編碼洗掉
+            const content = document.getElementById('post-content').value;
             const wordCount = content.replace(/\s/g, '').length;
 
             let targetId = editingPostId;
@@ -889,7 +973,8 @@ ${finalContent}
             if (newPostId && textContent) {
                 if (textContainer) textContainer.classList.remove('hidden');
                 if (recommendFilename) recommendFilename.textContent = `${newPostId}.txt`;
-                if (articleTextArea) articleTextArea.value = sanitizeText(textContent);
+                // 原樣輸出正文(包含圖片 Base64 碼)
+                if (articleTextArea) articleTextArea.value = textContent;
             } else {
                 if (textContainer) textContainer.classList.add('hidden');
             }
@@ -965,4 +1050,3 @@ ${finalContent}
     </script>
 </body>
 </html>
-
