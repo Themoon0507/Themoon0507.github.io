@@ -36,6 +36,22 @@
                         accent: {
                             DEFAULT: '#8c2d19',
                             dark: '#d96a53'
+                        },
+                        turf: {
+                            DEFAULT: '#2a4b3c',
+                            dark: '#81b29a'
+                        },
+                        navy: {
+                            DEFAULT: '#1e3f66',
+                            dark: '#7395ae'
+                        },
+                        gold: {
+                            DEFAULT: '#b8860b',
+                            dark: '#e2b13c'
+                        },
+                        saddle: {
+                            DEFAULT: '#6b4423',
+                            dark: '#a87954'
                         }
                     }
                 }
@@ -49,7 +65,6 @@
             transition: background-color 0.5s ease, color 0.5s ease;
         }
 
-        /* SVG 粗糙手造紙張纖維濾鏡 */
         .paper-overlay {
             position: fixed;
             top: 0;
@@ -76,7 +91,6 @@
         .view-transition { transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out; }
         .view-hidden { display: none; opacity: 0; transform: translateY(10px); }
         
-        /* 讓文字框裡插入的圖片也能美觀呈現在正文中 */
         .prose img {
             border-radius: 0.5rem;
             margin: 1.5rem auto;
@@ -159,11 +173,9 @@
                 <p class="text-right text-sm font-sans not-italic text-stone-500 dark:text-stone-500">— 伊坂幸太郎《重力小丑》</p>
             </div>
 
-            <!-- 分類過濾器 -->
             <div class="flex flex-wrap gap-2 mt-10 mb-4 border-b border-stone-200 dark:border-stone-800 pb-4 font-sans text-sm" id="category-filter-container">
             </div>
 
-            <!-- 新增：年代與地區過濾器 -->
             <div id="tag-filter-container" class="flex flex-wrap gap-4 mb-10 font-sans text-sm view-transition">
                 <div class="flex items-center gap-2">
                     <i class="fa-regular fa-clock text-stone-400 dark:text-stone-500"></i>
@@ -250,7 +262,7 @@
 
         <section id="view-write" class="view-transition view-hidden">
             <div class="flex justify-between items-center mb-8">
-                <h2 id="write-view-title" class="text-xl font-bold font-serif tracking-widest text-accent dark:text-accent-dark">新增遠征足跡</h2>
+                <h2 id="write-view-title" class="text-xl font-bold font-serif tracking-widest text-accent dark:text-accent-dark">新增</h2>
                 <button onclick="cancelWrite()" class="font-sans text-xs text-stone-500 hover:text-stone-700 dark:hover:text-stone-300">
                     取消並返回
                 </button>
@@ -279,7 +291,6 @@
                     </div>
                 </div>
 
-                <!-- 新增：編輯模式的年代與地區標籤 -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500 mb-2">年代標籤 (選填)</label>
@@ -310,22 +321,43 @@
                     <textarea id="post-summary" rows="2" required class="w-full bg-transparent border-b border-stone-300 dark:border-stone-700 py-2 focus:border-accent dark:focus:border-accent-dark outline-none transition-colors resize-none leading-relaxed" placeholder="出現在首頁清單的前導摘要..."></textarea>
                 </div>
 
+                <!-- 專屬：圖片尺寸與資訊檢視面板 -->
+                <div id="image-inspector-container" class="hidden mb-4 bg-stone-100/80 dark:bg-stone-800/60 p-3.5 rounded-lg border border-stone-200 dark:border-stone-700 text-xs transition-all">
+                    <span class="font-bold text-stone-600 dark:text-stone-300 block mb-2.5 flex items-center justify-between">
+                        <span><i class="fa-regular fa-images mr-1.5 text-accent dark:text-accent-dark"></i>已加入的文章圖庫 (檢視尺寸與解析度)</span>
+                        <span class="text-[10px] text-stone-400 font-normal">長編碼已移至底部，寫作區保持乾淨</span>
+                    </span>
+                    <div id="image-inspector-list" class="flex flex-wrap gap-2.5 max-h-48 overflow-y-auto pr-1"></div>
+                </div>
+
                 <div>
                     <div class="flex flex-wrap justify-between items-center mb-2 gap-2">
                         <label class="block text-xs font-semibold uppercase tracking-wider text-stone-500">完整正文 (支援 Markdown 語法)</label>
-                        <!-- 排版與圖片上傳工具列 -->
                         <div class="flex flex-wrap items-center gap-1.5 text-xs">
                             <button type="button" onclick="insertFormatting('**', '**')" class="px-2 py-1 bg-stone-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-300 rounded hover:bg-accent hover:text-white dark:hover:bg-accent-dark transition-colors font-bold" title="粗體">B</button>
                             <button type="button" onclick="insertFormatting('*', '*')" class="px-2 py-1 bg-stone-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-300 rounded hover:bg-accent hover:text-white dark:hover:bg-accent-dark transition-colors italic" title="斜體">I</button>
                             <button type="button" onclick="insertFormatting('## ', '')" class="px-2 py-1 bg-stone-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-300 rounded hover:bg-accent hover:text-white dark:hover:bg-accent-dark transition-colors font-bold" title="大標題">H2</button>
                             <button type="button" onclick="insertFormatting('### ', '')" class="px-2 py-1 bg-stone-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-300 rounded hover:bg-accent hover:text-white dark:hover:bg-accent-dark transition-colors font-semibold" title="小標題">H3</button>
-                            <label class="cursor-pointer px-2.5 py-1 bg-stone-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-300 rounded hover:bg-accent hover:text-white dark:hover:bg-accent-dark transition-colors flex items-center gap-1.5" title="選擇本地圖片直接寫入">
+                            <label class="cursor-pointer px-2.5 py-1 bg-stone-200/60 dark:bg-stone-800 text-stone-700 dark:text-stone-300 rounded hover:bg-accent hover:text-white dark:hover:bg-accent-dark transition-colors flex items-center gap-1.5 shadow-sm" title="選擇本地圖片，自動底部錨點引用">
                                 <i class="fa-regular fa-image"></i> 🖼️ 插入本地圖片
                                 <input type="file" id="image-upload-input" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
                             </label>
                         </div>
                     </div>
-                    <textarea id="post-content" rows="14" required class="w-full bg-transparent border border-stone-300 dark:border-stone-700 rounded-lg p-4 focus:border-accent dark:focus:border-accent-dark outline-none font-serif leading-relaxed transition-colors resize-y" placeholder="揮灑你的遠征足跡... (支援 **粗體**、*斜體* 與 # 標題)"></textarea>
+                    <textarea id="post-content" rows="14" required oninput="updateLivePreview()" class="w-full bg-transparent border border-stone-300 dark:border-stone-700 rounded-lg p-4 focus:border-accent dark:focus:border-accent-dark outline-none font-serif leading-relaxed transition-colors resize-y" placeholder="揮灑你的遠征足跡... (插入圖片現在只會在游標處留下乾淨標籤，長編碼自動沉入最底部)"></textarea>
+                </div>
+
+                <!-- 專屬：實時渲染預覽區 -->
+                <div class="border border-stone-200 dark:border-stone-700 rounded-lg overflow-hidden transition-all">
+                    <div class="bg-stone-100/80 dark:bg-stone-800/80 px-4 py-2.5 flex justify-between items-center cursor-pointer select-none hover:bg-stone-200/50 dark:hover:bg-stone-800" onclick="toggleLivePreview()">
+                        <span class="font-bold text-xs text-stone-600 dark:text-stone-300 flex items-center gap-1.5">
+                            <i class="fa-regular fa-eye text-accent dark:text-accent-dark"></i> 👁️ 實時排版與圖片渲染預覽 (點擊展開 / 收起)
+                        </span>
+                        <i id="preview-toggle-icon" class="fa-solid fa-chevron-down text-stone-400 text-xs"></i>
+                    </div>
+                    <div id="live-preview-content" class="p-6 bg-white/40 dark:bg-stone-900/40 prose prose-stone dark:prose-invert max-w-none font-serif text-sm leading-relaxed hidden border-t border-stone-200 dark:border-stone-800">
+                        <p class="text-stone-400 italic text-center py-4">在此輸入正文後，此處將即時呈現 1:1 的最終閱讀排版...</p>
+                    </div>
                 </div>
 
                 <div class="flex justify-end pt-4">
@@ -363,8 +395,8 @@
 
         let posts = [];
         let currentFilter = '全部';
-        let currentEra = '';    // 新增：年代狀態
-        let currentRegion = ''; // 新增：地區狀態
+        let currentEra = '';
+        let currentRegion = '';
         let searchQuery = ''; 
         let sortOrder = 'desc';
         let currentPage = 1;
@@ -419,8 +451,8 @@
                 id: p.id,
                 title: sanitizeText(p.title),
                 category: sanitizeText(p.category) || '隨筆',
-                era: p.era ? sanitizeText(p.era) : '',         // 新增：解析年代
-                region: p.region ? sanitizeText(p.region) : '',// 新增：解析地區
+                era: p.era ? sanitizeText(p.era) : '',
+                region: p.region ? sanitizeText(p.region) : '',
                 date: sanitizeText(p.date),
                 summary: sanitizeText(p.summary),
                 wordCount: p.wordCount || (p.content ? p.content.length : 0),
@@ -436,7 +468,7 @@
         function updateStats() {
             const totalPosts = posts.length;
             const totalWords = posts.reduce((sum, p) => sum + (p.wordCount || 0), 0);
-            document.getElementById('site-stats').innerHTML = `共收錄 <span class="font-bold text-accent dark:text-accent-dark">${totalPosts}</span> 篇日誌 ｜ 總計 <span class="font-bold text-accent dark:text-accent-dark">${totalWords.toLocaleString()}</span> 字 ｜ <span class="text-stone-500 dark:text-stone-400 inline-block mt-1 sm:mt-0"><i class="fa-regular fa-envelope mr-1"></i>筆者信箱：<a href="mailto:rcon93097@gmail.com" class="hover:text-accent dark:hover:text-accent-dark transition-colors">rcon93097@gmail.com</a></span>`;
+            document.getElementById('site-stats').innerHTML = `共收錄 <span class="font-bold text-accent dark:text-accent-dark">${totalPosts}</span> 篇文章 ｜ 總計 <span class="font-bold text-accent dark:text-accent-dark">${totalWords.toLocaleString()}</span> 字 ｜ <span class="text-stone-500 dark:text-stone-400 inline-block mt-1 sm:mt-0"><i class="fa-regular fa-envelope mr-1"></i>筆者信箱：<a href="mailto:rcon93097@gmail.com" class="hover:text-accent dark:hover:text-accent-dark transition-colors">rcon93097@gmail.com</a></span>`;
         }
 
         function handleSearch() {
@@ -445,7 +477,6 @@
             renderPosts();
         }
         
-        // 新增：處理標籤過濾
         function handleTagFilter() {
             currentEra = document.getElementById('filter-era').value;
             currentRegion = document.getElementById('filter-region').value;
@@ -519,8 +550,8 @@
             const filteredPosts = posts.filter(p => {
                 const matchCat = currentFilter === '全部' || p.category === currentFilter;
                 const matchSearch = p.title.toLowerCase().includes(searchQuery) || p.summary.toLowerCase().includes(searchQuery);
-                const matchEra = currentEra === '' || p.era === currentEra;       // 新增：年代過濾
-                const matchRegion = currentRegion === '' || p.region === currentRegion; // 新增：地區過濾
+                const matchEra = currentEra === '' || p.era === currentEra;
+                const matchRegion = currentRegion === '' || p.region === currentRegion;
                 return matchCat && matchSearch && matchEra && matchRegion;
             });
 
@@ -541,12 +572,11 @@
                 container.innerHTML = `
                     <div class="text-center py-20 font-serif">
                         <i class="fa-solid fa-compass text-stone-300 dark:text-stone-700 text-4xl mb-4 animate-pulse"></i>
-                        <p class="text-stone-400 dark:text-stone-600 tracking-wider">沒有找到符合條件的足跡...</p>
+                        <p class="text-stone-400 dark:text-stone-600 tracking-wider">沒有找到符合條件...</p>
                     </div>`;
                 return;
             }
 
-            // 分頁邏輯計算
             const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
             if (currentPage > totalPages) currentPage = totalPages;
             if (currentPage < 1) currentPage = 1;
@@ -558,7 +588,6 @@
                 const article = document.createElement('article');
                 article.className = 'group transition-all duration-300 border-b border-stone-200/50 dark:border-stone-800/50 pb-8';
                 
-                // 動態渲染標籤，改用 flex-wrap 避免手機版擠壓
                 const eraTag = post.era ? `<span class="border border-stone-300 dark:border-stone-700 px-2 py-0.5 rounded text-stone-500 dark:text-stone-400">${post.era}年代</span>` : '';
                 const regionTag = post.region ? `<span class="border border-stone-300 dark:border-stone-700 px-2 py-0.5 rounded text-stone-500 dark:text-stone-400">${post.region}</span>` : '';
 
@@ -585,7 +614,6 @@
                 container.appendChild(article);
             });
 
-            // 渲染分頁按鈕
             if (paginationContainer && totalPages > 1) {
                 paginationContainer.innerHTML = `
                     <button onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled class="px-4 py-2 rounded-full border border-stone-200 dark:border-stone-800 text-stone-400 dark:text-stone-600 cursor-not-allowed"' : 'class="px-4 py-2 rounded-full border border-stone-300 dark:border-stone-700 hover:border-accent dark:hover:border-accent-dark hover:text-accent dark:hover:text-accent-dark transition-colors bg-white/60 dark:bg-stone-900/60 font-medium shadow-sm"'}>
@@ -644,7 +672,6 @@
             const eraTag = post.era ? `<span class="border border-stone-300 dark:border-stone-700 px-2.5 py-1 rounded text-stone-500 dark:text-stone-400">${post.era}年代</span>` : '';
             const regionTag = post.region ? `<span class="border border-stone-300 dark:border-stone-700 px-2.5 py-1 rounded text-stone-500 dark:text-stone-400">${post.region}</span>` : '';
 
-            // 使用 marked 渲染 Markdown，保留換行
             let renderedHtml = finalContent;
             if (typeof marked !== 'undefined') {
                 marked.setOptions({ breaks: true });
@@ -823,8 +850,8 @@ ${renderedHtml}
             editingPostId = id;
             document.getElementById('post-title').value = post.title;
             document.getElementById('post-category').value = post.category;
-            document.getElementById('post-era').value = post.era || '';       // 新增：載入年代狀態
-            document.getElementById('post-region').value = post.region || ''; // 新增：載入地區狀態
+            document.getElementById('post-era').value = post.era || '';
+            document.getElementById('post-region').value = post.region || '';
             document.getElementById('post-date').value = post.date;
             document.getElementById('post-summary').value = post.summary;
             document.getElementById('post-content').value = content;
@@ -832,6 +859,9 @@ ${renderedHtml}
             document.getElementById('write-view-title').textContent = "編輯";
             document.getElementById('submit-btn-text').textContent = "更新並產出新數據";
 
+            // 掃描既有文章內是否有圖片參考，若有則自動生成資訊卡
+            extractAndInspectImages(content);
+            updateLivePreview();
             navigateTo('write-post');
         }
 
@@ -844,43 +874,136 @@ ${renderedHtml}
             document.getElementById('write-view-title').textContent = "新增";
             document.getElementById('submit-btn-text').textContent = "保存並準備導出數據";
 
+            clearImageInspector();
             navigateTo('home');
         }
 
-        // 新增：處理圖片上傳轉為 Base64 字串插入
+        // 新增：處理圖片上傳改為「底部參考鏈結法」，維持游標處乾淨並檢視大小
         function handleImageUpload(e) {
             const file = e.target.files[0];
             if (!file) return;
 
-            // 限制圖片大小避免 TXT 檔案過於龐大（建議 2MB 以下）
+            const fileSizeKB = (file.size / 1024).toFixed(1);
             if (file.size > 2 * 1024 * 1024) {
-                showToast("⚠️ 警告：圖片超過 2MB，建議壓縮後再上傳以保證 GitHub 載入速度。");
+                showToast("⚠️ 提示：圖片大小高達 " + (file.size / 1024 / 1024).toFixed(1) + " MB！建議壓縮至 1MB 以下讓網頁維持瞬開速度。");
             }
 
             const reader = new FileReader();
             reader.onload = function(event) {
                 const base64String = event.target.result;
-                const imageMarkdown = `\n![${file.name}](${base64String})\n`;
                 
-                const textarea = document.getElementById('post-content');
-                const startPos = textarea.selectionStart;
-                const endPos = textarea.selectionEnd;
-                
-                textarea.value = textarea.value.substring(0, startPos) + 
-                                 imageMarkdown + 
-                                 textarea.value.substring(endPos, textarea.value.length);
-                
-                textarea.focus();
-                textarea.selectionStart = startPos + imageMarkdown.length;
-                textarea.selectionEnd = startPos + imageMarkdown.length;
-                
-                showToast("🖼️ 圖片已轉換為代碼插入文字框中！");
-                e.target.value = ''; // 清空 input 允許重複選同張圖
+                const img = new Image();
+                img.onload = function() {
+                    const width = img.width;
+                    const height = img.height;
+                    
+                    // 生成一組乾淨簡短的引用標籤
+                    const imgId = '圖_' + Math.floor(Math.random() * 8999 + 1000);
+                    const cleanTag = `![${file.name}][${imgId}]`;
+                    
+                    const textarea = document.getElementById('post-content');
+                    const startPos = textarea.selectionStart;
+                    const endPos = textarea.selectionEnd;
+                    
+                    // 1. 在游標處插入乾淨的短標籤
+                    // 2. 將幾萬字的實體編碼安靜地送到文章「最底部」
+                    const base64Ref = `\n\n[${imgId}]: ${base64String}`;
+                    
+                    textarea.value = textarea.value.substring(0, startPos) + 
+                                     cleanTag + 
+                                     textarea.value.substring(endPos, textarea.value.length) + 
+                                     base64Ref;
+                    
+                    textarea.focus();
+                    textarea.selectionStart = startPos + cleanTag.length;
+                    textarea.selectionEnd = startPos + cleanTag.length;
+                    
+                    // 生成上方圖片檢視面板與資訊卡
+                    createImageCard(imgId, file.name, base64String, width, height, fileSizeKB + ' KB');
+                    
+                    showToast(`🖼️ 成功插入！長度編碼已自動沉入最底部，寫作區保持清爽！`);
+                    e.target.value = ''; 
+                    
+                    updateLivePreview();
+                };
+                img.src = base64String;
             };
             reader.readAsDataURL(file);
         }
 
-        // 新增：插入排版符號快捷鍵
+        // 專屬：生成圖片尺寸檢視卡片
+        function createImageCard(id, name, base64, w = '未知', h = '未知', sizeStr = '') {
+            const container = document.getElementById('image-inspector-container');
+            const list = document.getElementById('image-inspector-list');
+            
+            container.classList.remove('hidden');
+            
+            const card = document.createElement('div');
+            card.className = "flex items-center gap-3 bg-white dark:bg-stone-900 p-2 rounded border border-stone-200 dark:border-stone-700 shadow-sm max-w-xs hover:border-accent dark:hover:border-accent-dark transition-colors";
+            card.innerHTML = `
+                <img src="${base64}" class="w-12 h-12 object-cover rounded bg-stone-100 dark:bg-stone-800 flex-shrink-0 border border-stone-200 dark:border-stone-800" alt="縮圖">
+                <div class="overflow-hidden font-sans text-left">
+                    <p class="font-bold truncate text-stone-700 dark:text-stone-200 text-xs" title="${name}">${name}</p>
+                    <p class="text-[10px] text-stone-400 dark:text-stone-500 font-mono mt-0.5">解析度: <span class="font-bold text-stone-600 dark:text-stone-300">${w}x${h}</span> ${sizeStr ? ' | ' + sizeStr : ''}</p>
+                    <span class="inline-block mt-1 bg-stone-100 dark:bg-stone-800 text-accent dark:text-accent-dark px-1.5 py-0.5 rounded text-[10px] font-mono select-all" title="點擊可全選複製這組短標籤">![...][${id}]</span>
+                </div>
+            `;
+            list.appendChild(card);
+        }
+
+        function extractAndInspectImages(text) {
+            clearImageInspector();
+            const container = document.getElementById('image-inspector-container');
+            
+            // 掃描文章底部的 [圖_xxx]: data:image...
+            const refRegex = /\[([^\]]+)\]:\s*(data:image\/[a-zA-Z]+;base64,[^\s]+)/g;
+            let match;
+            let found = false;
+            while ((match = refRegex.exec(text)) !== null) {
+                found = true;
+                const id = match[1];
+                const base64 = match[2];
+                
+                // 動態讀取歷史圖片的解析度
+                const img = new Image();
+                img.onload = function() {
+                    createImageCard(id, "已儲存歷史圖檔", base64, img.width, img.height, "封存圖片");
+                };
+                img.src = base64;
+            }
+        }
+
+        function clearImageInspector() {
+            document.getElementById('image-inspector-list').innerHTML = '';
+            document.getElementById('image-inspector-container').classList.add('hidden');
+        }
+
+        // 專屬：實時渲染預覽切換與更新
+        function toggleLivePreview() {
+            const content = document.getElementById('live-preview-content');
+            const icon = document.getElementById('preview-toggle-icon');
+            content.classList.toggle('hidden');
+            icon.classList.toggle('fa-chevron-down');
+            icon.classList.toggle('fa-chevron-up');
+            if (!content.classList.contains('hidden')) {
+                updateLivePreview();
+            }
+        }
+
+        function updateLivePreview() {
+            const content = document.getElementById('live-preview-content');
+            if (content.classList.contains('hidden')) return;
+            const textareaVal = document.getElementById('post-content').value;
+            if (!textareaVal.trim()) {
+                content.innerHTML = '<p class="text-stone-400 italic text-center py-4">在此輸入正文後，此處將即時呈現 1:1 的最終閱讀排版...</p>';
+                return;
+            }
+            if (typeof marked !== 'undefined') {
+                marked.setOptions({ breaks: true });
+                content.innerHTML = marked.parse(textareaVal);
+            }
+        }
+
         function insertFormatting(prefix, suffix) {
             const textarea = document.getElementById('post-content');
             const startPos = textarea.selectionStart;
@@ -898,17 +1021,17 @@ ${renderedHtml}
                 textarea.selectionStart = startPos + newText.length;
                 textarea.selectionEnd = startPos + newText.length;
             }
+            updateLivePreview();
         }
 
         function handlePublish(e) {
             e.preventDefault();
             const title = sanitizeText(document.getElementById('post-title').value);
             const category = document.getElementById('post-category').value;
-            const era = sanitizeText(document.getElementById('post-era').value);       // 新增：抓取年代標籤
-            const region = sanitizeText(document.getElementById('post-region').value); // 新增：抓取地區標籤
+            const era = sanitizeText(document.getElementById('post-era').value);
+            const region = sanitizeText(document.getElementById('post-region').value);
             const date = document.getElementById('post-date').value;
             const summary = sanitizeText(document.getElementById('post-summary').value);
-            // 提醒：不要對完整正文執行 sanitizeText 避免把 base64 圖片編碼洗掉
             const content = document.getElementById('post-content').value;
             const wordCount = content.replace(/\s/g, '').length;
 
@@ -941,6 +1064,7 @@ ${renderedHtml}
             renderCategoryFilter();
             renderPosts();
             updateExportData(targetId, content);
+            clearImageInspector();
             navigateTo('home');
 
             setTimeout(() => {
@@ -957,8 +1081,8 @@ ${renderedHtml}
                 id: p.id,
                 title: sanitizeText(p.title),
                 category: sanitizeText(p.category),
-                era: sanitizeText(p.era),       // 新增：匯出時保存年代
-                region: sanitizeText(p.region), // 新增：匯出時保存地區
+                era: sanitizeText(p.era),
+                region: sanitizeText(p.region),
                 date: sanitizeText(p.date),
                 summary: sanitizeText(p.summary),
                 wordCount: p.wordCount
@@ -973,7 +1097,6 @@ ${renderedHtml}
             if (newPostId && textContent) {
                 if (textContainer) textContainer.classList.remove('hidden');
                 if (recommendFilename) recommendFilename.textContent = `${newPostId}.txt`;
-                // 原樣輸出正文(包含圖片 Base64 碼)
                 if (articleTextArea) articleTextArea.value = textContent;
             } else {
                 if (textContainer) textContainer.classList.add('hidden');
