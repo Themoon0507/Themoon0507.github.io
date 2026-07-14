@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+/* 關鍵魔法：開放 Tailwind v4「手動按鈕切換黑夜模式」的授權！ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ==========================================
+   《無盡的遠征》古典英倫探險主題配色與排版設定
+   ========================================== */
+
+@theme {
+  /* 1. 主題專屬色號設定 */
+  --color-parchment-light: #f5ecd8;
+  --color-parchment-text: #2b241a;
+  --color-parchment-dark: #1a1612;
+  --color-parchment-darkText: #e3dac9;
+  --color-accent: #8c2d19;
+  --color-accent-dark: #d96a53;
+  --color-turf: #2a4b3c;
+  --color-turf-dark: #81b29a;
+  --color-navy: #1e3f66;
+  --color-navy-dark: #7395ae;
+  --color-gold: #b8860b;
+  --color-gold-dark: #e2b13c;
+  --color-saddle: #6b4423;
+  --color-saddle-dark: #a87954;
+  
+  /* 2. 字體設定 */
+  --font-serif: "Noto Serif TC", Georgia, serif;
+}
+
+/* 3. SVG 頂級亞麻織布與細緻手造紙顆粒濾鏡（Fine Linen / Archival Paper Texture） */
+.paper-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.12;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cfilter id='fineLinen'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='2' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23fff' surfaceScale='1.8'%3E%3CfeDistantLight azimuth='45' elevation='55'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23fineLinen)'/%3E%3C/svg%3E");
+}
+
+.dark .paper-overlay {
+  opacity: 0.12;
+  mix-blend-mode: screen;
+}
+
+/* 4. 專屬：全方位拉寬文章正文、清單與引言的行距（打造頂級文學排版閱讀感） */
+.prose {
+  line-height: 2.2 !important;       /* 讓文章區域內「所有文字」基礎行距直接拉滿！ */
+  letter-spacing: 0.06em !important; /* 增加中文字與字之間的微小間隔，閱讀不卡眼 */
+}
+
+.prose p, .prose li, .prose blockquote {
+  line-height: 2.3 !important;       /* 針對段落、清單項目、引言，給予高達 2.3 倍的極致舒適行距 */
+  margin-top: 1.2em !important;      /* 每一段上方留白 */
+  margin-bottom: 1.5em !important;   /* 每一段與每個條目下方距離加大，徹底解決黏在一起的問題 */
+}
+
+.prose h2, .prose h3 {
+  margin-top: 2.5em !important;      /* 標題與上方段落拉開距離，章節層次更分明 */
+  margin-bottom: 1em !important;
+}
