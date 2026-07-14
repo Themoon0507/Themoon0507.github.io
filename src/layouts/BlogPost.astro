@@ -1,0 +1,175 @@
+---
+import { getCollection } from 'astro:content';
+import '../styles/global.css';
+
+// 接收從 Markdown 傳來的 Frontmatter 資料 (標題、日期、分類等)
+const { title, description, pubDate, category = '賽馬故事', era = '', region = '' } = Astro.props;
+
+// 自動抓取所有文章，用來計算單篇字數與「上一篇 / 下一篇」導覽！
+const allPosts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+// 尋找當前文章在列表中的位置
+const currentIndex = allPosts.findIndex(post => post.data.title === title);
+const currentPost = allPosts[currentIndex];
+
+// 自動計算當前這篇文章的字數
+const wordCount = currentPost && currentPost.body ? currentPost.body.replace(/\s/g, '').length : 1500;
+
+// 計算上一篇 (較新) 與 下一篇 (較舊)
+const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+---
+
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>{title}無盡的遠征</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body class="bg-parchment-light text-parchment-text dark:bg-parchment-dark dark:text-parchment-darkText min-h-screen flex flex-col relative overflow-x-hidden selection:bg-amber-200 selection:text-amber-900 font-serif transition-colors duration-500">
+	
+	<!-- 全站靈魂：中世紀細緻亞麻織布濾鏡 -->
+	<div class="paper-overlay"></div>
+
+	<!-- 頂部古典導覽列 -->
+	<header class="w-full max-w-4xl mx-auto px-6 pt-8 md:pt-12 flex justify-between items-center z-10 border-b border-stone-300/60 dark:border-stone-700/60 pb-6">
+		<a href="/" class="flex flex-col cursor-pointer select-none group">
+			<span class="text-2xl md:text-3xl font-bold font-serif tracking-widest text-accent dark:text-accent-dark transition-colors duration-300 relative">
+				《無盡的遠征》
+				<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent dark:bg-accent-dark transition-all duration-500 group-hover:w-full"></span>
+			</span>
+			<span class="text-xs font-sans tracking-widest text-stone-500 dark:text-stone-400 mt-1 uppercase">The Endless Expedition</span>
+		</a>
+
+		<nav class="flex items-center gap-3 md:gap-5 font-sans">
+			<a href="/dictionary.html" class="text-stone-600 dark:text-stone-300 hover:text-accent dark:hover:text-accent-dark transition-colors font-medium text-xs md:text-sm flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-stone-300/60 dark:border-stone-700/60 hover:border-accent dark:hover:border-accent-dark bg-white/40 dark:bg-stone-900/40 shadow-sm" title="前往賽駒譯名對照">
+				<i class="fa-solid fa-book-bookmark text-accent dark:text-accent-dark"></i>
+				<span class="hidden sm:inline">賽駒譯名辭典</span>
+			</a>
+
+			<button id="font-size-btn" class="text-stone-600 dark:text-stone-300 hover:text-accent dark:hover:text-accent-dark transition-colors font-bold text-xs px-2.5 py-1.5 border border-stone-300 dark:border-stone-700 rounded-full shadow-sm bg-white/40 dark:bg-stone-900/40" title="調整字體大小">
+				<span id="font-size-label">A 小</span>
+			</button>
+
+			<button id="theme-toggle" class="w-8 h-8 border border-stone-300 dark:border-stone-700 rounded-full flex items-center justify-center hover:bg-stone-200 dark:hover:bg-stone-800 transition-colors text-stone-700 dark:text-stone-300 shadow-sm" title="切換主題">
+				<i id="theme-icon" class="fa-solid fa-moon text-sm"></i>
+			</button>
+		</nav>
+	</header>
+
+	<!-- 核心文章閱讀區 -->
+	<main class="flex-grow w-full max-w-3xl mx-auto px-6 py-10 z-10">
+		
+		<!-- 返回列表與資訊卡 -->
+		<a href="/" class="inline-flex items-center gap-2 font-sans text-xs tracking-wider text-stone-500 dark:text-stone-400 hover:text-accent dark:hover:text-accent-dark mb-8 transition-colors">
+			<i class="fa-solid fa-arrow-left-long"></i> 返回列表
+		</a>
+
+		<!-- 文章標頭 metadata -->
+		<div class="flex flex-wrap items-center gap-2.5 text-xs font-sans text-stone-500 dark:text-stone-400 mb-4 border-b border-stone-200 dark:border-stone-800 pb-4">
+			<span class="bg-stone-200/60 dark:bg-stone-800 px-2.5 py-1 rounded text-accent dark:text-accent-dark font-semibold shadow-sm">{category}</span>
+			{era && <span class="border border-stone-300 dark:border-stone-700 px-2.5 py-1 rounded text-stone-500 dark:text-stone-400">{era}年代</span>}
+			{region && <span class="border border-stone-300 dark:border-stone-700 px-2.5 py-1 rounded text-stone-500 dark:text-stone-400">{region}</span>}
+			<span>•</span>
+			<span><i class="fa-regular fa-calendar mr-1"></i>{new Date(pubDate).toISOString().split('T')[0]}</span>
+			<span>•</span>
+			<span><i class="fa-solid fa-pen-nib mr-1"></i>約 {wordCount.toLocaleString()} 字</span>
+		</div>
+
+		<!-- 文章大標題 -->
+		<h1 class="text-2xl md:text-3xl font-bold font-serif mb-10 text-stone-800 dark:text-stone-100 leading-snug tracking-wide border-b border-stone-200 dark:border-stone-800 pb-8">
+			{title}
+		</h1>
+
+		<!-- 這裡就是 Markdown 文章正文渲染的專用舞台 (<slot />) -->
+		<article id="article-content" class="prose prose-stone dark:prose-invert max-w-none font-serif text-stone-700 dark:text-stone-300 leading-relaxed tracking-wide text-base">
+			<slot />
+		</article>
+
+		<!-- 回到頂端按鈕 -->
+		<div class="mt-16 mb-8 text-center">
+			<button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-stone-300 dark:border-stone-700 bg-white/80 dark:bg-stone-800/80 text-stone-600 dark:text-stone-300 hover:text-accent dark:hover:text-accent-dark hover:border-accent dark:hover:border-accent-dark transition-all text-xs font-sans tracking-wider shadow-sm hover:shadow">
+				<i class="fa-solid fa-arrow-up"></i> 回到頂端
+			</button>
+		</div>
+
+		<!-- 上一篇 / 下一篇導覽卡片 -->
+		<div class="mt-8 pt-8 border-t border-stone-200 dark:border-stone-800 flex flex-col sm:flex-row justify-between items-stretch gap-4 font-sans">
+			{nextPost ? (
+				<a href={`/blog/${nextPost.id}/`} class="group w-full sm:w-1/2 flex items-center justify-start gap-4 px-5 py-4 rounded-xl border border-stone-300 dark:border-stone-700 hover:border-accent dark:hover:border-accent-dark transition-all duration-300 bg-stone-100/30 hover:bg-stone-200/50 dark:hover:bg-stone-800/30 text-left">
+					<i class="fa-solid fa-chevron-left text-stone-400 group-hover:text-accent dark:group-hover:text-accent-dark transition-colors"></i>
+					<div class="overflow-hidden">
+						<span class="block text-[10px] text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-1">上一篇</span>
+						<span class="block text-sm font-serif font-semibold text-stone-700 dark:text-stone-300 group-hover:text-accent dark:group-hover:text-accent-dark truncate w-full">{nextPost.data.title}</span>
+					</div>
+				</a>
+			) : (
+				<div class="hidden sm:block sm:w-1/2"></div>
+			)}
+
+			{prevPost ? (
+				<a href={`/blog/${prevPost.id}/`} class="group w-full sm:w-1/2 flex items-center justify-end gap-4 px-5 py-4 rounded-xl border border-stone-300 dark:border-stone-700 hover:border-accent dark:hover:border-accent-dark transition-all duration-300 bg-stone-100/30 hover:bg-stone-200/50 dark:hover:bg-stone-800/30 text-right ml-auto">
+					<div class="overflow-hidden">
+						<span class="block text-[10px] text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-1">下一篇</span>
+						<span class="block text-sm font-serif font-semibold text-stone-700 dark:text-stone-300 group-hover:text-accent dark:group-hover:text-accent-dark truncate w-full">{prevPost.data.title}</span>
+					</div>
+					<i class="fa-solid fa-chevron-right text-stone-400 group-hover:text-accent dark:group-hover:text-accent-dark transition-colors"></i>
+				</a>
+			) : (
+				<div class="hidden sm:block sm:w-1/2"></div>
+			)}
+		</div>
+
+	</main>
+
+	<!-- 頁尾 -->
+	<footer class="w-full max-w-4xl mx-auto px-6 py-12 mt-12 border-t border-stone-200/60 dark:border-stone-800/60 text-center font-sans text-xs text-stone-400 dark:text-stone-600 z-10">
+		<p class="tracking-widest">© 2026 《無盡的遠征》The Endless Expedition</p>
+	</footer>
+
+	<!-- 互動引擎 (與首頁完美同步黑夜模式與字體大小！) -->
+	<script>
+		// 1. 黑夜模式開關
+		const toggleBtn = document.getElementById('theme-toggle');
+		const icon = document.getElementById('theme-icon');
+		const isDark = localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+		
+		if (isDark && icon) icon.className = 'fa-solid fa-sun text-amber-400 text-sm';
+		
+		toggleBtn?.addEventListener('click', () => {
+			document.documentElement.classList.toggle('dark');
+			const nowDark = document.documentElement.classList.contains('dark');
+			localStorage.setItem('theme', nowDark ? 'dark' : 'light');
+			if (icon) icon.className = nowDark ? 'fa-solid fa-sun text-amber-400 text-sm transform rotate-180 transition-transform duration-300' : 'fa-solid fa-moon text-stone-700 text-sm transform rotate-0 transition-transform duration-300';
+		});
+
+		// 2. 字體大小切換
+		const fontBtn = document.getElementById('font-size-btn');
+		const fontLabel = document.getElementById('font-size-label');
+		const articleContent = document.getElementById('article-content');
+		const sizes = ['text-base', 'text-lg', 'text-xl'];
+		const labels = ['A 小', 'A 中', 'A 大'];
+		let currentIdx = parseInt(localStorage.getItem('fontSizeIndex') || '0');
+
+		if (fontLabel) fontLabel.textContent = labels[currentIdx];
+		if (articleContent) {
+			articleContent.classList.remove('text-base', 'text-lg', 'text-xl');
+			articleContent.classList.add(sizes[currentIdx]);
+		}
+
+		fontBtn?.addEventListener('click', () => {
+			currentIdx = (currentIdx + 1) % 3;
+			localStorage.setItem('fontSizeIndex', currentIdx.toString());
+			if (fontLabel) fontLabel.textContent = labels[currentIdx];
+			if (articleContent) {
+				articleContent.classList.remove('text-base', 'text-lg', 'text-xl');
+				articleContent.classList.add(sizes[currentIdx]);
+			}
+		});
+	</script>
+</body>
+</html>

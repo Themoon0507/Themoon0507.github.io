@@ -1,0 +1,446 @@
+---
+import { getCollection } from 'astro:content';
+import '../styles/global.css';
+
+// 1. 自動抓取 blog 資料夾裡的所有文章
+const rawPosts = await getCollection('blog');
+
+// 2. 將 Astro 文章轉換成前端篩選器熟悉的格式
+const formattedPosts = rawPosts.map(post => {
+	const contentStr = post.body || '';
+	const wordCount = contentStr.replace(/\s/g, '').length || 1200;
+	
+    let finalCategory = '';
+    if (post.data.category) {
+        finalCategory = post.data.category;
+    } else if (post.data.tags) {
+        finalCategory = Array.isArray(post.data.tags) ? post.data.tags[0] : post.data.tags;
+    } else {
+        finalCategory = '未分類';
+    }
+
+	return {
+		id: post.id,
+		title: post.data.title,
+		date: new Date(post.data.pubDate).toISOString().split('T')[0],
+		summary: post.data.description || "點擊進入閱讀...",
+		category: finalCategory,
+        era: post.data.era ? String(post.data.era) : '',
+        region: post.data.region || '',
+		wordCount: wordCount,
+		url: `/blog/${post.id}/`
+	};
+});
+
+const totalPostsCount = formattedPosts.length;
+const totalWordsCount = formattedPosts.reduce((sum, p) => sum + p.wordCount, 0);
+---
+
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>無盡的遠征</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body class="bg-parchment-light text-parchment-text dark:bg-parchment-dark dark:text-parchment-darkText min-h-screen flex flex-col relative overflow-x-hidden selection:bg-amber-200 selection:text-amber-900 font-serif transition-colors duration-500">
+	
+	<div class="paper-overlay"></div>
+
+	<header class="w-full max-w-4xl mx-auto px-6 pt-8 md:pt-12 flex justify-between items-center z-10">
+		<div class="flex flex-col cursor-pointer select-none group">
+			<h1 class="text-2xl md:text-3xl font-bold font-serif tracking-widest text-accent dark:text-accent-dark transition-colors duration-300 relative">
+				《無盡的遠征》
+				<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent dark:bg-accent-dark transition-all duration-500 group-hover:w-full"></span>
+			</h1>
+			<span class="text-xs font-sans tracking-widest text-stone-500 dark:text-stone-400 mt-1 uppercase">The Endless Expedition</span>
+		</div>
+
+		<nav class="flex items-center gap-3 md:gap-5 font-sans">
+	        <a
+		       href="/dictionary/"
+		       data-astro-reload
+		       class="text-stone-600 dark:text-stone-300 hover:text-accent dark:hover:text-accent-dark transition-colors font-medium text-xs md:text-sm flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-stone-300/60 dark:border-stone-700/60 hover:border-accent dark:hover:border-accent-dark bg-white/40 dark:bg-stone-900/40 shadow-sm"
+		       title="前往賽駒譯名對照"
+	        >
+		       <i class="fa-solid fa-book-bookmark text-accent dark:text-accent-dark"></i>
+		       <span class="hidden sm:inline">賽駒譯名辭典</span>
+	        </a>
+
+	        <button
+		        id="font-size-btn"
+	        	class="text-stone-600 dark:text-stone-300 hover:text-accent dark:hover:text-accent-dark transition-colors font-bold text-xs px-2.5 py-1.5 border border-stone-300 dark:border-stone-700 rounded-full shadow-sm bg-white/40 dark:bg-stone-900/40"
+		        title="調整字體大小"
+	        >
+		        <span id="font-size-label">A 小</span>
+	        </button>
+
+	        <button
+		        id="theme-toggle"
+		        class="w-8 h-8 border border-stone-300 dark:border-stone-700 rounded-full flex items-center justify-center hover:bg-stone-200 dark:hover:bg-stone-800 transition-colors text-stone-700 dark:text-stone-300 shadow-sm"
+		        title="切換主題"
+	        >
+		        <i id="theme-icon" class="fa-solid fa-moon text-sm"></i>
+	        </button>
+        </nav>
+	</header>
+
+	<main class="flex-grow w-full max-w-3xl mx-auto px-6 py-10 z-10">
+		
+		<div id="control-panel" class="flex flex-col md:flex-row justify-between items-center gap-4 bg-stone-100/50 dark:bg-stone-800/30 p-4 rounded-xl border border-stone-200/50 dark:border-stone-700/50 shadow-sm mb-8 font-sans text-xs backdrop-blur-sm transition-all duration-300">
+			<div class="font-medium tracking-wide text-stone-600 dark:text-stone-400 leading-relaxed">
+				共收錄 <span class="font-bold text-accent dark:text-accent-dark">{totalPostsCount}</span> 篇文章 ｜ 總計 <span class="font-bold text-accent dark:text-accent-dark">{totalWordsCount.toLocaleString()}</span> 字
+			</div>
+			<div class="flex items-center gap-2 w-full md:w-auto">
+				<button id="sort-toggle-btn" class="px-3 py-1.5 bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-700 rounded-full hover:border-accent dark:hover:border-accent-dark transition-colors text-stone-700 dark:text-stone-300 whitespace-nowrap shadow-sm" title="切換排序">
+					<i class="fa-solid fa-arrow-up-short-wide mr-1"></i><span id="sort-order-label">最新由上往下</span>
+				</button>
+				<div class="w-full md:w-44 relative">
+					<i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-stone-400"></i>
+					<input type="text" id="search-input" placeholder="搜尋名駒或紀實..." class="w-full pl-8 pr-4 py-1.5 bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-700 rounded-full focus:outline-none focus:border-accent dark:focus:border-accent-dark transition-colors text-stone-700 dark:text-stone-300 shadow-inner">
+				</div>
+			</div>
+		</div>
+
+		<div class="border-l-2 border-stone-300 dark:border-stone-700 pl-6 py-2 my-8 text-stone-600 dark:text-stone-400 italic text-base leading-relaxed tracking-wider font-serif">
+			<p class="mb-2">馬匹一起衝出起跑線。</p>
+			<p class="mb-2">褐色的馬兒奔跑時勢頭強勁，隆隆的震動一直傳到了看台。七匹食草動物奮力向前衝刺，馬蹄在土地上翻飛，震人心魄。</p>
+			<p class="mb-2">我盯著馬蹄有節奏的舞動，不由得心想，地球就是靠這個轉動的吧。</p>
+			<p class="mb-4">這七匹馬肯定帶動了地球的旋轉，肯定是這樣的。</p>
+			<p class="text-right text-sm font-sans not-italic text-stone-500 dark:text-stone-500">— 伊坂幸太郎《重力小丑》</p>
+		</div>
+
+		<div class="flex flex-wrap gap-2 mt-10 mb-4 border-b border-stone-200 dark:border-stone-800 pb-4 font-sans text-xs transition-all duration-300" id="category-filter-container"></div>
+
+		<div id="dropdown-filters" class="flex flex-wrap gap-4 mb-10 font-sans text-xs transition-all duration-300">
+			<div class="flex items-center gap-2">
+				<i class="fa-regular fa-clock text-stone-400 dark:text-stone-500"></i>
+				<select id="filter-era" class="bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-700 rounded-full px-4 py-1 text-stone-700 dark:text-stone-300 focus:outline-none focus:border-accent dark:focus:border-accent-dark transition-colors cursor-pointer shadow-sm">
+					<option value="">所有年代</option>
+					<option value="1980">1980年代</option>
+					<option value="1990">1990年代</option>
+					<option value="2000">2000年代</option>
+					<option value="2010">2010年代</option>
+					<option value="2020">2020年代</option>
+				</select>
+			</div>
+			<div class="flex items-center gap-2">
+				<i class="fa-solid fa-earth-asia text-stone-400 dark:text-stone-500"></i>
+				<select id="filter-region" class="bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-700 rounded-full px-4 py-1 text-stone-700 dark:text-stone-300 focus:outline-none focus:border-accent dark:focus:border-accent-dark transition-colors cursor-pointer shadow-sm">
+					<option value="">所有地區</option>
+					<option value="日本">日本</option>
+					<option value="香港">香港</option>
+					<option value="歐洲">歐洲</option>
+					<option value="美國">美國</option>
+					<option value="澳洲">澳洲</option>
+				</select>
+			</div>
+		</div>
+
+		<div id="posts-container" class="space-y-12"></div>
+		<div id="pagination-container" class="flex justify-center items-center gap-4 mt-12 font-sans text-xs"></div>
+
+	</main>
+
+	<footer class="w-full max-w-4xl mx-auto px-6 py-12 mt-12 border-t border-stone-200/60 dark:border-stone-800/60 text-center font-sans text-xs text-stone-400 dark:text-stone-600 z-10">
+		<p class="tracking-widest">© 2026 《無盡的遠征》The Endless Expedition</p>
+	</footer>
+
+	<script is:inline define:vars={{ formattedPosts }}>
+		let posts = formattedPosts;
+        const uniqueCategories = [...new Set(posts.map(p => p.category))];
+		const CATEGORIES = ['全部', ...uniqueCategories.filter(c => c !== '未分類'), ...uniqueCategories.includes('未分類') ? ['未分類'] : []];
+		
+		let currentFilter = '全部';
+		let currentEra = '';
+		let currentRegion = '';
+		let searchQuery = '';
+		let sortOrder = 'desc';
+		let currentPage = 1;
+		const POSTS_PER_PAGE = 10;
+
+    function chineseNumberToInt(text) {
+	    const digits = {
+		    '零': 0,
+		    '一': 1,
+		    '二': 2,
+		    '兩': 2,
+		    '三': 3,
+		    '四': 4,
+		    '五': 5,
+		    '六': 6,
+		    '七': 7,
+		    '八': 8,
+		    '九': 9
+	    };
+
+	    const units = {
+		    '十': 10,
+		    '百': 100,
+		    '千': 1000
+	    };
+
+	    let total = 0;
+	    let current = 0;
+
+	    for (const char of text) {
+		    if (char in digits) {
+			    current = digits[char];
+		    } else if (char in units) {
+			    total += (current || 1) * units[char];
+		    	current = 0;
+		    }
+	    }
+
+	    return total + current;
+    }
+
+    function extractOrderIndex(title) {
+	    // 支援「之一」、「之十八」、「之二十一」等中文數字
+	    const matchZh = title.match(
+		    /之([零一二兩三四五六七八九十百千]+)/
+	    );
+
+	    if (matchZh) {
+		    return chineseNumberToInt(matchZh[1]);
+	    }
+
+	    // 同時支援「之21」、「#21」等阿拉伯數字
+	    const matchNum = title.match(/(?:之|#|\s)(\d+)/);
+
+	    if (matchNum) {
+		    return Number(matchNum[1]);
+	    }
+
+	    return 0;
+    }
+
+		function init() {
+			renderCategoryButtons();
+			renderPosts();
+			setupEventListeners();
+			initTheme();
+			initFontSize();
+		}
+
+		function renderCategoryButtons() {
+			const container = document.getElementById('category-filter-container');
+			if (!container) return;
+			
+			container.innerHTML = CATEGORIES.map(cat => {
+				const isActive = cat === currentFilter;
+				const activeClass = isActive 
+					? "bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark shadow-sm font-semibold" 
+					: "text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 font-normal";
+				return `<button onclick="window.filterCategory('${cat}')" class="px-4 py-1.5 rounded-full transition-all duration-200 text-xs ${activeClass}">${cat}</button>`;
+			}).join('');
+		}
+
+		window.filterCategory = function(cat) {
+			currentFilter = cat;
+			currentPage = 1;
+			renderCategoryButtons();
+			renderPosts();
+		};
+
+		function renderPosts() {
+			const container = document.getElementById('posts-container');
+			const paginationContainer = document.getElementById('pagination-container');
+			if (!container) return;
+
+			const filteredPosts = posts.filter(p => {
+				const matchCat = currentFilter === '全部' || p.category === currentFilter;
+				const matchSearch = !searchQuery || p.title.toLowerCase().includes(searchQuery) || p.summary.toLowerCase().includes(searchQuery);
+				const matchEra = currentEra === '' || p.era === currentEra;
+				const matchRegion = currentRegion === '' || p.region === currentRegion;
+				return matchCat && matchSearch && matchEra && matchRegion;
+			});
+
+			const sortedPosts = [...filteredPosts].sort((a, b) => {
+				const dateDiff = new Date(b.date) - new Date(a.date);
+				if (dateDiff !== 0) return sortOrder === 'desc' ? dateDiff : -dateDiff;
+                
+                const orderA = extractOrderIndex(a.title);
+                const orderB = extractOrderIndex(b.title);
+                if (orderA !== orderB) return sortOrder === 'desc' ? (orderB - orderA) : (orderA - orderB);
+                
+                return sortOrder === 'desc' ? b.id.localeCompare(a.id) : a.id.localeCompare(b.id);
+			});
+
+			if (sortedPosts.length === 0) {
+				container.innerHTML = `
+					<div class="text-center py-20 font-serif">
+						<i class="fa-solid fa-compass text-stone-300 dark:text-stone-700 text-4xl mb-4 animate-pulse"></i>
+						<p class="text-stone-400 dark:text-stone-600 tracking-wider">沒有找到符合條件的紀實...</p>
+					</div>`;
+				if (paginationContainer) paginationContainer.innerHTML = '';
+				return;
+			}
+
+			const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
+			if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+
+			const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+			const paginatedPosts = sortedPosts.slice(startIndex, startIndex + POSTS_PER_PAGE);
+
+            const fontIdx = parseInt(localStorage.getItem('fontSizeIndex')) || 0;
+            const metaSizes = ['text-xs', 'text-sm', 'text-base'];
+            const titleSizes = ['text-xl md:text-2xl', 'text-2xl md:text-3xl', 'text-3xl md:text-4xl'];
+            const summarySizes = ['text-sm', 'text-base', 'text-lg'];
+
+			container.innerHTML = paginatedPosts.map(post => {
+				const eraTag = post.era ? `<span class="border border-stone-300 dark:border-stone-700 px-2 py-0.5 rounded text-stone-500 dark:text-stone-400">${post.era}年代</span>` : '';
+				const regionTag = post.region ? `<span class="border border-stone-300 dark:border-stone-700 px-2 py-0.5 rounded text-stone-500 dark:text-stone-400">${post.region}</span>` : '';
+
+				return `
+					<article class="group transition-all duration-300 border-b border-stone-200/60 dark:border-stone-800/60 pb-8">
+						<div class="flex flex-wrap items-center gap-2.5 font-sans text-stone-500 dark:text-stone-400 mb-2 ${metaSizes[fontIdx]}">
+							<span class="bg-stone-200/60 dark:bg-stone-800 px-2.5 py-0.5 rounded text-accent dark:text-accent-dark font-medium">${post.category}</span>
+							${eraTag}
+							${regionTag}
+							<span>•</span>
+							<span><i class="fa-regular fa-calendar mr-1"></i>${post.date}</span>
+							<span>•</span>
+							<span><i class="fa-solid fa-pen-nib mr-1"></i>約 ${post.wordCount} 字</span>
+						</div>
+						<h3 class="font-bold font-serif mb-3 text-stone-800 dark:text-stone-100 group-hover:text-accent dark:group-hover:text-accent-dark transition-colors duration-300 leading-snug ${titleSizes[fontIdx]}">
+							<a href="${post.url}" class="block">${post.title}</a>
+						</h3>
+						<p class="text-stone-600 dark:text-stone-300 leading-relaxed font-serif mb-4 line-clamp-2 ${summarySizes[fontIdx]}">
+							${post.summary}
+						</p>
+						<a href="${post.url}" class="inline-flex items-center gap-1.5 font-sans font-semibold tracking-wider text-accent dark:text-accent-dark hover:underline transition-all ${metaSizes[fontIdx]}">
+							繼續閱讀 <i class="fa-solid fa-arrow-right-long text-[10px] transform group-hover:translate-x-1 transition-transform"></i>
+						</a>
+					</article>
+				`;
+			}).join('');
+
+			if (paginationContainer && totalPages > 1) {
+				paginationContainer.innerHTML = `
+					<button onclick="window.changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled class="px-4 py-2 rounded-full border border-stone-200 dark:border-stone-800 text-stone-400 dark:text-stone-600 cursor-not-allowed"' : 'class="px-4 py-2 rounded-full border border-stone-300 dark:border-stone-700 hover:border-accent dark:hover:border-accent-dark hover:text-accent dark:hover:text-accent-dark transition-colors bg-white/60 dark:bg-stone-900/60 font-medium shadow-sm"'}>
+						<i class="fa-solid fa-chevron-left mr-1.5"></i>上一頁
+					</button>
+					<span class="font-serif tracking-widest text-stone-600 dark:text-stone-400 px-2">
+						第 <strong class="text-accent dark:text-accent-dark font-sans">${currentPage}</strong> / <span class="font-sans">${totalPages}</span> 頁
+					</span>
+					<button onclick="window.changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled class="px-4 py-2 rounded-full border border-stone-200 dark:border-stone-800 text-stone-400 dark:text-stone-600 cursor-not-allowed"' : 'class="px-4 py-2 rounded-full border border-stone-300 dark:border-stone-700 hover:border-accent dark:hover:border-accent-dark hover:text-accent dark:hover:text-accent-dark transition-colors bg-white/60 dark:bg-stone-900/60 font-medium shadow-sm"'}>
+						下一頁<i class="fa-solid fa-chevron-right ml-1.5"></i>
+					</button>
+				`;
+			} else if (paginationContainer) {
+				paginationContainer.innerHTML = '';
+			}
+		}
+
+		window.changePage = function(page) {
+			currentPage = page;
+			renderPosts();
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+		};
+
+		function setupEventListeners() {
+			const searchInput = document.getElementById('search-input');
+			if (searchInput) {
+				searchInput.addEventListener('input', (e) => {
+					searchQuery = e.target.value.toLowerCase().trim();
+					currentPage = 1;
+					renderPosts();
+				});
+			}
+
+			const eraSelect = document.getElementById('filter-era');
+			const regionSelect = document.getElementById('filter-region');
+			if (eraSelect && regionSelect) {
+                const handleDropdownChange = () => {
+					currentEra = eraSelect.value;
+					currentRegion = regionSelect.value;
+					currentPage = 1;
+					renderPosts();
+				};
+				eraSelect.addEventListener('change', handleDropdownChange);
+				regionSelect.addEventListener('change', handleDropdownChange);
+			}
+
+			const sortBtn = document.getElementById('sort-toggle-btn');
+			const sortLabel = document.getElementById('sort-order-label');
+			if (sortBtn && sortLabel) {
+				sortBtn.addEventListener('click', () => {
+					sortOrder = sortOrder === 'desc' ? 'asc' : 'desc';
+					sortLabel.textContent = sortOrder === 'desc' ? "最新由上往下" : "最舊由上往下";
+					currentPage = 1;
+					renderPosts();
+				});
+			}
+		}
+
+        function initTheme() {
+	        const toggleBtn = document.getElementById('theme-toggle');
+	        const icon = document.getElementById('theme-icon');
+	        const isDark =
+		        localStorage.getItem('theme') === 'dark' ||
+	        	(!('theme' in localStorage) &&
+			        window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+	        document.documentElement.classList.toggle('dark', isDark);
+
+	        if (isDark && icon) {
+		        icon.className = 'fa-solid fa-sun text-amber-400 text-sm';
+	        }
+
+	        if (toggleBtn) {
+	        	toggleBtn.addEventListener('click', () => {
+			        document.documentElement.classList.toggle('dark');
+			        const nowDark =
+				        document.documentElement.classList.contains('dark');
+
+		        	localStorage.setItem('theme', nowDark ? 'dark' : 'light');
+
+			        if (icon) {
+			        	icon.className = nowDark
+				        	? 'fa-solid fa-sun text-amber-400 text-sm'
+					        : 'fa-solid fa-moon text-stone-700 text-sm';
+			        }
+		        });
+	        }
+        }
+
+		function initFontSize() {
+			const btn = document.getElementById('font-size-btn');
+			const label = document.getElementById('font-size-label');
+			const labels = ['A 小', 'A 中', 'A 大'];
+			let currentIdx = parseInt(localStorage.getItem('fontSizeIndex')) || 0;
+
+			if (label) label.textContent = labels[currentIdx];
+            applyFontSizeToUI(currentIdx);
+
+			if (btn) {
+				btn.addEventListener('click', () => {
+					currentIdx = (currentIdx + 1) % 3;
+					localStorage.setItem('fontSizeIndex', currentIdx);
+					if (label) label.textContent = labels[currentIdx];
+                    applyFontSizeToUI(currentIdx);
+                    renderPosts();
+				});
+			}
+		}
+
+        function applyFontSizeToUI(idx) {
+            const sizes = ['text-xs', 'text-sm', 'text-base'];
+            const panels = ['control-panel', 'category-filter-container', 'dropdown-filters'];
+            
+            panels.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.classList.remove('text-xs', 'text-sm', 'text-base');
+                    el.classList.add(sizes[idx]);
+                }
+            });
+        }
+
+		init();
+	</script>
+</body>
+</html>

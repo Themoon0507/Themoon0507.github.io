@@ -1,0 +1,494 @@
+---
+import '../styles/global.css';
+
+const basePath = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const horsesUrl = `${basePath}horses.json`;
+---
+
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>賽駒譯名互換檢索系統 ｜ 無盡的遠征</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+TC:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script is:inline>
+        // 避免頁面載入時的閃爍 (FOUC)，提前設定主題
+        if (localStorage.getItem('theme') === 'dark' || 
+            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+<body
+  data-horses-url={horsesUrl}
+  class="bg-parchment-light text-parchment-text dark:bg-parchment-dark dark:text-parchment-darkText min-h-screen flex flex-col relative"
+>
+
+    <!-- 全站靈魂：中世紀細緻亞麻織布濾鏡 -->
+    <div class="paper-overlay"></div>
+
+    <!-- 提示彈窗 -->
+    <div id="toast-notification" class="fixed top-0 left-0 w-full transform -translate-y-full transition-transform duration-300 ease-in-out z-50 bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark px-4 py-3 shadow-lg flex justify-between items-center text-sm font-sans">
+        <span id="toast-message" class="mx-auto text-center font-medium">提示訊息</span>
+        <button onclick="window.closeToast()" class="absolute right-4 hover:opacity-80"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <header class="w-full max-w-4xl mx-auto px-6 pt-8 md:pt-12 flex justify-between items-center z-10">
+        <div>
+            <a href="/" class="text-xs font-sans tracking-wider text-stone-500 dark:text-stone-400 hover:text-accent dark:hover:text-accent-dark flex items-center gap-2 mb-2 transition-colors w-fit">
+                <i class="fa-solid fa-arrow-left-long"></i> 返回主網站
+            </a>
+            <h1 class="text-2xl md:text-3xl font-bold font-serif tracking-widest text-accent dark:text-accent-dark cursor-pointer select-none relative group w-fit" onclick="window.triggerSecretClick()">
+                賽駒譯名對照辭典
+                <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent dark:bg-accent-dark transition-all duration-500 group-hover:w-full"></span>
+            </h1>
+        </div>
+        <div class="flex items-center gap-3 font-sans">
+            <!-- 聯動首頁的字體大小按鈕 -->
+            <button id="font-size-btn" class="text-stone-600 dark:text-stone-300 hover:text-accent dark:hover:text-accent-dark transition-colors font-bold text-xs px-2.5 py-1.5 border border-stone-300 dark:border-stone-700 rounded-full shadow-sm bg-white/40 dark:bg-stone-900/40" title="調整字體大小">
+                <span id="font-size-label">A 小</span>
+            </button>
+            <button id="theme-toggle" class="w-8 h-8 border border-stone-300 dark:border-stone-700 rounded-full flex items-center justify-center hover:bg-stone-200 dark:hover:bg-stone-800 transition-colors text-stone-700 dark:text-stone-300 shadow-sm" title="切換主題">
+                <i id="theme-icon" class="fa-solid fa-moon text-sm"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow w-full max-w-4xl mx-auto px-6 py-8 z-10 font-sans">
+        
+        <!-- 隱藏的站長專屬新增後台 -->
+        <div id="admin-section" class="hidden mb-10 p-6 bg-stone-200/50 dark:bg-stone-800/80 border-2 border-dashed border-stone-300 dark:border-stone-600 rounded-xl">
+            <div class="flex justify-between items-center mb-4 border-b border-stone-300/50 dark:border-stone-700 pb-3">
+                <h2 class="text-lg font-bold font-serif text-accent dark:text-accent-dark"><i class="fa-solid fa-pen-nib mr-2"></i>站長專屬：智能批量收錄</h2>
+                <button onclick="window.attemptUnlockSecretMode()" class="text-xs text-stone-500 hover:text-red-500 transition-colors">鎖定並隱藏</button>
+            </div>
+            
+            <div class="mb-4">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-2 gap-2">
+                    <label class="block text-xs font-semibold text-stone-600 dark:text-stone-400">
+                        支援從 Excel 直接貼上，或使用逗號分開。<br>格式：<strong class="text-accent dark:text-accent-dark">語系(JP/EN), 中文譯名, 母語原名, 英文名, 出生年份</strong>
+                    </label>
+                    <span class="text-[10px] text-stone-500">※ 一行代表一匹馬，可一次貼上多行</span>
+                </div>
+                <textarea id="batch-input" rows="8" class="w-full bg-white dark:bg-stone-900 border border-stone-300 dark:border-stone-700 rounded-lg p-3 outline-none focus:border-accent text-sm font-mono text-stone-700 dark:text-stone-200 placeholder-stone-400/70 resize-y leading-relaxed" placeholder="例如輸入：&#10;JP, 春秋分, イクイノックス, Equinox, 2019&#10;EN, 范高爾, Frankel, Frankel, 2008"></textarea>
+                <div class="flex justify-end mt-3">
+                    <button onclick="window.handleBatchAdd()" class="bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark px-6 py-2.5 rounded-lg hover:opacity-90 transition-opacity font-semibold text-sm shadow-sm flex items-center gap-2">
+                        <i class="fa-solid fa-bolt"></i> 執行批量新增
+                    </button>
+                </div>
+            </div>
+
+            <!-- 增量 JSON 匯出區 -->
+            <div id="export-section" class="mt-8 border-t border-stone-300/50 dark:border-stone-700 pt-6 hidden">
+                <label id="export-label" class="block text-xs font-semibold text-stone-500 mb-2">🎉 成功！請複製下方代碼，並在 <code>public/horses.json</code> 時，<strong class="text-accent dark:text-accent-dark">直接貼在最上方第一行的 <code>[</code> 下方</strong></label>
+                <textarea id="export-textarea" readonly rows="8" class="w-full bg-stone-100 dark:bg-stone-950 p-3 rounded-lg font-mono text-xs text-stone-600 dark:text-stone-400 border border-stone-300 dark:border-stone-700 focus:outline-none resize-y"></textarea>
+                <button onclick="window.copyExportJson()" class="mt-3 bg-stone-800 hover:bg-stone-700 text-stone-200 px-5 py-2 rounded-full transition-colors w-full sm:w-auto text-sm font-medium shadow-sm"><i class="fa-regular fa-copy mr-1.5"></i>一鍵複製新代碼</button>
+            </div>
+        </div>
+
+        <!-- 重新設計：極簡化的橫向控制面板 -->
+        <div class="bg-stone-100/50 dark:bg-stone-800/30 p-4 rounded-xl border border-stone-200/50 dark:border-stone-700/50 shadow-sm mb-8 backdrop-blur-sm">
+            
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex flex-wrap justify-center gap-2 w-full md:w-auto" id="filter-buttons">
+                    <button onclick="window.setFilter('ALL')" id="btn-ALL" class="px-4 py-1.5 rounded-full text-xs font-semibold bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark shadow-sm transition-all border border-transparent">
+                        全部收錄
+                    </button>
+                    <button onclick="window.setFilter('JP')" id="btn-JP" class="px-4 py-1.5 rounded-full text-xs font-semibold text-stone-600 dark:text-stone-400 hover:bg-stone-200/60 dark:hover:bg-stone-700/50 transition-all border border-transparent">
+                        JP 日文原名馬
+                    </button>
+                    <button onclick="window.setFilter('EN')" id="btn-EN" class="px-4 py-1.5 rounded-full text-xs font-semibold text-stone-600 dark:text-stone-400 hover:bg-stone-200/60 dark:hover:bg-stone-700/50 transition-all border border-transparent">
+                        EN 英文原名馬
+                    </button>
+                </div>
+
+                <div class="relative w-full md:w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 transform -translate-y-1/2 text-stone-400 text-xs"></i>
+                    <input type="text" id="search-input" oninput="window.handleSearch()" placeholder="輸入中/英/日文馬名檢索..." class="w-full pl-9 pr-4 py-1.5 bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-700 rounded-full focus:outline-none focus:border-accent dark:focus:border-accent-dark transition-colors text-stone-700 dark:text-stone-200 text-xs shadow-inner">
+                </div>
+            </div>
+            
+            <!-- 完整多行提示字 + 加入動態縮放 ID -->
+            <div id="tips-container" class="mt-4 pt-3 border-t border-stone-200/50 dark:border-stone-700/50 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2 text-[11px] text-stone-500 dark:text-stone-400 transition-all duration-300">
+                <div class="space-y-1.5 font-serif">
+                    <p><i class="fa-solid fa-circle-info mr-1 text-accent dark:text-accent-dark"></i>提示：輸入中文、原名或英文皆可即時對照。</p>
+                    <p><i class="fa-solid fa-language mr-1 text-accent dark:text-accent-dark"></i>基本依據香港馬會譯名。</p>
+                    <p><i class="fa-solid fa-shuffle mr-1 text-accent dark:text-accent-dark"></i>無檢索狀態下，一次隨機顯示三十條。</p>
+                    <p><i class="fa-solid fa-eye-slash mr-1 text-accent dark:text-accent-dark"></i>若檢索結果過多，最多僅顯示前一百條，請增加關鍵字以縮小範圍。</p>
+                </div>
+                <div class="self-end flex flex-col items-end">
+                    <span id="dedup-notice" class="hidden font-sans text-amber-600 dark:text-amber-400 text-[10px] mb-1 animate-pulse"></span>
+                    <span id="result-count" class="font-sans font-semibold text-accent dark:text-accent-dark whitespace-nowrap tracking-wide">載入中...</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="horses-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5"></div>
+    </main>
+
+    <footer class="w-full max-w-4xl mx-auto px-6 py-8 mt-auto border-t border-stone-200/60 dark:border-stone-800/60 text-center font-sans text-xs text-stone-400 dark:text-stone-600 z-10">
+        <p class="tracking-widest">© 2026 《無盡的遠征》賽駒譯名檢索系統</p>
+    </footer>
+
+    <!-- 加入 is:inline 避免 Astro 打包，並加入 @ts-nocheck 完美解除所有紅線 -->
+    <script is:inline>
+        // @ts-nocheck
+        let horsesData = [];
+        let currentFilter = 'ALL';
+        let searchQuery = '';
+        const DEFAULT_DISPLAY_LIMIT = 30; 
+        const SEARCH_DISPLAY_LIMIT = 100; 
+
+        let secretClickCount = 0;
+        let isSecretUnlocked = false;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            initTheme();
+            initFontSize();
+            await loadHorsesData();
+        });
+
+        // ==========================
+        // 初始化功能區
+        // ==========================
+        function initFontSize() {
+            const btn = document.getElementById('font-size-btn');
+            const label = document.getElementById('font-size-label');
+            const labels = ['A 小', 'A 中', 'A 大'];
+            let currentIdx = parseInt(localStorage.getItem('fontSizeIndex')) || 0;
+
+            if (label) label.textContent = labels[currentIdx];
+            applyFontSizeToTips(currentIdx); // 初始化時套用提示詞字體大小
+
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    currentIdx = (currentIdx + 1) % 3;
+                    localStorage.setItem('fontSizeIndex', currentIdx);
+                    if (label) label.textContent = labels[currentIdx];
+                    applyFontSizeToTips(currentIdx); // 切換時同步更新提示詞字體大小
+                    renderHorses(); // 重新渲染卡片，套用新的字體大小！
+                });
+            }
+        }
+
+        // 新增：同步控制提示詞區域大小的函數
+        function applyFontSizeToTips(idx) {
+            const tipsContainer = document.getElementById('tips-container');
+            const tipSizes = ['text-xs', 'text-sm', 'text-base'];
+            if (tipsContainer) {
+                tipsContainer.classList.remove('text-[11px]', 'text-xs', 'text-sm', 'text-base');
+                tipsContainer.classList.add(tipSizes[idx]);
+            }
+        }
+
+        function initTheme() {
+            const toggleBtn = document.getElementById('theme-toggle');
+            const icon = document.getElementById('theme-icon');
+            const isDark = document.documentElement.classList.contains('dark');
+            
+            if (isDark && icon) icon.className = 'fa-solid fa-sun text-amber-400 text-sm';
+            
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    const nowDark = document.documentElement.classList.contains('dark');
+                    localStorage.setItem('theme', nowDark ? 'dark' : 'light');
+                    if (icon) icon.className = nowDark ? 'fa-solid fa-sun text-amber-400 text-sm transform rotate-180 transition-transform duration-300' : 'fa-solid fa-moon text-stone-700 text-sm transform rotate-0 transition-transform duration-300';
+                });
+            }
+        }
+
+        async function loadHorsesData() {
+            let rawData = [];
+
+            try {
+                const horsesUrl = document.body.dataset.horsesUrl;
+                const response = await fetch(horsesUrl);
+
+                if (!response.ok) {
+                    throw new Error(`無法載入資料：HTTP ${response.status}`);
+                }
+
+                rawData = await response.json();
+            } catch (error) {
+                console.error('載入 horses.json 失敗：', error);
+                rawData = [];
+            }
+
+            const uniqueMap = new Map();
+            let duplicateCount = 0;
+
+            rawData.forEach(item => {
+                const uniqueKey =
+                    `${(item.mandarin || '').trim()}_${(item.original || '').trim()}`;
+
+                if (uniqueKey !== '_' && uniqueMap.has(uniqueKey)) {
+                    duplicateCount++;
+                } else {
+                    uniqueMap.set(uniqueKey, item);
+                }
+            });
+
+            horsesData = Array.from(uniqueMap.values());
+
+            if (duplicateCount > 0) {
+                const dedupNotice = document.getElementById('dedup-notice');
+
+                if (dedupNotice) {
+                    dedupNotice.textContent = `自動過濾 ${duplicateCount} 筆重複`;
+                    dedupNotice.classList.remove('hidden');
+
+                    setTimeout(() => {
+                        dedupNotice.classList.add('hidden');
+                    }, 5000);
+                }
+            }
+
+            renderHorses();
+        }
+
+        // ==========================
+        // 後台與功能邏輯
+        // ==========================
+        window.triggerSecretClick = function() {
+            secretClickCount++;
+            if (secretClickCount >= 5) {
+                window.attemptUnlockSecretMode();
+                secretClickCount = 0;
+            }
+        };
+
+        window.attemptUnlockSecretMode = function() {
+            if (isSecretUnlocked) {
+                isSecretUnlocked = false;
+                document.getElementById('admin-section').classList.add('hidden');
+                window.showToast("🔒 編輯模式已鎖定。");
+            } else {
+                const pwd = prompt("請輸入站長解鎖密碼：");
+                if (pwd === "openthegate") {
+                    isSecretUnlocked = true;
+                    document.getElementById('admin-section').classList.remove('hidden');
+                    document.getElementById('export-section').classList.add('hidden'); 
+                    window.showToast("🔓 密碼正確！批量新增後台已解鎖。");
+                } else if (pwd !== null) {
+                    window.showToast("❌ 密碼錯誤。");
+                }
+            }
+        };
+
+        window.handleBatchAdd = function() {
+            const inputTxt = document.getElementById('batch-input').value.trim();
+            if (!inputTxt) {
+                window.showToast("⚠️ 請先在輸入框內貼上賽駒資料");
+                return;
+            }
+
+            const lines = inputTxt.split('\n');
+            let successCount = 0;
+            let skipCount = 0;
+            let conflictDetails = [];
+            let newlyAddedBatch = []; 
+
+            lines.forEach((line, index) => {
+                const cleanLine = line.trim();
+                if (!cleanLine) return;
+
+                const parts = cleanLine.split(/\t|,/).map(s => s.trim());
+                if (parts.length < 3) {
+                    skipCount++;
+                    conflictDetails.push(`第 ${index + 1} 行欄位不足，已跳過。`);
+                    return;
+                }
+
+                const origin = parts[0].toUpperCase();
+                const mandarin = parts[1];
+                const original = parts[2];
+                const en = parts[3] || original; 
+                const birth = parts[4] || "";
+
+                const conflictHorse = horsesData.find(h => 
+                    (h.original && h.original.toLowerCase() === original.toLowerCase()) || 
+                    (h.en && en && h.en.toLowerCase() === en.toLowerCase())
+                );
+
+                if (conflictHorse) {
+                    skipCount++;
+                    conflictDetails.push(`第 ${index + 1} 行：[${original}] 與「${conflictHorse.mandarin}」衝突。`);
+                    return;
+                }
+
+                const newHorse = { origin, mandarin, original, en };
+                if (birth) newHorse.birth = birth;
+
+                horsesData.unshift(newHorse);
+                newlyAddedBatch.push(newHorse);
+                successCount++;
+            });
+
+            if (skipCount > 0) {
+                alert(`批量處理完畢！\n✅ 成功新增：${successCount} 筆\n⚠️ 略過衝突：${skipCount} 筆\n\n【略過原因】\n${conflictDetails.join('\n')}`);
+            } else if (successCount > 0) {
+                window.showToast(`✅ 完美！成功新增 ${successCount} 匹賽駒。`);
+            }
+
+            if (successCount > 0) {
+                document.getElementById('batch-input').value = ''; 
+                renderHorses();
+                updateExportJson(newlyAddedBatch); 
+            }
+        };
+
+        function updateExportJson(newBatch) {
+            const exportSection = document.getElementById('export-section');
+            const textarea = document.getElementById('export-textarea');
+            let jsonString = JSON.stringify(newBatch, null, 2);
+            jsonString = jsonString.substring(jsonString.indexOf('\n') + 1, jsonString.lastIndexOf('\n'));
+            jsonString = jsonString + ",";
+            textarea.value = jsonString;
+            exportSection.classList.remove('hidden');
+        }
+
+        window.copyExportJson = function() {
+            const textarea = document.getElementById('export-textarea');
+            textarea.select();
+            document.execCommand('copy');
+            window.showToast("📋 增量代碼已複製！請貼至 horses.json 第一行 [ 的下方");
+        };
+
+        window.showToast = function(message) {
+            const toast = document.getElementById('toast-notification');
+            const msgObj = document.getElementById('toast-message');
+            if(msgObj) msgObj.textContent = message;
+            toast.classList.remove('-translate-y-full');
+            setTimeout(() => toast.classList.add('-translate-y-full'), 3000);
+        };
+
+        window.setFilter = function(filterType) {
+            currentFilter = filterType;
+            ['ALL', 'JP', 'EN'].forEach(type => {
+                const btn = document.getElementById(`btn-${type}`);
+                if (!btn) return;
+                if (type === filterType) {
+                    btn.className = "px-4 py-1.5 rounded-full text-xs font-semibold bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark shadow-sm transition-all border border-transparent";
+                } else {
+                    btn.className = "px-4 py-1.5 rounded-full text-xs font-semibold text-stone-600 dark:text-stone-400 hover:bg-stone-200/60 dark:hover:bg-stone-700/50 transition-all border border-transparent";
+                }
+            });
+            renderHorses();
+        };
+
+        window.handleSearch = function() {
+            searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
+            renderHorses();
+        };
+
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // ==========================
+        // 核心渲染邏輯
+        // ==========================
+        function renderHorses() {
+            const container = document.getElementById('horses-grid');
+            const countLabel = document.getElementById('result-count');
+            if(!container) return;
+            container.innerHTML = '';
+
+            const filtered = horsesData.filter(h => {
+                const matchCategory = currentFilter === 'ALL' || h.origin === currentFilter;
+                const matchSearch = !searchQuery || 
+                    (h.mandarin && h.mandarin.toLowerCase().includes(searchQuery)) ||
+                    (h.original && h.original.toLowerCase().includes(searchQuery)) ||
+                    (h.en && h.en.toLowerCase().includes(searchQuery)) ||
+                    (h.birth && String(h.birth).toLowerCase().includes(searchQuery));
+                return matchCategory && matchSearch;
+            });
+
+            let finalDisplayList = filtered;
+
+            if (!searchQuery) {
+                const shuffled = shuffleArray(filtered);
+                finalDisplayList = shuffled.slice(0, DEFAULT_DISPLAY_LIMIT);
+                
+                if (filtered.length > DEFAULT_DISPLAY_LIMIT) {
+                    countLabel.textContent = `隨機顯示 ${finalDisplayList.length} / 共收錄 ${filtered.length} 筆`;
+                } else {
+                    countLabel.textContent = `顯示 ${finalDisplayList.length} / 共收錄 ${filtered.length} 筆`;
+                }
+            } else {
+                if (filtered.length > SEARCH_DISPLAY_LIMIT) {
+                    finalDisplayList = filtered.slice(0, SEARCH_DISPLAY_LIMIT);
+                    countLabel.textContent = `僅顯示前 ${SEARCH_DISPLAY_LIMIT} 筆結果 (共 ${filtered.length} 筆)`;
+                } else {
+                    countLabel.textContent = `搜尋結果：${finalDisplayList.length} 筆 (共 ${horsesData.length} 筆)`;
+                }
+            }
+
+            if (finalDisplayList.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-20 font-serif text-stone-400 dark:text-stone-600">
+                        <i class="fa-solid fa-horse-head text-4xl mb-4 opacity-50 animate-pulse"></i>
+                        <p class="tracking-wider text-sm">查無對應馬名，請嘗試其他關鍵字。</p>
+                    </div>`;
+                return;
+            }
+
+            // 取得目前的字體大小設定，並轉換為 Tailwind 類別
+            const fontIdx = parseInt(localStorage.getItem('fontSizeIndex')) || 0;
+            const titleSizes = ['text-lg', 'text-xl', 'text-2xl'];
+            const originalSizes = ['text-sm', 'text-base', 'text-lg'];
+            const enSizes = ['text-[11px]', 'text-xs', 'text-sm'];
+
+            const titleClass = titleSizes[fontIdx];
+            const originalClass = originalSizes[fontIdx];
+            const enClass = enSizes[fontIdx];
+
+            finalDisplayList.forEach(horse => {
+                const isJP = horse.origin === 'JP';
+                const tagColor = isJP 
+                    ? "bg-amber-100/60 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 border-amber-300/40 dark:border-amber-700/50" 
+                    : "bg-blue-100/60 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300 border-blue-300/40 dark:border-blue-700/50";
+                const badgeLabel = isJP ? "JP" : "EN";
+
+                const birthHtml = horse.birth 
+                    ? `<span class="text-[11px] font-sans font-medium text-stone-400 dark:text-stone-500 ml-2 shrink-0 bg-stone-100 dark:bg-stone-800 px-1.5 py-0.5 rounded">b. ${horse.birth}</span>` 
+                    : '';
+
+                const card = document.createElement('div');
+                card.className = "group bg-white/70 dark:bg-stone-900/60 border border-stone-200/80 dark:border-stone-700/80 rounded-xl p-4 flex flex-col justify-between hover:border-accent dark:hover:border-accent-dark transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-1 backdrop-blur-sm";
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-baseline gap-1.5 mb-3 border-b border-stone-200/60 dark:border-stone-800 pb-2.5">
+                            <div class="flex items-center overflow-hidden">
+                                <span class="font-serif ${titleClass} font-bold text-stone-800 dark:text-stone-100 tracking-wide truncate group-hover:text-accent dark:group-hover:text-accent-dark transition-colors">${horse.mandarin || ''}</span>
+                                ${birthHtml}
+                            </div>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded border ${tagColor} shrink-0 self-center tracking-widest">${badgeLabel}</span>
+                        </div>
+                        <div class="space-y-1.5 font-mono pt-1">
+                            <div class="text-accent dark:text-accent-dark font-semibold ${originalClass} leading-snug flex items-center gap-1.5">
+                                ${horse.original || ''}
+                            </div>
+                            ${horse.en && horse.en !== horse.original ? `<div class="text-stone-500 dark:text-stone-400 ${enClass} flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-[8px]"></i>${horse.en}</div>` : ''}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
