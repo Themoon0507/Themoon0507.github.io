@@ -1,7 +1,7 @@
 ---
 title: 之二十一：若你能再度起舞〔戰舞者〕
 pubDate: 2026-07-06
-description: 牠的一生，是一場永恆的悲劇。
+description: 相比隔年的經典戰，也許牠們的初次交鋒，正是那年的最優秀兩歲牡馬獎項。
 category: 賽馬故事
 era: "2020"
 region: 日本
