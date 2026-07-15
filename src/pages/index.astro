@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import '../styles/global.css';
+import ThemeInit from '../components/ThemeInit.astro';
 
 // 1. 自動抓取 blog 資料夾裡的所有文章
 const rawPosts = await getCollection('blog');
@@ -41,6 +42,16 @@ const totalWordsCount = formattedPosts.reduce((sum, p) => sum + p.wordCount, 0);
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<ThemeInit />
+
+	<link
+      rel="icon"
+      type="image/svg+xml"
+      href="/favicon-horse.svg"
+	  sizes="any"
+    />
+	
 	<title>無盡的遠征</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
