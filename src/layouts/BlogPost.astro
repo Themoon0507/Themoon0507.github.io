@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import '../styles/global.css';
+import ThemeInit from '../components/ThemeInit.astro';
 
 // 接收從 Markdown 傳來的 Frontmatter 資料 (標題、日期、分類等)
 const { title, description, pubDate, category = '賽馬故事', era = '', region = '' } = Astro.props;
@@ -27,6 +28,9 @@ const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1]
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<ThemeInit />
+
 	<title>{title}無盡的遠征</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
