@@ -1,26 +1,109 @@
 ---
 import { getCollection } from 'astro:content';
 import '../styles/global.css';
-import ThemeInit from '../components/ThemeInit.astro';
 
 // 接收從 Markdown 傳來的 Frontmatter 資料 (標題、日期、分類等)
 const { title, description, pubDate, category = '賽馬故事', era = '', region = '' } = Astro.props;
 
-// 自動抓取所有文章，用來計算單篇字數與「上一篇 / 下一篇」導覽！
-const allPosts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
+function chineseNumberToInt(text: string): number {
+	const digits: Record<string, number> = {
+		零: 0,
+		〇: 0,
+		一: 1,
+		二: 2,
+		兩: 2,
+		三: 3,
+		四: 4,
+		五: 5,
+		六: 6,
+		七: 7,
+		八: 8,
+		九: 9,
+	};
 
-// 尋找當前文章在列表中的位置
-const currentIndex = allPosts.findIndex(post => post.data.title === title);
+	const units: Record<string, number> = {
+		十: 10,
+		百: 100,
+		千: 1000,
+	};
+
+	let total = 0;
+	let current = 0;
+
+	for (const char of text) {
+		if (char in digits) {
+			current = digits[char];
+		} else if (char in units) {
+			total += (current || 1) * units[char];
+			current = 0;
+		}
+	}
+
+	return total + current;
+}
+
+function extractOrderIndex(postTitle: string): number | null {
+	const chineseMatch = postTitle.match(
+		/之([零〇一二兩三四五六七八九十百千]+)/,
+	);
+
+	if (chineseMatch) {
+		return chineseNumberToInt(chineseMatch[1]);
+	}
+
+	const numberMatch = postTitle.match(/(?:之|第|#)\s*(\d+)/);
+
+	if (numberMatch) {
+		return Number.parseInt(numberMatch[1], 10);
+	}
+
+	return null;
+}
+
+// 上下篇只會連到相同分類的文章。
+// 標題有「之一、之二十、之二十一」等篇號時，依篇號由小到大排序；
+// 沒有篇號的文章則依發布日期排列。
+const allPosts = (await getCollection('blog'))
+	.filter((item) => {
+		const itemCategory = item.data.category || '賽馬故事';
+		return itemCategory === category;
+	})
+	.sort((a, b) => {
+		const orderA = extractOrderIndex(a.data.title);
+		const orderB = extractOrderIndex(b.data.title);
+
+		if (orderA !== null && orderB !== null) {
+			return orderA - orderB;
+		}
+
+		if (orderA !== null) return -1;
+		if (orderB !== null) return 1;
+
+		return a.data.pubDate.valueOf() - b.data.pubDate.valueOf();
+	});
+
+// 尋找目前文章在同分類列表中的位置
+const currentIndex = allPosts.findIndex(
+	(item) => item.data.title === title,
+);
 const currentPost = allPosts[currentIndex];
 
-// 自動計算當前這篇文章的字數
-const wordCount = currentPost && currentPost.body ? currentPost.body.replace(/\s/g, '').length : 1500;
+// 自動計算目前文章字數
+const wordCount =
+	currentPost?.body
+		? currentPost.body.replace(/\s/g, '').length
+		: 1500;
 
-// 計算上一篇 (較新) 與 下一篇 (較舊)
-const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
-const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+// 篇號較小的是上一篇，篇號較大的是下一篇
+const prevPost =
+	currentIndex > 0
+		? allPosts[currentIndex - 1]
+		: null;
+
+const nextPost =
+	currentIndex >= 0 && currentIndex < allPosts.length - 1
+		? allPosts[currentIndex + 1]
+		: null;
 ---
 
 <!DOCTYPE html>
@@ -28,9 +111,6 @@ const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1]
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<ThemeInit />
-
 	<title>{title}無盡的遠征</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
@@ -103,23 +183,23 @@ const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1]
 
 		<!-- 上一篇 / 下一篇導覽卡片 -->
 		<div class="mt-8 pt-8 border-t border-stone-200 dark:border-stone-800 flex flex-col sm:flex-row justify-between items-stretch gap-4 font-sans">
-			{nextPost ? (
-				<a href={`/blog/${nextPost.id}/`} class="group w-full sm:w-1/2 flex items-center justify-start gap-4 px-5 py-4 rounded-xl border border-stone-300 dark:border-stone-700 hover:border-accent dark:hover:border-accent-dark transition-all duration-300 bg-stone-100/30 hover:bg-stone-200/50 dark:hover:bg-stone-800/30 text-left">
+			{prevPost ? (
+				<a href={`/blog/${prevPost.id}/`} class="group w-full sm:w-1/2 flex items-center justify-start gap-4 px-5 py-4 rounded-xl border border-stone-300 dark:border-stone-700 hover:border-accent dark:hover:border-accent-dark transition-all duration-300 bg-stone-100/30 hover:bg-stone-200/50 dark:hover:bg-stone-800/30 text-left">
 					<i class="fa-solid fa-chevron-left text-stone-400 group-hover:text-accent dark:group-hover:text-accent-dark transition-colors"></i>
 					<div class="overflow-hidden">
 						<span class="block text-[10px] text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-1">上一篇</span>
-						<span class="block text-sm font-serif font-semibold text-stone-700 dark:text-stone-300 group-hover:text-accent dark:group-hover:text-accent-dark truncate w-full">{nextPost.data.title}</span>
+						<span class="block text-sm font-serif font-semibold text-stone-700 dark:text-stone-300 group-hover:text-accent dark:group-hover:text-accent-dark truncate w-full">{prevPost.data.title}</span>
 					</div>
 				</a>
 			) : (
 				<div class="hidden sm:block sm:w-1/2"></div>
 			)}
 
-			{prevPost ? (
-				<a href={`/blog/${prevPost.id}/`} class="group w-full sm:w-1/2 flex items-center justify-end gap-4 px-5 py-4 rounded-xl border border-stone-300 dark:border-stone-700 hover:border-accent dark:hover:border-accent-dark transition-all duration-300 bg-stone-100/30 hover:bg-stone-200/50 dark:hover:bg-stone-800/30 text-right ml-auto">
+			{nextPost ? (
+				<a href={`/blog/${nextPost.id}/`} class="group w-full sm:w-1/2 flex items-center justify-end gap-4 px-5 py-4 rounded-xl border border-stone-300 dark:border-stone-700 hover:border-accent dark:hover:border-accent-dark transition-all duration-300 bg-stone-100/30 hover:bg-stone-200/50 dark:hover:bg-stone-800/30 text-right ml-auto">
 					<div class="overflow-hidden">
 						<span class="block text-[10px] text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-1">下一篇</span>
-						<span class="block text-sm font-serif font-semibold text-stone-700 dark:text-stone-300 group-hover:text-accent dark:group-hover:text-accent-dark truncate w-full">{prevPost.data.title}</span>
+						<span class="block text-sm font-serif font-semibold text-stone-700 dark:text-stone-300 group-hover:text-accent dark:group-hover:text-accent-dark truncate w-full">{nextPost.data.title}</span>
 					</div>
 					<i class="fa-solid fa-chevron-right text-stone-400 group-hover:text-accent dark:group-hover:text-accent-dark transition-colors"></i>
 				</a>
