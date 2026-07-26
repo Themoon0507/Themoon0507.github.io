@@ -24,12 +24,15 @@ region: 日本
 
 鑒於以上原因，2019年，降級制度正式廢除，並導入表列賽(Listed賽事)，如今中央分級如下表。
 
-<figure class="article-image">
+<figure style="width: 100%; max-width: 520px; margin: 2rem auto;">
   <img
-    src="https://ik.imagekit.io/fccjnqq7q/%E7%A7%91%E6%99%AE/%E5%88%86%E7%B4%9A%E5%88%B6%E5%BA%A6%20%E6%97%A5%E6%9C%AC.png?updatedAt=1785030716546?tr=w-1200,q-80"
+    src="https://ik.imagekit.io/fccjnqq7q/%E7%A7%91%E6%99%AE/%E5%88%86%E7%B4%9A%E5%88%B6%E5%BA%A6%20%E6%97%A5%E6%9C%AC.png?tr=w-640,q-80"
     alt="日本賽馬分級制度圖解"
+    style="display: block; width: 100%; height: auto;"
     loading="lazy"
     decoding="async"
   />
-  <figcaption>日本賽馬分級制度圖解</figcaption>
+  <figcaption style="margin-top: 0.75rem; text-align: center; font-size: 0.9rem;">
+    日本中央競馬分級制度圖解
+  </figcaption>
 </figure>
