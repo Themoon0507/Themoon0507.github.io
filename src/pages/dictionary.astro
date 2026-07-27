@@ -1,9 +1,5 @@
 ---
 import '../styles/global.css';
-import ThemeInit from '../components/ThemeInit.astro';
-
-const basePath = import.meta.env.BASE_URL.replace(/\/?$/, '/');
-const horsesUrl = `${basePath}horses.json`;
 ---
 
 <!DOCTYPE html>
@@ -11,16 +7,7 @@ const horsesUrl = `${basePath}horses.json`;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <ThemeInit />
-
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="/favicon-horse.svg"
-      sizes="any"
-    />
-    
+    <link rel="icon" type="image/svg+xml" href="/favicon-horse.svg">
     <title>賽駒譯名互換檢索系統 ｜ 無盡的遠征</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+TC:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -36,10 +23,7 @@ const horsesUrl = `${basePath}horses.json`;
         }
     </script>
 </head>
-<body
-  data-horses-url={horsesUrl}
-  class="bg-parchment-light text-parchment-text dark:bg-parchment-dark dark:text-parchment-darkText min-h-screen flex flex-col relative"
->
+<body class="bg-parchment-light text-parchment-text dark:bg-parchment-dark dark:text-parchment-darkText min-h-screen flex flex-col relative selection:bg-amber-200 selection:text-amber-900 transition-colors duration-500 font-serif">
 
     <!-- 全站靈魂：中世紀細緻亞麻織布濾鏡 -->
     <div class="paper-overlay"></div>
@@ -83,7 +67,7 @@ const horsesUrl = `${basePath}horses.json`;
             <div class="mb-4">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-2 gap-2">
                     <label class="block text-xs font-semibold text-stone-600 dark:text-stone-400">
-                        支援從 Excel 直接貼上，或使用逗號分開。<br>格式：<strong class="text-accent dark:text-accent-dark">語系(JP/EN), 中文譯名, 母語原名, 英文名, 出生年份</strong>
+                        支援從 Excel 直接貼上，或使用逗號分開。<br>格式：<strong class="text-accent dark:text-accent-dark">語系(JP/EN), 中文譯名, 母語原名, 英文名, 出生日期（YYYY.M.D）</strong>
                     </label>
                     <span class="text-[10px] text-stone-500">※ 一行代表一匹馬，可一次貼上多行</span>
                 </div>
@@ -159,6 +143,41 @@ const horsesUrl = `${basePath}horses.json`;
         let secretClickCount = 0;
         let isSecretUnlocked = false;
 
+        function normalizeText(value) {
+            return String(value ?? '').trim().normalize('NFKC').toLocaleLowerCase('en');
+        }
+
+        function horseIdentityKey(horse) {
+            const mandarin = normalizeText(horse.mandarin);
+            const birth = normalizeText(horse.birth);
+            const original = normalizeText(horse.original);
+            return birth ? `${mandarin}__${birth}` : `${mandarin}__${original}`;
+        }
+
+        function isValidBirthDate(value) {
+            const match = String(value).match(/^(\d{4})\.(\d{1,2})\.(\d{1,2})$/);
+            if (!match) return false;
+
+            const year = Number(match[1]);
+            const month = Number(match[2]);
+            const day = Number(match[3]);
+            const date = new Date(Date.UTC(year, month - 1, day));
+
+            return date.getUTCFullYear() === year
+                && date.getUTCMonth() === month - 1
+                && date.getUTCDate() === day;
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, char => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            })[char]);
+        }
+
         document.addEventListener('DOMContentLoaded', async () => {
             initTheme();
             initFontSize();
@@ -199,55 +218,31 @@ const horsesUrl = `${basePath}horses.json`;
         }
 
         function initTheme() {
-          const toggleBtn = document.getElementById('theme-toggle');
-          const icon = document.getElementById('theme-icon');
-
-          function updateThemeIcon() {
-            if (!icon) return;
-
-            const isDark =
-              document.documentElement.classList.contains('dark');
-
-            icon.className = isDark
-              ? 'fa-solid fa-sun text-amber-400 text-sm transition-transform duration-300 rotate-180'
-              : 'fa-solid fa-moon text-stone-700 dark:text-stone-300 text-sm transition-transform duration-300 rotate-0';
-          }
-
-          updateThemeIcon();
-
-          if (toggleBtn) {
-            toggleBtn.addEventListener('click', () => {
-              const nowDark =
-                !document.documentElement.classList.contains('dark');
-
-              document.documentElement.classList.toggle(
-                'dark',
-                nowDark
-              );
-        
-              localStorage.setItem(
-                'theme',
-                nowDark ? 'dark' : 'light'
-              );
-
-              updateThemeIcon();
-            });
-          }
+            const toggleBtn = document.getElementById('theme-toggle');
+            const icon = document.getElementById('theme-icon');
+            const isDark = document.documentElement.classList.contains('dark');
+            
+            if (isDark && icon) icon.className = 'fa-solid fa-sun text-amber-400 text-sm';
+            
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    const nowDark = document.documentElement.classList.contains('dark');
+                    localStorage.setItem('theme', nowDark ? 'dark' : 'light');
+                    if (icon) icon.className = nowDark ? 'fa-solid fa-sun text-amber-400 text-sm transform rotate-180 transition-transform duration-300' : 'fa-solid fa-moon text-stone-700 text-sm transform rotate-0 transition-transform duration-300';
+                });
+            }
         }
+
         async function loadHorsesData() {
             let rawData = [];
-
             try {
-                const horsesUrl = document.body.dataset.horsesUrl;
-                const response = await fetch(horsesUrl);
-
-                if (!response.ok) {
-                    throw new Error(`無法載入資料：HTTP ${response.status}`);
+                const response = await fetch(`/horses.json?_t=${Date.now()}`);
+                if (response.ok) {
+                    rawData = await response.json();
                 }
-
-                rawData = await response.json();
-            } catch (error) {
-                console.error('載入 horses.json 失敗：', error);
+            } catch (e) {
+                console.warn("載入資料失敗。");
                 rawData = [];
             }
 
@@ -255,10 +250,8 @@ const horsesUrl = `${basePath}horses.json`;
             let duplicateCount = 0;
 
             rawData.forEach(item => {
-                const uniqueKey =
-                    `${(item.mandarin || '').trim()}_${(item.original || '').trim()}`;
-
-                if (uniqueKey !== '_' && uniqueMap.has(uniqueKey)) {
+                const uniqueKey = horseIdentityKey(item);
+                if (uniqueKey !== "__" && uniqueMap.has(uniqueKey)) {
                     duplicateCount++;
                 } else {
                     uniqueMap.set(uniqueKey, item);
@@ -269,14 +262,10 @@ const horsesUrl = `${basePath}horses.json`;
 
             if (duplicateCount > 0) {
                 const dedupNotice = document.getElementById('dedup-notice');
-
                 if (dedupNotice) {
-                    dedupNotice.textContent = `自動過濾 ${duplicateCount} 筆重複`;
+                    dedupNotice.textContent = `⚠️ 自動過濾 ${duplicateCount} 筆重複`;
                     dedupNotice.classList.remove('hidden');
-
-                    setTimeout(() => {
-                        dedupNotice.classList.add('hidden');
-                    }, 5000);
+                    setTimeout(() => dedupNotice.classList.add('hidden'), 5000);
                 }
             }
 
@@ -330,9 +319,9 @@ const horsesUrl = `${basePath}horses.json`;
                 if (!cleanLine) return;
 
                 const parts = cleanLine.split(/\t|,/).map(s => s.trim());
-                if (parts.length < 3) {
+                if (parts.length !== 5) {
                     skipCount++;
-                    conflictDetails.push(`第 ${index + 1} 行欄位不足，已跳過。`);
+                    conflictDetails.push(`第 ${index + 1} 行不是完整五欄，已跳過。`);
                     return;
                 }
 
@@ -342,19 +331,33 @@ const horsesUrl = `${basePath}horses.json`;
                 const en = parts[3] || original; 
                 const birth = parts[4] || "";
 
-                const conflictHorse = horsesData.find(h => 
-                    (h.original && h.original.toLowerCase() === original.toLowerCase()) || 
-                    (h.en && en && h.en.toLowerCase() === en.toLowerCase())
-                );
-
-                if (conflictHorse) {
+                if (!['JP', 'EN'].includes(origin)) {
                     skipCount++;
-                    conflictDetails.push(`第 ${index + 1} 行：[${original}] 與「${conflictHorse.mandarin}」衝突。`);
+                    conflictDetails.push(`第 ${index + 1} 行語系必須是 JP 或 EN，已跳過。`);
                     return;
                 }
 
-                const newHorse = { origin, mandarin, original, en };
-                if (birth) newHorse.birth = birth;
+                if (!mandarin || !original || !en || !birth) {
+                    skipCount++;
+                    conflictDetails.push(`第 ${index + 1} 行有空白欄位，已跳過。`);
+                    return;
+                }
+
+                if (!isValidBirthDate(birth)) {
+                    skipCount++;
+                    conflictDetails.push(`第 ${index + 1} 行出生日期格式錯誤，請使用 YYYY.M.D。`);
+                    return;
+                }
+
+                const newHorse = { origin, mandarin, original, en, birth };
+                const newHorseKey = horseIdentityKey(newHorse);
+                const conflictHorse = horsesData.find(h => horseIdentityKey(h) === newHorseKey);
+
+                if (conflictHorse) {
+                    skipCount++;
+                    conflictDetails.push(`第 ${index + 1} 行：「${mandarin}」（${birth}）已存在。`);
+                    return;
+                }
 
                 horsesData.unshift(newHorse);
                 newlyAddedBatch.push(newHorse);
@@ -493,7 +496,7 @@ const horsesUrl = `${basePath}horses.json`;
                 const badgeLabel = isJP ? "JP" : "EN";
 
                 const birthHtml = horse.birth 
-                    ? `<span class="text-[11px] font-sans font-medium text-stone-400 dark:text-stone-500 ml-2 shrink-0 bg-stone-100 dark:bg-stone-800 px-1.5 py-0.5 rounded">b. ${horse.birth}</span>` 
+                    ? `<span class="text-[11px] font-sans font-medium text-stone-400 dark:text-stone-500 ml-2 shrink-0 bg-stone-100 dark:bg-stone-800 px-1.5 py-0.5 rounded">b. ${escapeHtml(horse.birth)}</span>` 
                     : '';
 
                 const card = document.createElement('div');
@@ -503,16 +506,16 @@ const horsesUrl = `${basePath}horses.json`;
                     <div>
                         <div class="flex justify-between items-baseline gap-1.5 mb-3 border-b border-stone-200/60 dark:border-stone-800 pb-2.5">
                             <div class="flex items-center overflow-hidden">
-                                <span class="font-serif ${titleClass} font-bold text-stone-800 dark:text-stone-100 tracking-wide truncate group-hover:text-accent dark:group-hover:text-accent-dark transition-colors">${horse.mandarin || ''}</span>
+                                <span class="font-serif ${titleClass} font-bold text-stone-800 dark:text-stone-100 tracking-wide truncate group-hover:text-accent dark:group-hover:text-accent-dark transition-colors">${escapeHtml(horse.mandarin)}</span>
                                 ${birthHtml}
                             </div>
                             <span class="text-[10px] font-bold px-2 py-0.5 rounded border ${tagColor} shrink-0 self-center tracking-widest">${badgeLabel}</span>
                         </div>
                         <div class="space-y-1.5 font-mono pt-1">
                             <div class="text-accent dark:text-accent-dark font-semibold ${originalClass} leading-snug flex items-center gap-1.5">
-                                ${horse.original || ''}
+                                ${escapeHtml(horse.original)}
                             </div>
-                            ${horse.en && horse.en !== horse.original ? `<div class="text-stone-500 dark:text-stone-400 ${enClass} flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-[8px]"></i>${horse.en}</div>` : ''}
+                            ${horse.en && horse.en !== horse.original ? `<div class="text-stone-500 dark:text-stone-400 ${enClass} flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-[8px]"></i>${escapeHtml(horse.en)}</div>` : ''}
                         </div>
                     </div>
                 `;
