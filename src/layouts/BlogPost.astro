@@ -89,6 +89,10 @@ const currentIndex = allPosts.findIndex(
 );
 const currentPost = allPosts[currentIndex];
 
+// 優先使用路由傳入的署名；舊路由未傳新欄位時，改從文章資料讀取。
+const writer = Astro.props.writer ?? currentPost?.data.writer ?? 'Sayaka';
+const editor = Astro.props.editor ?? currentPost?.data.editor ?? '';
+
 // 自動計算目前文章字數
 const wordCount =
 	currentPost?.body
@@ -168,6 +172,8 @@ const nextPost =
 			<span class="bg-stone-200/60 dark:bg-stone-800 px-2.5 py-1 rounded text-accent dark:text-accent-dark font-semibold shadow-sm">{category}</span>
 			{era && <span class="border border-stone-300 dark:border-stone-700 px-2.5 py-1 rounded text-stone-500 dark:text-stone-400">{era}年代</span>}
 			{region && <span class="border border-stone-300 dark:border-stone-700 px-2.5 py-1 rounded text-stone-500 dark:text-stone-400">{region}</span>}
+			<span class="border border-stone-300 dark:border-stone-700 px-2.5 py-1 rounded text-stone-500 dark:text-stone-400"><i class="fa-solid fa-user-pen mr-1" aria-hidden="true"></i>筆者：{writer}</span>
+			{editor && <span class="border border-stone-300 dark:border-stone-700 px-2.5 py-1 rounded text-stone-500 dark:text-stone-400">編輯：{editor}</span>}
 			<span>•</span>
 			<span><i class="fa-regular fa-calendar mr-1"></i>{new Date(pubDate).toISOString().split('T')[0]}</span>
 			<span>•</span>

@@ -28,6 +28,8 @@ const formattedPosts = rawPosts.map(post => {
 		category: finalCategory,
         era: post.data.era ? String(post.data.era) : '',
         region: post.data.region || '',
+		writer: post.data.writer || 'Sayaka',
+		editor: post.data.editor || '',
 		wordCount: wordCount,
 		url: `/blog/${post.id}/`
 	};
@@ -178,6 +180,15 @@ const totalWordsCount = formattedPosts.reduce((sum, p) => sum + p.wordCount, 0);
 					<option value="澳洲">澳洲</option>
 				</select>
 			</div>
+			<div class="flex items-center gap-2">
+				<i class="fa-solid fa-user-pen text-stone-400 dark:text-stone-500" aria-hidden="true"></i>
+				<label for="filter-writer" class="text-stone-500 dark:text-stone-400">筆者</label>
+				<select id="filter-writer" class="bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-700 rounded-full px-4 py-1 text-stone-700 dark:text-stone-300 focus:outline-none focus:border-accent dark:focus:border-accent-dark transition-colors cursor-pointer shadow-sm">
+					<option value="">所有筆者</option>
+					<option value="Sayaka">Sayaka</option>
+					<option value="Divano">Divano</option>
+				</select>
+			</div>
 		</div>
 
 		<div id="posts-container" class="space-y-12"></div>
@@ -197,6 +208,7 @@ const totalWordsCount = formattedPosts.reduce((sum, p) => sum + p.wordCount, 0);
 		let currentFilter = '全部';
 		let currentEra = '';
 		let currentRegion = '';
+		let currentWriter = '';
 		let searchQuery = '';
 		let sortOrder = 'desc';
 		let currentPage = 1;
@@ -296,7 +308,9 @@ const totalWordsCount = formattedPosts.reduce((sum, p) => sum + p.wordCount, 0);
 				const matchSearch = !searchQuery || p.title.toLowerCase().includes(searchQuery) || p.summary.toLowerCase().includes(searchQuery);
 				const matchEra = currentEra === '' || p.era === currentEra;
 				const matchRegion = currentRegion === '' || p.region === currentRegion;
-				return matchCat && matchSearch && matchEra && matchRegion;
+				// 僅比對主筆，不把編輯者當成筆者。
+				const matchWriter = currentWriter === '' || p.writer === currentWriter;
+				return matchCat && matchSearch && matchEra && matchRegion && matchWriter;
 			});
 
 			const sortedPosts = [...filteredPosts].sort((a, b) => {
@@ -336,12 +350,17 @@ const totalWordsCount = formattedPosts.reduce((sum, p) => sum + p.wordCount, 0);
 				const eraTag = post.era ? `<span class="border border-stone-300 dark:border-stone-700 px-2 py-0.5 rounded text-stone-500 dark:text-stone-400">${post.era}年代</span>` : '';
 				const regionTag = post.region ? `<span class="border border-stone-300 dark:border-stone-700 px-2 py-0.5 rounded text-stone-500 dark:text-stone-400">${post.region}</span>` : '';
 
+				const writerTag = `<span class="border border-stone-300 dark:border-stone-700 px-2 py-0.5 rounded text-stone-500 dark:text-stone-400"><i class="fa-solid fa-user-pen mr-1" aria-hidden="true"></i>筆者：${post.writer}</span>`;
+				const editorTag = post.editor ? `<span class="border border-stone-300 dark:border-stone-700 px-2 py-0.5 rounded text-stone-500 dark:text-stone-400">編輯：${post.editor}</span>` : '';
+
 				return `
 					<article class="group transition-all duration-300 border-b border-stone-200/60 dark:border-stone-800/60 pb-8">
 						<div class="flex flex-wrap items-center gap-2.5 font-sans text-stone-500 dark:text-stone-400 mb-2 ${metaSizes[fontIdx]}">
 							<span class="bg-stone-200/60 dark:bg-stone-800 px-2.5 py-0.5 rounded text-accent dark:text-accent-dark font-medium">${post.category}</span>
 							${eraTag}
 							${regionTag}
+							${writerTag}
+							${editorTag}
 							<span>•</span>
 							<span><i class="fa-regular fa-calendar mr-1"></i>${post.date}</span>
 							<span>•</span>
@@ -395,15 +414,18 @@ const totalWordsCount = formattedPosts.reduce((sum, p) => sum + p.wordCount, 0);
 
 			const eraSelect = document.getElementById('filter-era');
 			const regionSelect = document.getElementById('filter-region');
-			if (eraSelect && regionSelect) {
+			const writerSelect = document.getElementById('filter-writer');
+			if (eraSelect && regionSelect && writerSelect) {
                 const handleDropdownChange = () => {
 					currentEra = eraSelect.value;
 					currentRegion = regionSelect.value;
+					currentWriter = writerSelect.value;
 					currentPage = 1;
 					renderPosts();
 				};
 				eraSelect.addEventListener('change', handleDropdownChange);
 				regionSelect.addEventListener('change', handleDropdownChange);
+				writerSelect.addEventListener('change', handleDropdownChange);
 			}
 
 			const sortBtn = document.getElementById('sort-toggle-btn');

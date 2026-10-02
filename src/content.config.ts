@@ -20,6 +20,10 @@ const blog = defineCollection({
             tags: z.array(z.string()).or(z.string()).optional(),
             era: z.union([z.string(), z.number()]).optional(),
             region: z.string().optional(),
+            // 筆者用於文章歸屬與首頁篩選；舊文章預設為 Sayaka。
+            writer: z.enum(['Sayaka', 'Divano']).default('Sayaka'),
+            // 編輯只用於署名，不會影響筆者分類；沒有編輯時省略此欄。
+            editor: z.enum(['Sayaka', 'Divano']).optional(),
         }),
 });
 
