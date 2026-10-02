@@ -230,5 +230,5 @@ editor: Sayaka
 
 筆名「Divano」源自一匹已經退役的香港馬——開心寶寶。儘管牠可能並不出名，卻是我最喜歡的馬兒，我對牠的喜愛不亞於浪漫勇士與鍵琴高奏。未來若有機會，我也希望好好寫下牠的故事。
 
-- 個人頁面：[小紅書](https://xhslink.cn/o/9MsuXXz3QRs)
+- 個人頁面：[小紅書] 1650641757
 - 反饋郵箱：[jared6lau@foxmail.com](mailto:jared6lau@foxmail.com)
