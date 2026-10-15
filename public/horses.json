@@ -3210,7 +3210,7 @@
     "mandarin": "完全勁",
     "original": "シンプリーオーサム",
     "en": "Simply Awesome",
-    "birth": "2029.3.15"
+    "birth": "2020.3.15"
   },
   {
     "origin": "JP",
@@ -10659,5 +10659,887 @@
     "original": "タワーオブロンドン",
     "en": "Tower of London",
     "birth": "2015.2.9"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "偉大凱薩",
+    "original": "ビッグシーザー",
+    "en": "Big Caesar",
+    "birth": "2020.3.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "金球花",
+    "original": "クラスペディア",
+    "en": "Craspedia",
+    "birth": "2022.3.31"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "疾速刺擊",
+    "original": "フリッカージャブ",
+    "en": "Flicker Jab",
+    "birth": "2022.5.7"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "小玉娃娃",
+    "original": "カルプスペルシュ",
+    "en": "Karpuz Pelus",
+    "birth": "2022.2.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "名將夜空",
+    "original": "メイショウヨゾラ",
+    "en": "Meisho Yozora",
+    "birth": "2021.2.6"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "小妹",
+    "original": "ムイ",
+    "en": "Mui",
+    "birth": "2022.3.23"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "開路先聲",
+    "original": "プロトポロス",
+    "en": "Protoporos",
+    "birth": "2020.3.28"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "純魔法",
+    "original": "ピューロマジック",
+    "en": "Puro Magic",
+    "birth": "2021.2.18"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "赤夢",
+    "original": "レッドモンレーヴ",
+    "en": "Red Mon Reve",
+    "birth": "2019.2.17"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "玉藻盛裝",
+    "original": "タマモブラックタイ",
+    "en": "Tamamo Black Tie",
+    "birth": "2020.4.20"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "玉藻飛翼",
+    "original": "タマモイカロス",
+    "en": "Tamamo Icarus",
+    "birth": "2023.2.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "天雷神",
+    "original": "ティニア",
+    "en": "Tinia",
+    "birth": "2020.5.2"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "策馬彎弓",
+    "original": "ヤブサメ",
+    "en": "Yabusame",
+    "birth": "2021.5.1"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "春日復活",
+    "original": "ヨシノイースター",
+    "en": "Yoshino Easter",
+    "birth": "2018.3.28"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "依山村聚",
+    "original": "Balmacara",
+    "en": "Balmacara",
+    "birth": "2021.4.23"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "常鮮色",
+    "original": "Colori Forever",
+    "en": "Colori Forever",
+    "birth": "2023.3.12"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "聯星共舞",
+    "original": "Dancing Gemini",
+    "en": "Dancing Gemini",
+    "birth": "2021.4.1"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "極醒",
+    "original": "Extremely Zain",
+    "en": "Extremely Zain",
+    "birth": "2023.3.19"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "豪爽乾杯",
+    "original": "Fondo Blanco",
+    "en": "Fondo Blanco",
+    "birth": "2022.2.1"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "丘中村子",
+    "original": "Hankelow",
+    "en": "Hankelow",
+    "birth": "2023.1.28"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "針鋒對決",
+    "original": "Needle Match",
+    "en": "Needle Match",
+    "birth": "2023.3.4"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "工業浮城",
+    "original": "Oxagon",
+    "en": "Oxagon",
+    "birth": "2023.4.6"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "李花盛放",
+    "original": "Persica",
+    "en": "Persica",
+    "birth": "2021.2.12"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "雪恨之路",
+    "original": "Redemption Road",
+    "en": "Redemption Road",
+    "birth": "2023.5.3"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "永動力",
+    "original": "Ridari",
+    "en": "Ridari",
+    "birth": "2022.5.14"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "野性小鎮",
+    "original": "Skukuza",
+    "en": "Skukuza",
+    "birth": "2021.3.30"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "尋王壯舉",
+    "original": "The Lost King",
+    "en": "The Lost King",
+    "birth": "2022.1.26"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "瑟王傳",
+    "original": "Arthurian",
+    "en": "Arthurian",
+    "birth": "2024.3.13"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "越來越熟",
+    "original": "Burning Up",
+    "en": "Burning Up",
+    "birth": "2024.4.30"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "前鋒初上",
+    "original": "Camarda Rc",
+    "en": "Camarda Rc",
+    "birth": "2024.2.9"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "首要鐵律",
+    "original": "First Law",
+    "en": "First Law",
+    "birth": "2024.2.25"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "眾望",
+    "original": "Narrjoo",
+    "en": "Narrjoo",
+    "birth": "2024.2.26"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "雷飛俠",
+    "original": "Rafe's Da Man",
+    "en": "Rafe's Da Man",
+    "birth": "2024.2.17"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "氣沖霄漢",
+    "original": "Rocket Boy",
+    "en": "Rocket Boy",
+    "birth": "2024.3.10"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "細膩情曲",
+    "original": "Romanza",
+    "en": "Romanza",
+    "birth": "2024.2.13"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "赤髮孩兒",
+    "original": "The Ginger Kid",
+    "en": "The Ginger Kid",
+    "birth": "2024.3.30"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "正旺季",
+    "original": "Theheatison",
+    "en": "Theheatison",
+    "birth": "2024.3.14"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "祖傳秘技",
+    "original": "Ancestor",
+    "en": "Ancestor",
+    "birth": "2023.2.7"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "亞洲力道",
+    "original": "Asia Force",
+    "en": "Asia Force",
+    "birth": "2023.4.24"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "棉花棒",
+    "original": "Cotton Bud",
+    "en": "Cotton Bud",
+    "birth": "2023.3.19"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "伽利偉略",
+    "original": "Galilean Quality",
+    "en": "Galilean Quality",
+    "birth": "2023.3.27"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "光榮路",
+    "original": "Glory Road",
+    "en": "Glory Road",
+    "birth": "2023.5.15"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "同業領導",
+    "original": "Guildmaster",
+    "en": "Guildmaster",
+    "birth": "2023.4.14"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "高風起",
+    "original": "High Storm",
+    "en": "High Storm",
+    "birth": "2023.3.14"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "伯郡王",
+    "original": "King Of Berkshire",
+    "en": "King Of Berkshire",
+    "birth": "2023.4.4"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "凝神直視",
+    "original": "Level Look",
+    "en": "Level Look",
+    "birth": "2023.5.3"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "龍盤步",
+    "original": "Lopeo",
+    "en": "Lopeo",
+    "birth": "2023.3.11"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "月上玉桂",
+    "original": "Mythical Bay",
+    "en": "Mythical Bay",
+    "birth": "2023.4.23"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "出發攀高",
+    "original": "Pierre Grosse",
+    "en": "Pierre Grosse",
+    "birth": "2023.1.26"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "力穩金",
+    "original": "Reem Rak",
+    "en": "Reem Rak",
+    "birth": "2023.3.3"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "愛琴公子",
+    "original": "Aegean Prince",
+    "en": "Aegean Prince",
+    "birth": "2022.5.18"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "勁舞巴黎",
+    "original": "Dancing In Paris",
+    "en": "Dancing In Paris",
+    "birth": "2020.2.16"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "幻界",
+    "original": "Fantasy World",
+    "en": "Fantasy World",
+    "birth": "2022.4.7"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "敲定",
+    "original": "Finalise",
+    "en": "Finalise",
+    "birth": "2022.3.7"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "跨谷遊",
+    "original": "Glen To Glen",
+    "en": "Glen To Glen",
+    "birth": "2022.3.13"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "黃金蘊藏",
+    "original": "Golden West",
+    "en": "Golden West",
+    "birth": "2021.3.29"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "隱世逸士",
+    "original": "Hermetic",
+    "en": "Hermetic",
+    "birth": "2022.1.26"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "風裡行",
+    "original": "In The Breeze",
+    "en": "In The Breeze",
+    "birth": "2018.3.11"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "大建築師",
+    "original": "Master Builder",
+    "en": "Master Builder",
+    "birth": "2021.2.20"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "山路",
+    "original": "Mountain Road",
+    "en": "Mountain Road",
+    "birth": "2019.3.6"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "百德勇將",
+    "original": "Paddy The Squire",
+    "en": "Paddy The Squire",
+    "birth": "2020.2.23"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "碧浪騰",
+    "original": "Pinatique",
+    "en": "Pinatique",
+    "birth": "2022.5.19"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "天極星",
+    "original": "Pole Star",
+    "en": "Pole Star",
+    "birth": "2022.2.22"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "小園地",
+    "original": "Square Necker",
+    "en": "Square Necker",
+    "birth": "2022.2.14"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "全無壓力",
+    "original": "Stressfree",
+    "en": "Stressfree",
+    "birth": "2020.2.27"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "相得益彰",
+    "original": "Synergism",
+    "en": "Synergism",
+    "birth": "2022.4.29"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "士別三日",
+    "original": "Valedictory",
+    "en": "Valedictory",
+    "birth": "2022.3.29"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "激勇",
+    "original": "Valiancy",
+    "en": "Valiancy",
+    "birth": "2022.4.18"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "吼萬雷",
+    "original": "Almeraq",
+    "en": "Almeraq",
+    "birth": "2022.2.8"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "美利事",
+    "original": "American Affair",
+    "en": "American Affair",
+    "birth": "2020.4.16"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "大魔將",
+    "original": "Big Mojo",
+    "en": "Big Mojo",
+    "birth": "2022.4.29"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "小崗村",
+    "original": "Coppull",
+    "en": "Coppull",
+    "birth": "2023.3.30"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "各司其職",
+    "original": "Division",
+    "en": "Division",
+    "birth": "2023.3.24"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "加倍衝",
+    "original": "Double Rush",
+    "en": "Double Rush",
+    "birth": "2022.4.1"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "出藍之作",
+    "original": "Kind Of Blue",
+    "en": "Kind Of Blue",
+    "birth": "2021.2.25"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "猛霸飛駿",
+    "original": "Mitbaahy",
+    "en": "Mitbaahy",
+    "birth": "2019.5.1"
+  },
+  {
+    "origin": "EN",
+    "mandarin": "澎湃浪",
+    "original": "Paborus",
+    "en": "Paborus",
+    "birth": "2021.3.12"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "假面花",
+    "original": "アロンソア",
+    "en": "Alonsoa",
+    "birth": "2023.5.5"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "美洲警探",
+    "original": "アメリカンポリス",
+    "en": "American Police",
+    "birth": "2022.3.15"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "柔情輕奏",
+    "original": "コンテネレッツア",
+    "en": "Con Tenerezza",
+    "birth": "2021.1.16"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "怒放花",
+    "original": "インフローレ",
+    "en": "In Flore",
+    "birth": "2022.2.2"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "半狼戰力",
+    "original": "リカントロポ",
+    "en": "Licantropo",
+    "birth": "2022.4.25"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "月牽絆",
+    "original": "リアンマヒナ",
+    "en": "Lien Mahina",
+    "birth": "2023.1.28"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "戰勝回朝",
+    "original": "ルトゥール",
+    "en": "Retour",
+    "birth": "2021.5.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "十三號線",
+    "original": "ルートサーティーン",
+    "en": "Route Thirteen",
+    "birth": "2023.4.4"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "勝天雷",
+    "original": "テーオーシュタイン",
+    "en": "T O Stein",
+    "birth": "2022.4.28"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "義博大爺",
+    "original": "ヨシヒロ",
+    "en": "Yoshihiro",
+    "birth": "2022.2.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "薔薇花放",
+    "original": "アルベリック",
+    "en": "Alberic",
+    "birth": "2021.2.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "啤梨樹",
+    "original": "ビルンバウム",
+    "en": "Birnbaum",
+    "birth": "2021.3.25"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "綺飛動",
+    "original": "コパノエビータ",
+    "en": "Copano Evita",
+    "birth": "2021.2.25"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "永日大放",
+    "original": "ドゥラエテルノ",
+    "en": "Dura Eterno",
+    "birth": "2022.3.20"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "地下玄王",
+    "original": "エンマ",
+    "en": "Emma",
+    "birth": "2022.4.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "福至運來",
+    "original": "フクキタテーラー",
+    "en": "Fukukita Tailor",
+    "birth": "2022.2.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "天虹",
+    "original": "ヒデノレインボー",
+    "en": "Hideno Rainbow",
+    "birth": "2019.4.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "激賞光",
+    "original": "ホウショウルクス",
+    "en": "Hosho Lux",
+    "birth": "2023.5.6"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "雅乾杯",
+    "original": "アールプロスト",
+    "en": "R Prost",
+    "birth": "2022.4.30"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "赤紅俊舞",
+    "original": "レッドベルダンス",
+    "en": "Red Belle Danse",
+    "birth": "2022.4.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "舞王",
+    "original": "ショーダンサー",
+    "en": "Show Dancer",
+    "birth": "2022.2.26"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "天陽閃焰",
+    "original": "タイヨウフレア",
+    "en": "Taiyo Flare",
+    "birth": "2022.3.2"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "常伴身邊",
+    "original": "アスクアイルビゼア",
+    "en": "Ask I'll Be There",
+    "birth": "2021.4.14"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "展翅",
+    "original": "クーデール",
+    "en": "Coup d'Ailes",
+    "birth": "2022.3.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "白山蝶花",
+    "original": "ハクサンアイリス",
+    "en": "Hakusan Iris",
+    "birth": "2022.2.20"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "栗毛良駿",
+    "original": "ジョディーズマロン",
+    "en": "Jody's Marron",
+    "birth": "2018.2.21"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "上峰千仞",
+    "original": "マッシャーブルム",
+    "en": "Masherbrum",
+    "birth": "2021.3.14"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "杜鵑春開",
+    "original": "モーニングマジック",
+    "en": "Morning Magic",
+    "birth": "2022.4.3"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "快是時候",
+    "original": "シゲルソロソロ",
+    "en": "Shigeru Sorosoro",
+    "birth": "2020.3.15"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "杏仁糖",
+    "original": "トゥロン",
+    "en": "Turron",
+    "birth": "2022.2.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "白草放步",
+    "original": "ホワイトガーベラ",
+    "en": "White Gerbera",
+    "birth": "2019.4.22"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "生日翱天",
+    "original": "バースデイフライト",
+    "en": "Birthday Flight",
+    "birth": "2023.3.1"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "聖馬運河",
+    "original": "カナルサンマルタン",
+    "en": "Canal Saint Martin",
+    "birth": "2023.4.27"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "夢之最",
+    "original": "ドリームコア",
+    "en": "Dream Core",
+    "birth": "2023.2.5"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "情緣有兆",
+    "original": "エンネ",
+    "en": "Enne",
+    "birth": "2023.4.11"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "慶典之丘",
+    "original": "フェスティバルヒル",
+    "en": "Festival Hill",
+    "birth": "2023.1.8"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "急流入海",
+    "original": "ギャラボーグ",
+    "en": "Garavogue",
+    "birth": "2023.1.26"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "赤寶火彩",
+    "original": "ガーネットフレア",
+    "en": "Garnet Flare",
+    "birth": "2023.1.18"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "先行女子",
+    "original": "ハヤブササキチャン",
+    "en": "Hayabusa Sakichan",
+    "birth": "2023.1.26"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "美風景",
+    "original": "ラベルセーヌ",
+    "en": "La Belle Scene",
+    "birth": "2023.2.9"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "菱寶鑽",
+    "original": "ロザーンジュ",
+    "en": "Losange",
+    "birth": "2023.4.9"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "新貴傑作",
+    "original": "マスターソアラ",
+    "en": "Master Soarer",
+    "birth": "2023.4.20"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "絕色飛步",
+    "original": "モンローウォーク",
+    "en": "Monroe Walk",
+    "birth": "2023.3.10"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "盛演",
+    "original": "ナイスプレーアスク",
+    "en": "Nice Play Ask",
+    "birth": "2023.5.3"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "醒目祈願",
+    "original": "スマートプリエール",
+    "en": "Smart Priere",
+    "birth": "2023.3.6"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "甜物",
+    "original": "サムシングスイート",
+    "en": "Something Sweet",
+    "birth": "2023.4.25"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "心甜意甜",
+    "original": "スウィートハピネス",
+    "en": "Sweet Happiness",
+    "birth": "2023.4.4"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "竹園飛奔",
+    "original": "テイエムアイラン",
+    "en": "T M I Run",
+    "birth": "2023.2.14"
+  },
+  {
+    "origin": "JP",
+    "mandarin": "大成風潮",
+    "original": "タイセイボーグ",
+    "en": "Taisei Vogue",
+    "birth": "2023.4.5"
   }
 ]
