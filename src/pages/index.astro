@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import '../styles/global.css';
 import ThemeInit from '../components/ThemeInit.astro';
+import homeBannerHorse from '../assets/home-banner-horse.webp';
 
 // 1. 自動抓取 blog 資料夾裡的所有文章
 const rawPosts = await getCollection('blog');
@@ -56,6 +57,31 @@ const totalWordsCount = formattedPosts.reduce((sum, p) => sum + p.wordCount, 0);
 	
 	<title>無盡的遠征</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<style>
+	.home-banner {
+		--home-banner-opacity: 0.19;
+		--home-banner-position: center;
+		position: relative;
+		isolation: isolate;
+	}
+
+	.home-banner-art {
+		position: absolute;
+		inset-block: 0;
+		inset-inline: clamp(-3.5rem, 24rem - 50vw, 0px);
+		z-index: -1;
+		opacity: var(--home-banner-opacity);
+		pointer-events: none;
+	}
+
+	.home-banner-art img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		object-position: var(--home-banner-position);
+	}
+</style>
 </head>
 <body class="bg-parchment-light text-parchment-text dark:bg-parchment-dark dark:text-parchment-darkText min-h-screen flex flex-col relative overflow-x-hidden selection:bg-amber-200 selection:text-amber-900 font-serif transition-colors duration-500">
 	
@@ -100,62 +126,67 @@ const totalWordsCount = formattedPosts.reduce((sum, p) => sum + p.wordCount, 0);
 	</header>
 
 	<main class="flex-grow w-full max-w-3xl mx-auto px-6 py-10 z-10">
-		
-		<div id="control-panel" class="flex flex-col md:flex-row justify-between items-center gap-4 bg-stone-100/50 dark:bg-stone-800/30 p-4 rounded-xl border border-stone-200/50 dark:border-stone-700/50 shadow-sm mb-8 font-sans text-xs backdrop-blur-sm transition-all duration-300">
-			<div class="font-medium tracking-wide text-stone-600 dark:text-stone-400 leading-relaxed flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
-              <span>
-                共收錄
-                <span class="font-bold text-accent dark:text-accent-dark">
-                  {totalPostsCount}
-                </span>
-                篇文章
-              </span>
+		<div class="home-banner">
+			<div id="control-panel" class="flex flex-col md:flex-row justify-between items-center gap-4 bg-stone-100/50 dark:bg-stone-800/30 p-4 rounded-xl border border-stone-200/50 dark:border-stone-700/50 shadow-sm mb-8 font-sans text-xs backdrop-blur-sm transition-all duration-300">
+				<div class="font-medium tracking-wide text-stone-600 dark:text-stone-300 leading-relaxed flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+	              <span>
+	                共收錄
+	                <span class="font-bold text-accent dark:text-accent-dark">
+	                  {totalPostsCount}
+	                </span>
+	                篇文章
+	              </span>
 
-              <span aria-hidden="true" class="text-stone-300 dark:text-stone-700">
-                ｜
-              </span>
+	              <span aria-hidden="true" class="text-stone-300 dark:text-stone-700">
+	                ｜
+	              </span>
 
-              <span>
-                總計
-                <span class="font-bold text-accent dark:text-accent-dark">
-                  {totalWordsCount.toLocaleString()}
-                </span>
-                字
-              </span>
+	              <span>
+	                總計
+	                <span class="font-bold text-accent dark:text-accent-dark">
+	                  {totalWordsCount.toLocaleString()}
+	                </span>
+	                字
+	              </span>
 
-              <span aria-hidden="true" class="text-stone-300 dark:text-stone-700">
-                ｜
-              </span>
+	              <span aria-hidden="true" class="text-stone-300 dark:text-stone-700">
+	                ｜
+	              </span>
 
-              <a
-                href="mailto:rcon93097@gmail.com"
-                class="inline-flex items-center gap-1 text-stone-500 dark:text-stone-400 hover:text-accent dark:hover:text-accent-dark transition-colors"
-                title="寄信給筆者"
-              >
-                <i class="fa-regular fa-envelope" aria-hidden="true"></i>
-                <span>筆者信箱：rcon93097@gmail.com</span>
-              </a>
-            </div>
-			<div class="flex items-center gap-2 w-full md:w-auto">
-				<button id="sort-toggle-btn" class="px-3 py-1.5 bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-700 rounded-full hover:border-accent dark:hover:border-accent-dark transition-colors text-stone-700 dark:text-stone-300 whitespace-nowrap shadow-sm" title="切換排序">
-					<i class="fa-solid fa-arrow-up-short-wide mr-1"></i><span id="sort-order-label">最新由上往下</span>
-				</button>
-				<div class="w-full md:w-44 relative">
-					<i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-stone-400"></i>
-					<input type="text" id="search-input" placeholder="搜尋..." class="w-full pl-8 pr-4 py-1.5 bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-700 rounded-full focus:outline-none focus:border-accent dark:focus:border-accent-dark transition-colors text-stone-700 dark:text-stone-300 shadow-inner">
+	              <a
+	                href="mailto:rcon93097@gmail.com"
+	                class="inline-flex items-center gap-1 hover:text-accent dark:hover:text-accent-dark transition-colors"
+	                title="寄信給筆者"
+	              >
+	                <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+	                <span>筆者信箱：rcon93097@gmail.com</span>
+	              </a>
+	            </div>
+				<div class="flex items-center gap-2 w-full md:w-auto">
+					<button id="sort-toggle-btn" class="px-3 py-1.5 bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-700 rounded-full hover:border-accent dark:hover:border-accent-dark transition-colors text-stone-700 dark:text-stone-300 whitespace-nowrap shadow-sm" title="切換排序">
+						<i class="fa-solid fa-arrow-up-short-wide mr-1"></i><span id="sort-order-label">最新由上往下</span>
+					</button>
+					<div class="w-full md:w-44 relative">
+						<i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-stone-400"></i>
+						<input type="text" id="search-input" placeholder="搜尋..." class="w-full pl-8 pr-4 py-1.5 bg-white/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-700 rounded-full focus:outline-none focus:border-accent dark:focus:border-accent-dark transition-colors text-stone-700 dark:text-stone-300 placeholder:text-stone-600 dark:placeholder:text-stone-300 shadow-inner">
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="border-l-2 border-stone-300 dark:border-stone-700 pl-6 py-2 my-8 text-stone-600 dark:text-stone-400 italic text-base leading-relaxed tracking-wider font-serif">
-			<p class="mb-2">馬匹一起衝出起跑線。</p>
-			<p class="mb-2">褐色的馬兒奔跑時勢頭強勁，隆隆的震動一直傳到了看台。七匹食草動物奮力向前衝刺，馬蹄在土地上翻飛，震人心魄。</p>
-			<p class="mb-2">我盯著馬蹄有節奏的舞動，不由得心想，地球就是靠這個轉動的吧。</p>
-			<p class="mb-4">這七匹馬肯定帶動了地球的旋轉，肯定是這樣的。</p>
-			<p class="text-right text-sm font-sans not-italic text-stone-500 dark:text-stone-500">— 伊坂幸太郎《重力小丑》</p>
-		</div>
+			<div class="border-l-2 border-stone-300 dark:border-stone-700 pl-6 py-2 my-8 text-stone-700 dark:text-stone-300 italic text-base leading-relaxed tracking-wider font-serif">
+				<p class="mb-2">馬匹一起衝出起跑線。</p>
+				<p class="mb-2">褐色的馬兒奔跑時勢頭強勁，隆隆的震動一直傳到了看台。七匹食草動物奮力向前衝刺，馬蹄在土地上翻飛，震人心魄。</p>
+				<p class="mb-2">我盯著馬蹄有節奏的舞動，不由得心想，地球就是靠這個轉動的吧。</p>
+				<p class="mb-4">這七匹馬肯定帶動了地球的旋轉，肯定是這樣的。</p>
+				<p class="text-right text-sm font-sans not-italic">— 伊坂幸太郎《重力小丑》</p>
+			</div>
 
-		<div class="flex flex-wrap gap-2 mt-10 mb-4 border-b border-stone-200 dark:border-stone-800 pb-4 font-sans text-xs transition-all duration-300" id="category-filter-container"></div>
+			<div class="flex flex-wrap gap-2 mt-10 mb-4 border-b border-stone-200 dark:border-stone-800 pb-4 font-sans text-xs transition-all duration-300" id="category-filter-container"></div>
+
+			<div class="home-banner-art" aria-hidden="true">
+				<img src={homeBannerHorse.src} alt="" width={homeBannerHorse.width} height={homeBannerHorse.height} />
+			</div>
+		</div>
 
 		<div id="dropdown-filters" class="flex flex-wrap gap-4 mb-10 font-sans text-xs transition-all duration-300">
 			<div class="flex items-center gap-2">
@@ -286,7 +317,7 @@ const totalWordsCount = formattedPosts.reduce((sum, p) => sum + p.wordCount, 0);
 				const isActive = cat === currentFilter;
 				const activeClass = isActive 
 					? "bg-accent text-white dark:bg-accent-dark dark:text-parchment-dark shadow-sm font-semibold" 
-					: "text-stone-600 dark:text-stone-400 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 font-normal";
+					: "text-stone-700 dark:text-stone-300 hover:bg-stone-200/50 dark:hover:bg-stone-800/50 font-normal";
 				return `<button onclick="window.filterCategory('${cat}')" class="px-4 py-1.5 rounded-full transition-all duration-200 text-xs ${activeClass}">${cat}</button>`;
 			}).join('');
 		}
